@@ -1,6 +1,19 @@
 package com.example.flashgig.models;
 
 public class User {
+
+    public String fullName, email, phone, userId;
+
+    public User(){
+    }
+
+    public User(String fullName, String email, String phone, String userId){
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.userId = userId;
+    }
+
     public String getFullName() {
         return fullName;
     }
@@ -30,18 +43,6 @@ public class User {
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String fullName, email, phone, userId;
-
-    public User(){
-    }
-
-    public User(String fullName, String email, String phone, String userId){
-        this.fullName = fullName;
-        this.email = email;
-        this.phone = phone;
         this.userId = userId;
     }
 }

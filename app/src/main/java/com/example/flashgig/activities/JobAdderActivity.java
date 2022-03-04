@@ -2,6 +2,7 @@ package com.example.flashgig.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -9,13 +10,18 @@ import android.widget.ToggleButton;
 
 import com.example.flashgig.models.Job;
 import com.example.flashgig.databinding.ActivityJobAdderBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class JobAdderActivity extends AppCompatActivity {
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
     private EditText editTextTitle, editTextDescription;
     private ToggleButton tglCarp, tglPlum, tglElec, tglOther;
@@ -72,9 +78,10 @@ public class JobAdderActivity extends AppCompatActivity {
         if(categories.isEmpty()){
             categories.add("Other");
         }
-
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyy hh:mm:ss aaa");
+        mAuth = FirebaseAuth.getInstance();
         DocumentReference doc = db.collection("jobs").document();
-        Job job = new Job(title, description, categories, doc.getId());
+        Job job = new Job(title, description, mAuth.getCurrentUser().getEmail(), dateFormat.format(Calendar.getInstance().getTime()), categories, doc.getId());
         doc.set(job);
 
         Toast.makeText(this, "Job Added to Database", Toast.LENGTH_SHORT).show();

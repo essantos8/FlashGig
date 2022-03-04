@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerViewAdapter.MyViewHolder> {
     Context ctx;
@@ -38,16 +42,23 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     public void onBindViewHolder(@NonNull JobRecyclerViewAdapter.MyViewHolder holder, int position) {
         // assign values for each view holder as they come on screen
         // based on position of recycler view
-        holder.textViewTitle.setText(jobArrayList.get(position).getTitle());
-        holder.textViewDesc.setText(jobArrayList.get(position).getDescription());
+        Job curJob = jobArrayList.get(position);
+        holder.textViewTitle.setText(curJob.getTitle());
+        holder.textViewDesc.setText(curJob.getDescription());
         String categories = "";
-        for (int i = 0; i < jobArrayList.get(position).getCategories().size(); i++) {
-            categories += jobArrayList.get(position).getCategories().get(i);
-            if(i != jobArrayList.get(position).getCategories().size() -1){
+        for (int i = 0; i < curJob.getCategories().size(); i++) {
+            categories += curJob.getCategories().get(i);
+            if(i != curJob.getCategories().size() -1){
                 categories += ", ";
             }
         }
         holder.textViewCategories.setText(categories);
+        holder.textViewDate.setText(curJob.getDate());
+        holder.textViewClient.setText(curJob.getClient());
+        holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()));
+        holder.textViewLocationRegion.setText(jobArrayList.get(position).getLocation().getRegion());
+        holder.textViewLocationCity.setText(jobArrayList.get(position).getLocation().getCity());
+        holder.textViewLocationBaranggay.setText(jobArrayList.get(position).getLocation().getBaranggay());
     }
 
     @Override
@@ -60,7 +71,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         // grabbing the views from the row layout file
         // similar with oncreate
 
-        TextView textViewTitle, textViewDesc, textViewCategories;
+        TextView textViewTitle, textViewDesc, textViewCategories, textViewDate, textViewClient, textViewLocationRegion, textViewLocationCity, textViewLocationBaranggay, textViewWorkers;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +79,12 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
             textViewTitle = itemView.findViewById(R.id.textJobTitle);
             textViewDesc = itemView.findViewById(R.id.textJobDescription);
             textViewCategories = itemView.findViewById(R.id.textJobCategories);
+            textViewDate = itemView.findViewById(R.id.textJobDate);
+            textViewClient = itemView.findViewById(R.id.textJobClient);
+            textViewLocationRegion = itemView.findViewById(R.id.textJobLocationRegion);
+            textViewLocationCity = itemView.findViewById(R.id.textJobLocationCity);
+            textViewLocationBaranggay = itemView.findViewById(R.id.textJobLocationBaranggay);
+            textViewWorkers = itemView.findViewById(R.id.textJobWorkers);
 
         }
     }

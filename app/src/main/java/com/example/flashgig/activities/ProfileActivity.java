@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
             if(task.isSuccessful()){
                 QueryDocumentSnapshot user;
                 if(!task.getResult().iterator().hasNext()){
-                    Toast.makeText(this, "User not found in database!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "User not found in database!", Toast.LENGTH_SHORT).show();
                     Log.d("TAG","user not in database");
                     return;
                 }

@@ -48,7 +48,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         binding.btnSignUp.setOnClickListener(view -> {
             registerUser();
-//            Toast.makeText(this, "Success 2", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -58,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-//            Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -92,20 +91,10 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignUpActivity.this, task -> {
             if(task.isSuccessful()){
                 Toast.makeText(SignUpActivity.this, "User registered successfully!", Toast.LENGTH_LONG).show();
-//                FirebaseUser user = mAuth.getCurrentUser();
-
-                DocumentReference doc = db.collection("users").document();
-
+                FirebaseUser user = mAuth.getCurrentUser();
                 // Update Database with new user info
-                User user = new User(fullName, email, phone, doc.getId());
-
-                doc.set(user);
-
-//                db.collection("users").add(user).addOnSuccessListener(documentReference -> {
-//                    Toast.makeText(this, "Added to Database with ID: " + documentReference.getId(), Toast.LENGTH_SHORT).show();
-//                }).addOnFailureListener(e -> {
-//                    Toast.makeText(this, "Database error!", Toast.LENGTH_SHORT).show();
-//                });
+                User data = new User(fullName, email, phone, user.getUid());
+                db.collection("users").document(user.getUid()).set(data);
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 startActivity(new Intent(this, LoginActivity.class));
@@ -114,7 +103,5 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(SignUpActivity.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
             }
         });
-
-//        Toast.makeText(this, "Success 1", Toast.LENGTH_SHORT).show();
     }
 }

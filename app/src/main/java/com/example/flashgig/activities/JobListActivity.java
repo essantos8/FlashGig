@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.flashgig.models.Job;
 import com.example.flashgig.databinding.ActivityJobListBinding;
@@ -34,31 +35,14 @@ public class JobListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();
-//        db.collection("jobs").get().addOnCompleteListener(task -> {
-//            if(task.isSuccessful()){
-//                for(QueryDocumentSnapshot doc : task.getResult()){
-//                    jobList.add(new Job(doc.getString("title"),
-//                                        doc.getString("description"),
-//                                        (ArrayList<String>) doc.get("categories"),
-//                                        doc.getString("jobId")));
-//                }
-//            }
-//            adapter.notifyDataSetChanged();
-//
-//        });
 
         eventChangeListener();
-/*
-
-*/
-
-//        Toast.makeText(this, "hehe", Toast.LENGTH_SHORT).show();
     }
 
     private void eventChangeListener(){
         db.collection("jobs").addSnapshotListener((value, error) -> {
             if(error != null){
-                Log.d("erorrr", "Firebase error");
+                Log.d("error", "Firebase error");
             }
             for(DocumentChange dc : value.getDocumentChanges()){
                 if(dc.getType() == DocumentChange.Type.ADDED){
