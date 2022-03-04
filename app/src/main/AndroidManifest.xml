@@ -10,22 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FlashGig">
         <activity
-            android:name="com.example.flashgig.activities.JobListActivity"
+            android:name=".activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.flashgig.activities.JobAdderActivity"
+            android:name=".activities.JobAdderActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.flashgig.activities.SignUpActivity"
+            android:name=".activities.SignUpActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.flashgig.activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.flashgig.activities.ProfileActivity"
-            android:exported="true" />
-        <activity
-            android:name="com.example.flashgig.activities.MainActivity"
+            android:name=".activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

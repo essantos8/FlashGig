@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.flashgig.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.mifmif.common.regex.Main;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -51,7 +52,9 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, ProfileActivity.class));
+//                startActivity(new Intent(this, ProfileActivity.class));
+                finish();
+                startActivity(new Intent(this, MainActivity.class));
             }
             else{
                 Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show();
