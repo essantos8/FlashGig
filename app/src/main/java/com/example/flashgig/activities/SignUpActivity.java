@@ -23,6 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
 
         ActivitySignupBinding binding = ActivitySignupBinding.inflate(getLayoutInflater());

@@ -7,6 +7,15 @@
         android:icon="@drawable/icon_home"
         android:title="Home" />
     <item
+        android:id="@+id/messages"
+        android:icon="@drawable/icon_messages"
+        android:title="Messages"/>
+    <item
+        android:id="@+id/myJobs"
+        android:icon="@drawable/icon_myjobs"
+        android:title="My Jobs"/>
+
+    <item
         android:id="@+id/profile"
         android:icon="@drawable/icon_profile"
         android:title="Profile"/>

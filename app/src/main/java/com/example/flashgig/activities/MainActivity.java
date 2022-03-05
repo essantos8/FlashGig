@@ -14,6 +14,8 @@ import com.example.flashgig.databinding.ActivityMainBinding;
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.FragmentProfileBinding;
 import com.example.flashgig.fragments.HomeFragment;
+import com.example.flashgig.fragments.MessagesFragment;
+import com.example.flashgig.fragments.MyJobsFragment;
 import com.example.flashgig.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
 
         replaceFragment(new HomeFragment());
@@ -40,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     replaceFragment(new HomeFragment());
+                    break;
+                case R.id.messages:
+                    replaceFragment(new MessagesFragment());
+                    break;
+                case R.id.myJobs:
+                    replaceFragment(new MyJobsFragment());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());
