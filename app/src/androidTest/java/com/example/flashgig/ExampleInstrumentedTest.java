@@ -1,4 +1,4 @@
-package com.example.firebase_test_java;
+package com.example.flashgig;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.firebase_test_java", appContext.getPackageName());
+        assertEquals("com.example.flashgig", appContext.getPackageName());
     }
 }

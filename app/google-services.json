@@ -8,6 +8,43 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:204986752191:android:77a03a59dfb1b635eb7a0a",
+        "android_client_info": {
+          "package_name": "com.example.auth_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204986752191-bn5jj8p05vtr5jncg9eluoa4hs2gj2mo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.auth_test",
+            "certificate_hash": "10c5c18e482ce433895b384a2336820584b078ee"
+          }
+        },
+        {
+          "client_id": "204986752191-177paeqqhdg2hl6jorrh3pfv01hslm9g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPlaEHQSQsNox1Tq-G-piaGyr-P7jxRBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204986752191-177paeqqhdg2hl6jorrh3pfv01hslm9g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:204986752191:android:98e776149d5158e0eb7a0a",
         "android_client_info": {
           "package_name": "com.example.firebase_test"
@@ -40,6 +77,35 @@
         "mobilesdk_app_id": "1:204986752191:android:6bb2730d05e642a3eb7a0a",
         "android_client_info": {
           "package_name": "com.example.firebase_test_java"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204986752191-177paeqqhdg2hl6jorrh3pfv01hslm9g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPlaEHQSQsNox1Tq-G-piaGyr-P7jxRBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204986752191-177paeqqhdg2hl6jorrh3pfv01hslm9g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204986752191:android:fbd36421d19f4dfceb7a0a",
+        "android_client_info": {
+          "package_name": "com.example.flashgig"
         }
       },
       "oauth_client": [

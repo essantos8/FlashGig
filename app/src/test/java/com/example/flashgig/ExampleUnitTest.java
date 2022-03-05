@@ -1,4 +1,4 @@
-package com.example.firebase_test_java;
+package com.example.flashgig;
 
 import org.junit.Test;
 
