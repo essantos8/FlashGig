@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.flashgig.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mifmif.common.regex.Main;
 
 public class LoginActivity extends AppCompatActivity {
@@ -18,7 +19,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
 
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         if(password.isEmpty()){
-            editTextPassword.setError("Name is required!");
+            editTextPassword.setError("Password is required!");
             editTextPassword.requestFocus();
             return;
         }
@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(this, ProfileActivity.class));
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
             }
@@ -61,5 +60,16 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
+        }
     }
 }

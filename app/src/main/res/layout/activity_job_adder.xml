@@ -4,30 +4,130 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_dark"
+    android:background="@color/white"
     tools:context=".activities.JobAdderActivity">
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupCategories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="48dp"
+        android:textAlignment="center"
+        app:checkedChip="@id/chipOther"
+        app:chipSpacingHorizontal="6dp"
+        app:chipSpacingVertical="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:selectionRequired="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipCarpentry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:checkable="true"
+            android:checked="false"
+            android:clickable="true"
+            android:text="Carpentry"
+            android:visibility="visible"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/chip_color"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipPlumbing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:checkable="true"
+            android:checked="false"
+            android:text="Plumbing"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/chip_color"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipElectrical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:checkable="true"
+            android:checked="false"
+            android:text="Electrical"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/chip_color"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipElectronics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:checked="false"
+            android:text="Electronics"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/chip_color"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipPersonalShopping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:checked="false"
+            android:text="Personal Shopping"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/chip_color"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipVirtualAssistant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:checked="false"
+            android:text="Virtual Assistant"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/chip_color"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipOther"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:checked="false"
+            android:text="Other"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/chip_color"
+            app:chipStrokeWidth="1dp" />
+
+    </com.google.android.material.chip.ChipGroup>
 
     <Button
         android:id="@+id/btnAddJob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#10B4F6"
+        android:backgroundTint="@color/yellow_flash"
         android:text="Add Job"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.809" />
+        app:layout_constraintVertical_bias="0.838" />
 
     <EditText
         android:id="@+id/editTextTextAddJobTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textColor="#EFEFEF"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.303"
@@ -39,9 +139,10 @@
         android:id="@+id/editTextTextAddJobDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textColor="#EFEFEF"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.303"
@@ -53,8 +154,9 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
         android:text="Title"
-        android:textColor="#EFEFEF"
+        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,8 +170,9 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
         android:text="Description"
-        android:textColor="#EFEFEF"
+        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,8 +186,9 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
         android:text="Categories"
-        android:textColor="#EFEFEF"
+        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,65 +198,4 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTextAddJobTitle"
         app:layout_constraintVertical_bias="0.142" />
 
-    <ToggleButton
-        android:id="@+id/tglCarp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="Carpentry"
-        android:textColor="#EFEFEF"
-        android:textOff="Carpentry"
-        android:textOn="Carpentry"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.198"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.036" />
-
-    <ToggleButton
-        android:id="@+id/tglElec"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="Carpentry"
-        android:textColor="#EFEFEF"
-        android:textOff="Electrical"
-        android:textOn="Electrical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.198"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tglCarp"
-        app:layout_constraintVertical_bias="0.075" />
-
-    <ToggleButton
-        android:id="@+id/tglOther"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="Carpentry"
-        android:textColor="#EFEFEF"
-        android:textOff="Other"
-        android:textOn="Other"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.665"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tglPlum"
-        app:layout_constraintVertical_bias="0.075" />
-
-    <ToggleButton
-        android:id="@+id/tglPlum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="16dp"
-        android:checked="false"
-        android:text="Carpentry"
-        android:textColor="#EFEFEF"
-        android:textOff="Plumbing"
-        android:textOn="Plumbing"
-        app:layout_constraintStart_toEndOf="@+id/tglCarp"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

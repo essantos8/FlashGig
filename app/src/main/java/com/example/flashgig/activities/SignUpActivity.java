@@ -23,7 +23,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
 
         ActivitySignupBinding binding = ActivitySignupBinding.inflate(getLayoutInflater());
@@ -50,16 +49,6 @@ public class SignUpActivity extends AppCompatActivity {
         binding.btnSignUp.setOnClickListener(view -> {
             registerUser();
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void registerUser() {
@@ -104,5 +93,15 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(SignUpActivity.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
