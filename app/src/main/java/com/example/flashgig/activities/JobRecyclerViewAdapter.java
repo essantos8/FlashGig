@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.models.Job;
 import com.example.flashgig.R;
+import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 
@@ -43,12 +44,38 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         holder.textViewTitle.setText(curJob.getTitle());
         holder.textViewDesc.setText(curJob.getDescription());
         String categories = "";
-        for (int i = 0; i < curJob.getCategories().size(); i++) {
-            categories += curJob.getCategories().get(i);
-            if(i != curJob.getCategories().size() -1){
-                categories += ", ";
+        for (String category: curJob.getCategories()){
+            switch (category){
+                case "Carpentry":
+                    holder.chipCarpentry.setVisibility(View.VISIBLE);
+                    break;
+                case "Plumbing":
+                    holder.chipPlumbing.setVisibility(View.VISIBLE);
+                    break;
+                case "Electrical":
+                    holder.chipElectrical.setVisibility(View.VISIBLE);
+                    break;
+                case "Electronics":
+                    holder.chipElectronics.setVisibility(View.VISIBLE);
+                    break;
+                case "Personal Shopping": case "Shopping":
+                    holder.chipPersonalShopping.setVisibility(View.VISIBLE);
+                    break;
+                case "Virtual Assistant": case "Assistant":
+                    holder.chipVirtualAssistant.setVisibility(View.VISIBLE);
+                    break;
+                case "Other":
+                    holder.chipOther.setVisibility(View.VISIBLE);
+                    break;
             }
         }
+//        for (int i = 0; i < curJob.getCategories().size(); i++) {
+//            switch (i)
+//            categories += curJob.getCategories().get(i);
+//            if(i != curJob.getCategories().size() -1){
+//                categories += ", ";
+//            }
+//        }
         holder.textViewCategories.setText(categories);
         holder.textViewDate.setText(curJob.getDate());
         holder.textViewClient.setText(curJob.getClient());
@@ -69,6 +96,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         // similar with oncreate
 
         TextView textViewTitle, textViewDesc, textViewCategories, textViewDate, textViewClient, textViewLocationRegion, textViewLocationCity, textViewLocationBaranggay, textViewWorkers;
+        Chip chipCarpentry, chipPlumbing, chipElectronics, chipElectrical, chipPersonalShopping, chipVirtualAssistant, chipOther;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,6 +110,13 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
             textViewLocationCity = itemView.findViewById(R.id.textJobLocationCity);
             textViewLocationBaranggay = itemView.findViewById(R.id.textJobLocationBaranggay);
             textViewWorkers = itemView.findViewById(R.id.textJobWorkers);
+            chipCarpentry = itemView.findViewById(R.id.chipCarpentry);
+            chipPlumbing = itemView.findViewById(R.id.chipPlumbing);
+            chipElectronics = itemView.findViewById(R.id.chipElectronics);
+            chipElectrical = itemView.findViewById(R.id.chipElectrical);
+            chipPersonalShopping = itemView.findViewById(R.id.chipPersonalShopping);
+            chipVirtualAssistant = itemView.findViewById(R.id.chipVirtualAssistant);
+            chipOther = itemView.findViewById(R.id.chipOther);
 
         }
     }

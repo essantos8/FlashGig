@@ -19,6 +19,7 @@ import com.example.flashgig.databinding.FragmentProfileBinding;
 import com.example.flashgig.models.Job;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void eventChangeListener(){
-        db.collection("jobs").addSnapshotListener((value, error) -> {
+        db.collection("jobs").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
             if(error != null){
                 Log.d("error", "Firebase error");
             }

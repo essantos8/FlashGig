@@ -36,14 +36,20 @@
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/Flash_Gig/app/src/main/res/layout/recycler_view_row.xml" value="0.4" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/Flash_Gig/app/src/main/res/menu/nav_bar.xml" value="0.25416666666666665" />
         <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/drawable/ic_launcher_background.xml" value="0.165" />
-        <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_job_adder.xml" value="0.264" />
+        <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_job_adder.xml" value="0.25" />
         <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_job_list.xml" value="0.25416666666666665" />
         <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_main.xml" value="0.15572916666666667" />
         <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_signup.xml" value="0.25416666666666665" />
+        <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_splash.xml" value="0.11302083333333333" />
         <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_user_profile.xml" value="0.15572916666666667" />
-        <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/recycler_view_row.xml" value="0.536" />
+        <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_home.xml" value="0.1671875" />
+        <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_messages.xml" value="0.1671875" />
+        <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_my_jobs.xml" value="0.1671875" />
+        <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_profile.xml" value="0.16" />
+        <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/layout/recycler_view_row.xml" value="0.4" />
+        <entry key="..\:/wsl/FIREBASE_TEST_JAVA/app/src/main/res/menu/nav_bar.xml" value="0.1671875" />
       </map>
     </option>
   </component>
