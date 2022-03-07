@@ -8,17 +8,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.flashgig.databinding.ActivityLoginBinding;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mifmif.common.regex.Main;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private EditText editTextEmail, editTextPassword;
+    private TextInputLayout tilemail, tilpassword;
+    private TextInputEditText tietemail, tietpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
 
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
@@ -26,8 +30,11 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        editTextEmail = binding.editTextTextLoginEmail;
-        editTextPassword = binding.editTextTextLoginPassword;
+        tilemail = binding.tilemail;
+        tietemail = binding.tietemail;
+        tilpassword = binding.tilpassword;
+        tietpassword = binding.tietpassword;
+
 
         binding.btnLoginLogin.setOnClickListener(view -> {
             loginUser();
@@ -36,24 +43,29 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(){
-        String email = editTextEmail.getText().toString(),
-                password = editTextPassword.getText().toString();
+        String email = tietemail.getText().toString(),
+                password = tietpassword.getText().toString();
 
         if(email.isEmpty()){
-            editTextEmail.setError("Name is required!");
-            editTextEmail.requestFocus();
+            tilemail.setError("Email is required!");
+            //editTextEmail.requestFocus();
             return;
         }
+        else{
+            tilemail.setError(null);
+        }
         if(password.isEmpty()){
-            editTextPassword.setError("Name is required!");
-            editTextPassword.requestFocus();
+            tilpassword.setError("Password is required!");
+            //editTextPassword.requestFocus();
             return;
+        }
+        else{
+            tilemail.setError(null);
         }
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(this, ProfileActivity.class));
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
             }
@@ -61,5 +73,16 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
+        }
     }
 }

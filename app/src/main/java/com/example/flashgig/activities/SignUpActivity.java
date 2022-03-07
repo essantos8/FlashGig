@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.example.flashgig.models.User;
 import com.example.flashgig.databinding.ActivitySignupBinding;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -19,11 +21,12 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
 
-    private EditText editTextFullName, editTextEmail, editTextPassword, editTextPhone;
+    //private EditText editTextFullName, editTextEmail, editTextPassword, editTextPhone;
+    private TextInputLayout tilnamesignup, tilemailsignup, tilpasswordsignup, tilnumbersignup;
+    private TextInputEditText tietnamesignup, tietemailsignup, tietpasswordsignup, tietnumbersignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
 
         ActivitySignupBinding binding = ActivitySignupBinding.inflate(getLayoutInflater());
@@ -40,52 +43,41 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        tilnamesignup = binding.tilnamesignup;
+        tilemailsignup = binding.tilemailsignup;
+        tilpasswordsignup = binding.tilpasswordsignup;
+        tilnumbersignup = binding.tilnumbersignup;
 
-
-        editTextFullName = binding.editTextTextPersonName;
-        editTextEmail = binding.editTextTextEmailAddress;
-        editTextPassword = binding.editTextTextPassword;
-        editTextPhone = binding.editTextPhone;
+        tietnamesignup = binding.tietnamesignup;
+        tietemailsignup = binding.tietemailsignup;
+        tietpasswordsignup = binding.tietpasswordsignup;
+        tietnumbersignup = binding.tietnumbersignup;
 
         binding.btnSignUp.setOnClickListener(view -> {
             registerUser();
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void registerUser() {
-        String fullName = editTextFullName.getText().toString(),
-                email = editTextEmail.getText().toString(),
-                password = editTextPassword.getText().toString(),
-                phone = editTextPhone.getText().toString();
+        String fullName = tietnamesignup.getText().toString(),
+                email = tietemailsignup.getText().toString(),
+                password = tietpasswordsignup.getText().toString(),
+                phone = tietnumbersignup.getText().toString();
 
         if(fullName.isEmpty()){
-            editTextFullName.setError("Name is required!");
-            editTextFullName.requestFocus();
+            tilnamesignup.setError("Name is required!");
             return;
         }
         if(email.isEmpty()){
-            editTextEmail.setError("Email is required!");
-            editTextEmail.requestFocus();
+            tilemailsignup.setError("Email is required!");
             return;
         }
         if(password.isEmpty()){
-            editTextPassword.setError("Password is required!");
-            editTextPassword.requestFocus();
+            tilpasswordsignup.setError("Password is required!");
             return;
         }
         if(phone.isEmpty()){
-            editTextPhone.setError("Phone number is required!");
-            editTextPhone.requestFocus();
+            tilnumbersignup.setError("Phone number is required!");
             return;
         }
 
@@ -104,5 +96,15 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(SignUpActivity.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
