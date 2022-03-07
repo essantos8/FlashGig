@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-    <style name="Theme.FlashGig.Yellow" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.FlashGig.Blue" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dashboard_blue</item>
         <item name="colorPrimaryVariant">@color/dashboard_blue</item>

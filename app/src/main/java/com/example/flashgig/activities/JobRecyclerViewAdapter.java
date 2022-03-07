@@ -4,10 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.models.Job;
@@ -42,10 +43,9 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         // based on position of recycler view
         Job curJob = jobArrayList.get(position);
         holder.textViewTitle.setText(curJob.getTitle());
-        holder.textViewDesc.setText(curJob.getDescription());
-        String categories = "";
-        for (String category: curJob.getCategories()){
-            switch (category){
+        holder.textViewDescription.setText(curJob.getDescription());
+        for (String category : curJob.getCategories()) {
+            switch (category) {
                 case "Carpentry":
                     holder.chipCarpentry.setVisibility(View.VISIBLE);
                     break;
@@ -58,10 +58,12 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
                 case "Electronics":
                     holder.chipElectronics.setVisibility(View.VISIBLE);
                     break;
-                case "Personal Shopping": case "Shopping":
+                case "Personal Shopping":
+                case "Shopping":
                     holder.chipPersonalShopping.setVisibility(View.VISIBLE);
                     break;
-                case "Virtual Assistant": case "Assistant":
+                case "Virtual Assistant":
+                case "Assistant":
                     holder.chipVirtualAssistant.setVisibility(View.VISIBLE);
                     break;
                 case "Other":
@@ -69,20 +71,20 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
                     break;
             }
         }
-//        for (int i = 0; i < curJob.getCategories().size(); i++) {
-//            switch (i)
-//            categories += curJob.getCategories().get(i);
-//            if(i != curJob.getCategories().size() -1){
-//                categories += ", ";
-//            }
-//        }
-        holder.textViewCategories.setText(categories);
         holder.textViewDate.setText(curJob.getDate());
         holder.textViewClient.setText(curJob.getClient());
         holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()));
-        holder.textViewLocationRegion.setText(jobArrayList.get(position).getLocation().getRegion());
-        holder.textViewLocationCity.setText(jobArrayList.get(position).getLocation().getCity());
-        holder.textViewLocationBaranggay.setText(jobArrayList.get(position).getLocation().getBaranggay());
+        String loc = jobArrayList.get(position).getLocation().getCity() + ", " + jobArrayList.get(position).getLocation().getBaranggay();
+        holder.textViewLocation.setText(loc);
+        holder.jobCard.setOnClickListener(view -> {
+            if (holder.textViewHide.getVisibility() == View.VISIBLE) {
+                holder.textViewHide.setVisibility(View.GONE);
+                holder.btnAccept.setVisibility(View.GONE);
+            } else {
+                holder.textViewHide.setVisibility(View.VISIBLE);
+                holder.btnAccept.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -91,24 +93,24 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         return jobArrayList.size();
     }
 
+
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         // grabbing the views from the row layout file
         // similar with oncreate
 
-        TextView textViewTitle, textViewDesc, textViewCategories, textViewDate, textViewClient, textViewLocationRegion, textViewLocationCity, textViewLocationBaranggay, textViewWorkers;
+        TextView textViewTitle, textViewDescription, textViewDate, textViewClient, textViewLocation, textViewWorkers, textViewHide;
         Chip chipCarpentry, chipPlumbing, chipElectronics, chipElectrical, chipPersonalShopping, chipVirtualAssistant, chipOther;
+        CardView jobCard;
+        Button btnAccept;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textViewTitle = itemView.findViewById(R.id.textJobTitle);
-            textViewDesc = itemView.findViewById(R.id.textJobDescription);
-            textViewCategories = itemView.findViewById(R.id.textJobCategories);
+            textViewDescription = itemView.findViewById(R.id.textJobDescription);
             textViewDate = itemView.findViewById(R.id.textJobDate);
             textViewClient = itemView.findViewById(R.id.textJobClient);
-            textViewLocationRegion = itemView.findViewById(R.id.textJobLocationRegion);
-            textViewLocationCity = itemView.findViewById(R.id.textJobLocationCity);
-            textViewLocationBaranggay = itemView.findViewById(R.id.textJobLocationBaranggay);
+            textViewLocation = itemView.findViewById(R.id.textJobLocation);
             textViewWorkers = itemView.findViewById(R.id.textJobWorkers);
             chipCarpentry = itemView.findViewById(R.id.chipCarpentry);
             chipPlumbing = itemView.findViewById(R.id.chipPlumbing);
@@ -117,7 +119,10 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
             chipPersonalShopping = itemView.findViewById(R.id.chipPersonalShopping);
             chipVirtualAssistant = itemView.findViewById(R.id.chipVirtualAssistant);
             chipOther = itemView.findViewById(R.id.chipOther);
-
+            jobCard = itemView.findViewById(R.id.jobCardPopup);
+            textViewHide = itemView.findViewById(R.id.textViewHide);
+            btnAccept = itemView.findViewById(R.id.btnAcceptJob);
         }
     }
+
 }
