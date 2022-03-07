@@ -15,8 +15,8 @@
     </style>
     <style name="Theme.FlashGig.Yellow" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/yellow_flash</item>
-        <item name="colorPrimaryVariant">#FFFE80</item>
+        <item name="colorPrimary">@color/dashboard_blue</item>
+        <item name="colorPrimaryVariant">@color/dashboard_blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

@@ -11,6 +11,8 @@ import android.widget.ToggleButton;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.databinding.ActivityJobAdderBinding;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,7 +30,9 @@ public class JobAdderActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
-    private EditText editTextTitle, editTextDescription;
+    //private EditText editTextTitle, editTextDescription;
+    private TextInputLayout tiltitlejobadder, tildescriptionjobadder;
+    private TextInputEditText tiettitlejobadder, tietdescriptionjobadder;
 
     ActivityJobAdderBinding binding;
 
@@ -41,8 +45,10 @@ public class JobAdderActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        editTextTitle = binding.editTextTextAddJobTitle;
-        editTextDescription = binding.editTextTextAddJobDesc;
+        tiltitlejobadder = binding.tiltitlejobadder;
+        tildescriptionjobadder = binding.tildescriptionjobadder;
+        tiettitlejobadder = binding.tiettitlejobadder;
+        tietdescriptionjobadder = binding.tietdescriptionjobadder;
 
         binding.btnAddJob.setOnClickListener(view -> {
             addJob();
@@ -51,8 +57,8 @@ public class JobAdderActivity extends AppCompatActivity {
     }
 
     private void addJob() {
-        String title = editTextTitle.getText().toString(),
-                description = editTextDescription.getText().toString();
+        String title = tiettitlejobadder.getText().toString(),
+                description = tietdescriptionjobadder.getText().toString();
         ArrayList<String> categories = new ArrayList<>();
         for (int i = 0; i < binding.chipGroupCategories.getChildCount(); i++) {
             Chip chip = (Chip) binding.chipGroupCategories.getChildAt(i);
@@ -86,13 +92,13 @@ public class JobAdderActivity extends AppCompatActivity {
 
 
         if(title.isEmpty()){
-            editTextTitle.setError("Job Title is required!");
-            editTextTitle.requestFocus();
+            tiltitlejobadder.setError("Job Title is required!");
+            //editTextTitle.requestFocus();
             return;
         }
         if(description.isEmpty()){
-            editTextDescription.setError("Description is required!");
-            editTextDescription.requestFocus();
+            tildescriptionjobadder.setError("Description is required!");
+            //editTextDescription.requestFocus();
             return;
         }
 
