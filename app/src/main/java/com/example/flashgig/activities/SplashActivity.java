@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.flashgig.R;
@@ -15,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SplashActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+
+    private Button btnLogin, btnSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +37,27 @@ public class SplashActivity extends AppCompatActivity {
         }, 2000);
         mAuth = FirebaseAuth.getInstance();
 
-        binding.btnLogin.setOnClickListener(view ->
-                startActivity(new Intent(this, LoginActivity.class)));
-        binding.btnSignup.setOnClickListener(view ->
-                startActivity(new Intent(this, SignUpActivity.class)));
+        btnLogin = binding.btnLogin;
+        btnSignup = binding.btnSignup;
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+            }
+        });
+
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SplashActivity.this, SignUpActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
     }
 
     @Override
@@ -47,6 +69,8 @@ public class SplashActivity extends AppCompatActivity {
             Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
             finish();
             startActivity(new Intent(this, MainActivity.class));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
+
 }

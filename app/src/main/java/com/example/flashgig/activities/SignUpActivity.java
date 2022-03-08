@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.flashgig.R;
 import com.example.flashgig.models.User;
 import com.example.flashgig.databinding.ActivitySignupBinding;
 import com.google.android.material.textfield.TextInputEditText;
@@ -106,5 +107,11 @@ public class SignUpActivity extends AppCompatActivity {
         if(currentUser != null){
             Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
