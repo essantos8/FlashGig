@@ -1,5 +1,6 @@
 package com.example.flashgig.fragments;
 
+import android.inputmethodservice.AbstractInputMethodService;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.flashgig.R;
@@ -54,6 +57,8 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,8 +71,18 @@ public class HomeFragment extends Fragment {
         adapter = new JobRecyclerViewAdapter(this.getContext(), jobList);
         recyclerView.setAdapter(adapter);
 
-
         eventChangeListener();
+        binding.searchviewHome.setOnSearchClickListener(view -> {
+            binding.cardView.setVisibility(View.VISIBLE);
+        });
+        binding.searchviewHome.setOnClickListener(view -> {
+            binding.searchviewHome.setIconified(false);
+        });
+        binding.searchviewHome.setOnCloseListener(() -> {
+            binding.cardView.setVisibility(View.GONE);
+            return false;
+        });
+
         // Inflate the layout for this fragment
         return binding.getRoot();
     }

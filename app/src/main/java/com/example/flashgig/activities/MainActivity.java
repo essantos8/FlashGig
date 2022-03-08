@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.flashgig.databinding.ActivityMainBinding;
@@ -57,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed () {
+        SearchView searchBar = findViewById(R.id.searchviewHome);
+        if(!searchBar.isIconified()){
+            searchBar.setIconified(true);
+            searchBar.onActionViewCollapsed();
+            return;
+        }
         this.moveTaskToBack(true);
     }
 
