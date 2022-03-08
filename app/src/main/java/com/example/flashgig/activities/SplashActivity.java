@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.widget.Toast;
 
+import com.example.flashgig.R;
 import com.example.flashgig.databinding.ActivitySplashBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,11 +19,17 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivitySplashBinding binding = ActivitySplashBinding.inflate(getLayoutInflater());
 
         // Grabbing objects/views from layout
-        ActivitySplashBinding binding = ActivitySplashBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
+        setContentView(R.layout.splash_intro);
+//        setContentView(binding.getRoot());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setContentView(binding.getRoot());
+            }
+        }, 2000);
         mAuth = FirebaseAuth.getInstance();
 
         binding.btnLogin.setOnClickListener(view ->
