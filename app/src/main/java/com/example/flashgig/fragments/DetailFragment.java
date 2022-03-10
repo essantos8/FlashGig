@@ -60,12 +60,9 @@ public class DetailFragment extends Fragment {
         //Designated back button for DetailFragment items
         ImageButton back = (ImageButton) view.findViewById(R.id.backButton);
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.popBackStackImmediate();
-            }
+        back.setOnClickListener(v -> {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            fm.popBackStackImmediate();
         });
 
         return view;

@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
+        eventChangeListener();
     }
 
 
@@ -74,13 +75,8 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
         adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
         recyclerView.setAdapter(adapter);
 
-        eventChangeListener();
-        binding.searchviewHome.setOnSearchClickListener(view -> {
-            binding.cardView.setVisibility(View.VISIBLE);
-        });
-        binding.searchviewHome.setOnClickListener(view -> {
-            binding.searchviewHome.setIconified(false);
-        });
+        binding.searchviewHome.setOnSearchClickListener(view -> binding.cardView.setVisibility(View.VISIBLE));
+        binding.searchviewHome.setOnClickListener(view -> binding.searchviewHome.setIconified(false));
         binding.searchviewHome.setOnCloseListener(() -> {
             binding.cardView.setVisibility(View.GONE);
             return false;
@@ -94,7 +90,7 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
     public void onItemClick(Job job) {
         Fragment fragment = DetailFragment.newInstance(job.getTitle());
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
