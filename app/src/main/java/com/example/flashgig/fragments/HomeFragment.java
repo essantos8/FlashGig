@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +32,7 @@ import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.ItemClickListener{
 
     private FirebaseFirestore db;
     private ArrayList<Job> jobList = new ArrayList<>();
@@ -68,7 +70,7 @@ public class HomeFragment extends Fragment {
         RecyclerView recyclerView = binding.recyclerViewJobs;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        adapter = new JobRecyclerViewAdapter(this.getContext(), jobList);
+        adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
         recyclerView.setAdapter(adapter);
 
         eventChangeListener();
@@ -85,5 +87,15 @@ public class HomeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return binding.getRoot();
+    }
+
+    @Override
+    public void onItemClick(Job job) {
+        Fragment fragment = DetailFragment.newInstance(job.getTitle());
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
     }
 }

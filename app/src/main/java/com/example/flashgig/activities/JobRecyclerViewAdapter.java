@@ -20,10 +20,12 @@ import java.util.ArrayList;
 public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerViewAdapter.MyViewHolder> {
     Context ctx;
     ArrayList<Job> jobArrayList;
+    ItemClickListener clickListener;
 
-    public JobRecyclerViewAdapter(Context ctx, ArrayList<Job> jobArrayList){
+    public JobRecyclerViewAdapter(Context ctx, ArrayList<Job> jobArrayList, ItemClickListener clickListener){
         this.ctx = ctx;
         this.jobArrayList = jobArrayList;
+        this.clickListener = clickListener;
     }
 
 
@@ -44,6 +46,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         Job curJob = jobArrayList.get(position);
         holder.textViewTitle.setText(curJob.getTitle());
         holder.textViewDescription.setText(curJob.getDescription());
+
         for (String category : curJob.getCategories()) {
             switch (category) {
                 case "Carpentry":
@@ -76,13 +79,11 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()));
         String loc = jobArrayList.get(position).getLocation().getCity() + ", " + jobArrayList.get(position).getLocation().getBaranggay();
         holder.textViewLocation.setText(loc);
-        holder.jobCard.setOnClickListener(view -> {
-            if (holder.textViewHide.getVisibility() == View.VISIBLE) {
-                holder.textViewHide.setVisibility(View.GONE);
-                holder.btnAccept.setVisibility(View.GONE);
-            } else {
-                holder.textViewHide.setVisibility(View.VISIBLE);
-                holder.btnAccept.setVisibility(View.VISIBLE);
+
+        holder.jobCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.onItemClick(curJob);
             }
         });
     }
@@ -123,6 +124,10 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
             textViewHide = itemView.findViewById(R.id.textViewHide);
             btnAccept = itemView.findViewById(R.id.btnAcceptJob);
         }
+    }
+
+    public interface ItemClickListener {
+        public void onItemClick(Job job);
     }
 
 }
