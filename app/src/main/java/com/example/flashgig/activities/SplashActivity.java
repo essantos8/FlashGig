@@ -29,34 +29,23 @@ public class SplashActivity extends AppCompatActivity {
         // Grabbing objects/views from layout
         setContentView(R.layout.splash_intro);
 //        setContentView(binding.getRoot());
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setContentView(binding.getRoot());
-            }
-        }, 2000);
+        new Handler().postDelayed(() -> setContentView(binding.getRoot()), 1000);
         mAuth = FirebaseAuth.getInstance();
 
         btnLogin = binding.btnLogin;
         btnSignup = binding.btnSignup;
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        btnLogin.setOnClickListener(view -> {
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-            }
         });
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SplashActivity.this, SignUpActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
+        btnSignup.setOnClickListener(view -> {
+            Intent intent = new Intent(SplashActivity.this, SignUpActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
     }
 
