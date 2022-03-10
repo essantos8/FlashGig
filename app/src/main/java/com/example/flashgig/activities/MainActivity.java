@@ -7,8 +7,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     HomeFragment homeFragment = new HomeFragment();
     ProfileFragment profileFragment = new ProfileFragment();
+    ImageButton back;
 
 
     @Override
@@ -37,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -57,15 +60,19 @@ public class MainActivity extends AppCompatActivity {
             return true;});
     }
 
+
     @Override
     public void onBackPressed () {
+
+        FragmentManager fm = getSupportFragmentManager();
+        fm.popBackStack();
         SearchView searchBar = findViewById(R.id.searchviewHome);
         if(!searchBar.isIconified()){
             searchBar.setIconified(true);
             searchBar.onActionViewCollapsed();
             return;
         }
-        this.moveTaskToBack(true);
+//        this.moveTaskToBack(true);
     }
 
     private void replaceFragment(Fragment fragment){

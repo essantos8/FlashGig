@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 
 public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.ItemClickListener{
@@ -42,9 +43,9 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         db = FirebaseFirestore.getInstance();
     }
+
 
     private void eventChangeListener(){
         db.collection("jobs").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
