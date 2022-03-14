@@ -18,4 +18,24 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+
+    <string-array name="locationCity">
+        <item>Caloocan City</item>
+        <item>Las Piñas City</item>
+        <item>Makati City</item>
+        <item>Malabon City</item>
+        <item>Mandaluyong City</item>
+        <item>Manila City</item>
+        <item>Marikina City</item>
+        <item>Muntinlupa City</item>
+        <item>Navotas City</item>
+        <item>Parañaque City</item>
+        <item>Pasay City</item>
+        <item>Pasig City</item>
+        <item>Pateros (Municipality)</item>
+        <item>Quezon City</item>
+        <item>San Juan</item>
+        <item>Taguig City</item>
+        <item>Valenzuela City</item>
+    </string-array>
 </resources>
