@@ -11,7 +11,7 @@
         android:theme="@style/Theme.FlashGig">
         <activity
             android:name=".activities.JobAdderActivityV2"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true" />
