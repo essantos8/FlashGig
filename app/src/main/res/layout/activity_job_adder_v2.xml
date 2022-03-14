@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.JobAdderActivityV2">
+
+    <TextView
+        android:id="@+id/textView_screenTitle"
+        android:layout_width="411dp"
+        android:layout_height="84dp"
+        android:background="#006DFE"
+        android:fontFamily="@font/salmapro"
+        android:letterSpacing="0.08"
+        android:paddingStart="10dp"
+        android:paddingTop="20dp"
+        android:text="Create a Job Post"
+        android:textColor="#FFFFFF"
+        android:textSize="34dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_jobTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="92dp"
+        android:fontFamily="@font/salmapro"
+        android:letterSpacing="0.08"
+        android:text="Title"
+        android:textColor="#444444"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_jobDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/salmapro"
+        android:letterSpacing="0.08"
+        android:text="Description"
+        android:textColor="#444444"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_jobTitle" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_jobTitle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Enter job title"
+        app:helperText="Required*"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_jobTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditText_jobTitle"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#E2E4E9"
+            android:fontFamily="@font/salmapro"
+            android:textSize="14dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_jobDesc"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Explain job details"
+        app:counterEnabled="true"
+        app:counterMaxLength="1000"
+        app:helperText="Required*"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_jobDesc">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:background="#E2E4E9"
+            android:fontFamily="@font/salmapro"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textSize="14dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView_jobCateg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/salmapro"
+        android:text="Job Category"
+        android:textColor="#444444"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.112"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_jobDesc" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup_jobCateg"
+        android:layout_width="345dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        app:chipSpacingHorizontal="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_jobCateg">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_carpentry"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapro"
+            android:text="Carpentry"
+            android:textSize="12dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_plumbing"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapro"
+            android:text="Plumbing"
+            android:textSize="12dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_elctrical"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapro"
+            android:text="Electrical"
+            android:textSize="12dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_electronics"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapro"
+            android:text="Electronics"
+            android:textSize="12dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_pShopping"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapro"
+            android:text="Personal Shopping"
+            android:textSize="12dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_vAssistant"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapro"
+            android:text="Virtual Assistant"
+            android:textSize="12dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_other"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapro"
+            android:text="Other"
+            android:textSize="12dp" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <TextView
+        android:id="@+id/textView_numWorker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/salmapro"
+        android:text="Number of Workers"
+        android:textColor="#444444"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup_jobCateg" />
+
+    <TextView
+        android:id="@+id/textView_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/salmapro"
+        android:text="Location"
+        android:textColor="#444444"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_numWorker" />
+
+    <Spinner
+        android:id="@+id/spinner_region"
+        android:layout_width="119dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.566"
+        app:layout_constraintStart_toEndOf="@+id/textView_numWorker"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup_jobCateg" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
