@@ -87,8 +87,8 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
     }
 
     @Override
-    public void onItemClick(Job job) {
-        Fragment fragment = DetailFragment.newInstance(job.getTitle());
+    public void onItemClick(String JID) {
+        Fragment fragment = DetailFragment.newInstance(JID);
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
         fragmentTransaction.addToBackStack(null);
