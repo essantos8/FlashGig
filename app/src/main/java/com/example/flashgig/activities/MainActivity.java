@@ -29,6 +29,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    String curUser;
+
     BottomNavigationView bottomNavigationView;
 
     HomeFragment homeFragment = new HomeFragment();

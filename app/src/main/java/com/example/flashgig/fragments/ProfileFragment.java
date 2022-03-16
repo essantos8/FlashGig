@@ -28,6 +28,7 @@ public class ProfileFragment extends Fragment {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    public String curUser;
 
     private TextView textName, textEmail, textPhone;
 
@@ -50,6 +51,8 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
                 user = task.getResult().iterator().next();
+
+                curUser = user.getString("fullName");
 
                 textName.setText(user.getString("fullName"));
                 textEmail.setText(user.getString("email"));

@@ -2,6 +2,7 @@ package com.example.flashgig.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -14,15 +15,35 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.flashgig.R;
+import com.example.flashgig.databinding.FragmentDetailBinding;
+import com.example.flashgig.databinding.FragmentProfileBinding;
 import com.example.flashgig.models.Job;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class DetailFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private String mParam1;
     private FirebaseFirestore db;
+    String curUser;
+    DocumentSnapshot document;
+    Task<QuerySnapshot> curJob;
+    FragmentManager fm;
+
+    TextView textJobTitle, textJobDate, textJobLocation, textJobClient, textJobDescription;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -51,41 +72,74 @@ public class DetailFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
+        curJob = db.collection("jobs").whereEqualTo("jobId",mParam1).get();
+        Log.d("nothing", "onCreate: " +curJob.getClass());
     }
 
+
+    public void jobFinder(){
+//        db.collection("jobs").whereEqualTo("jobId", mParam1)
+        curJob.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            document = task.getResult().getDocuments().get(0);
+//                            location = document.get("location.baranggay");
+////
+//
+//                            String barangay = document.get("location.baranggay").toString();
+
+
+                            Log.d("TAG", "Data obtained: " +document.get("location.baranggay"));
+
+                            textJobTitle.setText(document.getString("title"));
+                            textJobLocation.setText((String) document.get("location.baranggay") +", " + document.get("location.city"));
+                            textJobDate.setText(document.getString("date"));
+                            textJobClient.setText(document.getString("client"));
+                            textJobDescription.setText(document.getString("description"));
+
+                    }
+                }
+                });
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_detail, container, false);
-        TextView JobTitle = view.findViewById(R.id.JobTitle);
-        db.collection("jobs").whereEqualTo("jobId", mParam1).get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                QueryDocumentSnapshot job;
-                if(!task.getResult().iterator().hasNext()){
-                    Toast.makeText(getContext(), "Job not found in database!", Toast.LENGTH_SHORT).show();
-                    Log.d("TAG","job not in database");
-                    return;
-                }
-                job = task.getResult().iterator().next();
+//        View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-                JobTitle.setText(job.getString("client"));
-            }
-            else{
-                Log.d("TAG","mission failed");
-            }
-        });
+        FragmentDetailBinding binding = FragmentDetailBinding.inflate(inflater, container, false);
+//        JobTitle.setText(document.get("title").toString());
+
+        textJobTitle = binding.textJobTitle;
+        textJobLocation = binding.textJobLocation;
+        textJobDate = binding.textJobDate;
+        textJobClient = binding.textJobClient;
+        textJobDescription = binding.textJobDescription;
+
+        jobFinder();
 
 
-        //Designated back button for DetailFragment items
-        ImageButton back = (ImageButton) view.findViewById(R.id.backButton);
+        binding.backButton.setOnClickListener(view ->{
 
-        back.setOnClickListener(v -> {
-            FragmentManager fm = getActivity().getSupportFragmentManager();
+            fm = getActivity().getSupportFragmentManager();
             fm.popBackStackImmediate();
         });
 
-        return view;
+        binding.btnAcceptJob.setOnClickListener(view ->{
+
+            final Map<String, Object> addUsertoArrayMap = new HashMap<>();
+            addUsertoArrayMap.put("workers", FieldValue.arrayUnion(FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+            curJob.addOnCompleteListener(task -> {
+               if (task.isSuccessful()) {
+                   db.collection("jobs").document(document.getId()).update(addUsertoArrayMap);
+               }
+            });
+//            Log.d("user", "meron: "+ FirebaseAuth.getInstance().getCurrentUser());
+
+        });
+
+        return binding.getRoot();
     }
 }
