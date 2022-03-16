@@ -108,14 +108,6 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment, String tag, String animDirection){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // Default anim is Left to Right
-        Integer[] customAnimations = {
-                R.anim.fade_in, //enter
-                R.anim.slide_out_right, //exit
-                R.anim.fade_in, //pop enter
-                R.anim.slide_out_right //pop exit]
-        };
         if(animDirection.equals("LtoR")){
             fragmentTransaction
                     .setCustomAnimations(R.anim.fade_in, //enter
@@ -124,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                             R.anim.slide_out_right //pop exit
                     )
                     .replace(R.id.frameLayout, fragment, tag)
+                    .addToBackStack(null)
                     .commit();
         }
         else{
@@ -134,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
                             R.anim.slide_out_left //pop exit
                     )
                     .replace(R.id.frameLayout, fragment, tag)
+                    .addToBackStack(null)
                     .commit();
         }
     }
-
 }

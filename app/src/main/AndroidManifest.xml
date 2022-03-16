@@ -9,13 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FlashGig.Blue">
-
+        <activity
+            android:name=".activities.UserVerificationActivity"
+            android:exported="true" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.JobAdderActivity"
-            android:exported="false" />
+            android:name=".activities.JobAdderActivityV2"
+            android:exported="true" />
         <activity
             android:name=".activities.SignUpActivity"
             android:exported="true" />

@@ -10,14 +10,14 @@
         android:id="@+id/textName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/salmapromedium"
         android:text="Name"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProfilePic" />
 
     <TextView
         android:id="@+id/textEmail"
@@ -49,6 +49,7 @@
         android:id="@+id/textProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/salmapromedium"
         android:text="User Profile"
         android:textColor="@color/white"
@@ -57,12 +58,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="64dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/salmapromedium"
@@ -71,13 +73,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnProfileAddJob"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnProfileUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/salmapromedium"
         android:text="Update Information"
@@ -86,7 +90,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textPhone"
-        app:layout_constraintVertical_bias="0.205"
+        app:layout_constraintVertical_bias="0.0"
         app:rippleColor="@color/dashboard_blue" />
 
     <Button
@@ -105,5 +109,19 @@
         app:layout_constraintTop_toBottomOf="@+id/btnProfileUpdate"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="@color/dashboard_blue" />
+
+    <ImageView
+        android:id="@+id/imageViewProfilePic"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:maxWidth="200dp"
+        android:maxHeight="200dp"
+        android:src="@drawable/ic_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="wrap"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textProfile"
+        app:layout_constraintWidth_max="wrap" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -80,7 +80,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         String loc = jobArrayList.get(position).getLocation().getCity() + ", " + jobArrayList.get(position).getLocation().getBaranggay();
         holder.textViewLocation.setText(loc);
 
-        holder.jobCard.setOnClickListener(view -> clickListener.onItemClick(curJob));
+        holder.jobCard.setOnClickListener(view -> clickListener.onItemClick(curJob.jobId));
     }
 
     @Override
@@ -122,7 +122,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     }
 
     public interface ItemClickListener {
-        public void onItemClick(Job job);
+        public void onItemClick(String jobId);
     }
 
 }
