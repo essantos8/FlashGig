@@ -1,53 +1,26 @@
 package com.example.flashgig.activities;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.databinding.ActivityProfileEditBinding;
-import com.example.flashgig.databinding.ActivitySignupBinding;
 import com.example.flashgig.models.User;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
@@ -89,7 +62,7 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         binding.btnConfirm.setOnClickListener(view -> {
             // Only upload to storage if new image is selected
-            if(imageUri != null) uploadPicture();
+            if (imageUri != null) uploadPicture();
             pushUserInfo();
         });
     }
@@ -97,22 +70,22 @@ public class ProfileEditActivity extends AppCompatActivity {
     private void pushUserInfo() {
         HashMap<String, Object> hashMap = new HashMap<>();
         String newName = binding.etName.getText().toString(), newAbout = binding.etAboutMe.getText().toString();
-        if(!newName.equals(user.getFullName()) && !newName.equals("")){
+        if (!newName.equals(user.getFullName()) && !newName.equals("")) {
             hashMap.put("fullName", binding.etName.getText().toString());
         }
-        if(!newAbout.equals(user.getAbout()) && !newAbout.equals("")){
+        if (!newAbout.equals(user.getAbout()) && !newAbout.equals("")) {
             hashMap.put("about", binding.etAboutMe.getText().toString());
         }
 //        hashMap.put("skills", binding.etAboutMe.getText().toString()); // arraylist
-        if(hashMap.size() == 0){
+        if (hashMap.size() == 0) {
             Toast.makeText(this, "No changes were made", Toast.LENGTH_SHORT).show();
             onBackPressed();
             return;
         }
         db.collection("users").document(currentUser.getUid()).update(hashMap).addOnSuccessListener(unused ->
-                        Toast.makeText(this, "User Information Updated", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "User Information Updated", Toast.LENGTH_SHORT).show()
         ).addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to update User Information!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to update User Information!", Toast.LENGTH_SHORT).show()
         ).addOnCompleteListener(task -> onBackPressed());
     }
 
@@ -131,10 +104,10 @@ public class ProfileEditActivity extends AppCompatActivity {
         db.collection("users").document(currentUser.getUid()).get().addOnCompleteListener(task -> {
             user = task.getResult().toObject(User.class);
             binding.etName.setHint(user.getFullName());
-            if(user.getAbout() != ""){
+            if (user.getAbout() != "") {
                 binding.etAboutMe.setHint(user.getAbout());
             }
-            if(user.getSkills().size() > 0){
+            if (user.getSkills().size() > 0) {
 //                binding.
             }
         });
@@ -150,13 +123,13 @@ public class ProfileEditActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==getPicRC && resultCode==RESULT_OK && data!=null){
+        if (requestCode == getPicRC && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
             profilePicture.setImageURI(imageUri);
         }
     }
 
-    private void uploadPicture(){
+    private void uploadPicture() {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setTitle("Uploading...");
         pd.show();
@@ -171,7 +144,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             pd.dismiss();
 //            Toast.makeText(this, "Error ", Toast.LENGTH_SHORT).show();
         }).addOnProgressListener(snapshot -> {
-            double progress = 100.0 * ((double)snapshot.getBytesTransferred()/snapshot.getTotalByteCount());
+            double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
             pd.setMessage("Progress: " + progress + "%");
         });
     }

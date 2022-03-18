@@ -4,18 +4,17 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.R;
 import com.example.flashgig.activities.JobAdderActivity;
@@ -30,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.ItemClickListener{
+public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.ItemClickListener {
 
     private FirebaseFirestore db;
     private ArrayList<Job> jobList = new ArrayList<>();
@@ -45,13 +44,13 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
     }
 
 
-    private void eventChangeListener(){
+    private void eventChangeListener() {
         db.collection("jobs").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
-            if(error != null){
+            if (error != null) {
                 Log.d("error", "Firebase error");
             }
-            for(DocumentChange dc : value.getDocumentChanges()){
-                if(dc.getType() == DocumentChange.Type.ADDED){
+            for (DocumentChange dc : value.getDocumentChanges()) {
+                if (dc.getType() == DocumentChange.Type.ADDED) {
                     jobList.add(dc.getDocument().toObject(Job.class));
                 }
                 adapter.notifyDataSetChanged();
@@ -97,11 +96,11 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
         return binding.getRoot();
     }
 
-    private String getTodaysDate(){
+    private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
-        month =  month + 1;
+        month = month + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
         return makeDateString(day, month, year);
     }
@@ -123,39 +122,45 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
         return new DatePickerDialog(getContext(), style, dateSetListener, year, month, day);
     }
 
-    private String makeDateString(int day, int month, int year){
+    private String makeDateString(int day, int month, int year) {
         return getMonthFormat(month) + " " + day + " " + year;
     }
 
-    private String getMonthFormat(int month){
-        switch (month){
-            case 1: return "JAN";
-            case 2: return "FEB";
-            case 3: return "MAR";
-            case 4: return "APR";
-            case 5: return "MAY";
-            case 6: return "JUN";
-            case 7: return "JUL";
-            case 8: return "AUG";
-            case 9: return "SEP";
-            case 10: return "OCT";
-            case 11: return "NOV";
-            default: return "DEC";
+    private String getMonthFormat(int month) {
+        switch (month) {
+            case 1:
+                return "JAN";
+            case 2:
+                return "FEB";
+            case 3:
+                return "MAR";
+            case 4:
+                return "APR";
+            case 5:
+                return "MAY";
+            case 6:
+                return "JUN";
+            case 7:
+                return "JUL";
+            case 8:
+                return "AUG";
+            case 9:
+                return "SEP";
+            case 10:
+                return "OCT";
+            case 11:
+                return "NOV";
+            default:
+                return "DEC";
         }
     }
 
     @Override
-    public void onItemClick(String jobId) {
-//        Fragment fragment = DetailFragment.newInstance(job.getTitle());
-        Fragment fragment = new DetailFragment();
-        Bundle args = new Bundle();
-        args.putString("jobId", jobId);
-        fragment.setArguments(args);
-
+    public void onItemClick(String JID) {
+        Fragment fragment = DetailFragment.newInstance(JID);
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     }
 }

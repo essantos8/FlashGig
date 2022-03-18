@@ -1,13 +1,12 @@
 package com.example.flashgig.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.ActivityLoginBinding;
@@ -17,17 +16,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mifmif.common.regex.Main;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -65,16 +61,17 @@ public class LoginActivity extends AppCompatActivity {
             loginUser();
         });
 
-        binding.btnLoginGoogle.setOnClickListener(view ->{
+        binding.btnLoginGoogle.setOnClickListener(view -> {
             loginGoogle();
         });
 
     }
+
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
             finish();
             startActivity(new Intent(this, MainActivity.class));
@@ -82,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
@@ -94,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == googleRC) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             Exception e = task.getException();
-            if(task.isSuccessful()){
+            if (task.isSuccessful()) {
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     GoogleSignInAccount account = task.getResult(ApiException.class);
@@ -106,8 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                     // Google Sign In failed, update UI appropriately
                     Log.w("Google Sign In", "Google sign in failed", ex);
                 }
-            }
-            else{
+            } else {
                 Log.w("Google Sign In", e.toString());
             }
 
@@ -119,34 +115,31 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, googleRC);
     }
 
-    private void loginUser(){
+    private void loginUser() {
         String email = tietemail.getText().toString(),
                 password = tietpassword.getText().toString();
 
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             tilemail.setError("Email is required!");
             //editTextEmail.requestFocus();
             return;
-        }
-        else{
+        } else {
             tilemail.setError(null);
         }
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             tilpassword.setError("Password is required!");
             //editTextPassword.requestFocus();
             return;
-        }
-        else{
+        } else {
             tilemail.setError(null);
         }
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
+            if (task.isSuccessful()) {
                 Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
-            }
-            else{
+            } else {
                 Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -162,18 +155,16 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         // Check if account is in database
                         db.collection("users").whereEqualTo("email", account.getEmail()).get().addOnCompleteListener(task1 -> {
-                            if(task1.isSuccessful()){
-                                if(task1.getResult().size() > 0){
+                            if (task1.isSuccessful()) {
+                                if (task1.getResult().size() > 0) {
                                     Log.d("Google Sign In", "Existing account");
-                                }
-                                else {
+                                } else {
                                     Log.d("Google Sign In", "New account, adding to Database");
                                     User userData = new User(account.getDisplayName(), account.getEmail(), "", mAuth.getCurrentUser().getUid());
 
                                     db.collection("users").document(mAuth.getCurrentUser().getUid()).set(userData);
                                 }
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(this, "Error accessing database!", Toast.LENGTH_SHORT).show();
                             }
                         });

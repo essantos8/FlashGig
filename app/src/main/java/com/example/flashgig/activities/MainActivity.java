@@ -1,31 +1,22 @@
 package com.example.flashgig.activities;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.SearchView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.SearchView;
-import android.widget.Toast;
-
-import com.example.flashgig.databinding.ActivityMainBinding;
 import com.example.flashgig.R;
-import com.example.flashgig.databinding.FragmentProfileBinding;
+import com.example.flashgig.databinding.ActivityMainBinding;
 import com.example.flashgig.fragments.DetailFragment;
 import com.example.flashgig.fragments.HomeFragment;
 import com.example.flashgig.fragments.MessagesFragment;
 import com.example.flashgig.fragments.MyJobsFragment;
 import com.example.flashgig.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,50 +46,49 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.home:
-                    if(!curFragmentTag.equals("home")) {
+                    if (!curFragmentTag.equals("home")) {
                         replaceFragment(new HomeFragment(), "home", "LtoR");
                     }
                     break;
                 case R.id.messages:
-                    if(!curFragmentTag.equals("messages")) {
-                        if(!curFragmentTag.equals("home")){
+                    if (!curFragmentTag.equals("messages")) {
+                        if (!curFragmentTag.equals("home")) {
                             replaceFragment(new MessagesFragment(), "messages", "LtoR");
-                        }
-                        else{
+                        } else {
                             replaceFragment(new MessagesFragment(), "messages", "RtoL");
                         }
                     }
                     break;
                 case R.id.myJobs:
-                    if(!curFragmentTag.equals("myJobs")) {
-                        if(!curFragmentTag.equals("profile")){
+                    if (!curFragmentTag.equals("myJobs")) {
+                        if (!curFragmentTag.equals("profile")) {
                             replaceFragment(new MyJobsFragment(), "myJobs", "RtoL");
-                        }
-                        else{
+                        } else {
                             replaceFragment(new MyJobsFragment(), "myJobs", "LtoR");
                         }
                     }
                     break;
                 case R.id.profile:
-                    if(!curFragmentTag.equals("profile")) {
+                    if (!curFragmentTag.equals("profile")) {
                         replaceFragment(new ProfileFragment(), "profile", "RtoL");
                     }
                     break;
             }
-            return true;});
+            return true;
+        });
     }
 
     @Override
-    public void onBackPressed () {
+    public void onBackPressed() {
         Fragment curFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
-        if(curFragment instanceof DetailFragment){
+        if (curFragment instanceof DetailFragment) {
             super.onBackPressed();
             return;
         }
 
         SearchView searchBar = findViewById(R.id.searchviewHome);
-        if(searchBar != null){
-            if(!searchBar.isIconified()){
+        if (searchBar != null) {
+            if (!searchBar.isIconified()) {
                 searchBar.setIconified(true);
                 searchBar.onActionViewCollapsed();
                 return;
@@ -107,10 +97,10 @@ public class MainActivity extends AppCompatActivity {
         this.moveTaskToBack(true);
     }
 
-    private void replaceFragment(Fragment fragment, String tag, String animDirection){
+    private void replaceFragment(Fragment fragment, String tag, String animDirection) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if(animDirection.equals("LtoR")){
+        if (animDirection.equals("LtoR")) {
             fragmentTransaction
                     .setCustomAnimations(R.anim.fade_in, //enter
                             R.anim.slide_out_right, //exit
@@ -120,8 +110,7 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.frameLayout, fragment, tag)
                     .addToBackStack(null)
                     .commit();
-        }
-        else{
+        } else {
             fragmentTransaction
                     .setCustomAnimations(R.anim.fade_in, //enter
                             R.anim.slide_out_left, //exit

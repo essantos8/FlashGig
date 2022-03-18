@@ -1,8 +1,5 @@
 package com.example.flashgig.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -15,18 +12,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.ActivityJobAdderBinding;
 import com.example.flashgig.models.Job;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -94,8 +90,8 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
         ArrayList<String> categories = new ArrayList<>();
         for (int i = 0; i < binding.chipGroupJobCateg.getChildCount(); i++) {
             Chip chip = (Chip) binding.chipGroupJobCateg.getChildAt(i);
-            if(chip.isChecked()){
-                switch (i){
+            if (chip.isChecked()) {
+                switch (i) {
                     case 0:
                         categories.add("Carpentry");
                         break;
@@ -122,17 +118,17 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
         }
 
 
-        if(title.isEmpty()){
+        if (title.isEmpty()) {
             tietTitle.setError("Job Title is required!");
             return;
         }
-        if(description.isEmpty()){
+        if (description.isEmpty()) {
             tietDescription.setError("Description is required!");
             return;
         }
 
         DocumentReference doc = db.collection("jobs").document();
-        Job job = new Job(title, description, mAuth.getCurrentUser().getEmail(), dateButton.getText().toString(), categories, spinnerWorkers.getSelectedItemPosition()+1, spinnerLocation.getSelectedItem().toString(), etMin.getText().toString()+etMax.getText().toString(), doc.getId());
+        Job job = new Job(title, description, mAuth.getCurrentUser().getEmail(), dateButton.getText().toString(), categories, spinnerWorkers.getSelectedItemPosition() + 1, spinnerLocation.getSelectedItem().toString(), etMin.getText().toString() + etMax.getText().toString(), doc.getId());
         doc.set(job);
 
         HashMap<String, Object> timestamp = new HashMap<String, Object>();
@@ -142,11 +138,11 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
         finish();
     }
 
-    private String getTodaysDate(){
+    private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
-        month =  month + 1;
+        month = month + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
         return makeDateString(day, month, year);
     }
@@ -172,40 +168,40 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
     }
 
-    private String makeDateString(int day, int month, int year){
+    private String makeDateString(int day, int month, int year) {
         return getMonthFormat(month) + " " + day + " " + year;
     }
 
-    private String getMonthFormat(int month){
-        if(month == 1)
+    private String getMonthFormat(int month) {
+        if (month == 1)
             return "JAN";
-        if(month == 2)
+        if (month == 2)
             return "FEB";
-        if(month == 3)
+        if (month == 3)
             return "MAR";
-        if(month == 4)
+        if (month == 4)
             return "APR";
-        if(month == 5)
+        if (month == 5)
             return "MAY";
-        if(month == 6)
+        if (month == 6)
             return "JUN";
-        if(month == 7)
+        if (month == 7)
             return "JUL";
-        if(month == 8)
+        if (month == 8)
             return "AUG";
-        if(month == 9)
+        if (month == 9)
             return "SEP";
-        if(month == 10)
+        if (month == 10)
             return "OCT";
-        if(month == 11)
+        if (month == 11)
             return "NOV";
-        if(month == 12)
+        if (month == 12)
             return "DEC";
 
         return "JAN";
     }
 
-    public void openDatePicker(View view){
+    public void openDatePicker(View view) {
         datePickerDialog.show();
     }
 

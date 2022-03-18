@@ -12,7 +12,8 @@ public class Job {
 
     public ArrayList<String> categories, workers;
 
-    public Job(){}
+    public Job() {
+    }
 
     public Job(String title, String description, String client, String date, ArrayList<String> categories, String jobId) {
 
@@ -22,7 +23,7 @@ public class Job {
         // placeholder location
         Faker faker = new Faker();
 //        this.location = new Location(faker.address().country(), faker.address().city(), faker.address().streetName());
-        this.location = faker.address().country()+", "+faker.address().city()+", "+faker.address().streetName();
+        this.location = faker.address().country() + ", " + faker.address().city() + ", " + faker.address().streetName();
         this.date = date;
 
         this.workers = new ArrayList<>();
@@ -30,6 +31,7 @@ public class Job {
         this.categories = categories;
         this.jobId = jobId;
     }
+
     public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, String jobId) {
 
         this.title = title;
@@ -46,7 +48,7 @@ public class Job {
     }
 
 
-        public void setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -67,7 +69,7 @@ public class Job {
     }
 
     public String getDescription() {
-        if(description == null){
+        if (description == null) {
             description = "No description given.";
         }
         return description;

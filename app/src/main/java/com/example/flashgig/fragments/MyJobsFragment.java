@@ -14,7 +14,7 @@ public class MyJobsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
     }
 
     @Override

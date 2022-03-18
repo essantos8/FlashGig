@@ -1,10 +1,10 @@
 package com.example.flashgig.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flashgig.databinding.ActivityUserVerificationBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -55,7 +55,7 @@ public class UserVerificationActivity extends AppCompatActivity {
         binding.btnSubmit.setOnClickListener(view -> {
             String code = binding.tietCode.getText().toString();
             Toast.makeText(this, code, Toast.LENGTH_SHORT).show();
-            if(credential == null){
+            if (credential == null) {
                 credential = PhoneAuthProvider.getCredential(verificationId, code);
             }
             signInWithPhoneAuthCredential(credential);
@@ -64,7 +64,7 @@ public class UserVerificationActivity extends AppCompatActivity {
 
     }
 
-    public OnVerificationStateChangedCallbacks setCallbacks(){
+    public OnVerificationStateChangedCallbacks setCallbacks() {
         return new OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {

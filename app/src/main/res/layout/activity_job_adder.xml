@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".activities.JobAdderActivityV2">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activities.JobAdderActivityV2">
 
         <TextView
             android:id="@+id/textView_screenTitle"
@@ -59,60 +58,60 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout_jobTitle" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_jobTitle"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="32dp"
-        android:hint="Enter job title"
-        app:helperText="Required*"
-        app:counterEnabled="true"
-        app:counterMaxLength="30"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_jobTitle">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietJobTitle"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout_jobTitle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#E2E4E9"
-            android:capitalize="sentences"
-            android:inputType="textShortMessage"
-            android:textSize="14dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="32dp"
+            android:hint="Enter job title"
+            app:helperText="Required*"
+            app:counterEnabled="true"
+            app:counterMaxLength="30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_jobTitle">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_jobDesc"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="32dp"
-        android:hint="Explain job details"
-        app:counterEnabled="true"
-        app:counterMaxLength="1000"
-        app:helperText="Required*"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_jobDesc">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietJobTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E2E4E9"
+                android:capitalize="sentences"
+                android:inputType="textShortMessage"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietJobDesc"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout_jobDesc"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#E2E4E9"
-            android:capitalize="characters"
-            android:inputType="textMultiLine"
-            android:singleLine="false"
-            android:textSize="14dp" />
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="32dp"
+            android:hint="Explain job details"
+            app:counterEnabled="true"
+            app:counterMaxLength="1000"
+            app:helperText="Required*"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_jobDesc">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietJobDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E2E4E9"
+                android:capitalize="characters"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:textSize="14dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/textView_jobCateg"

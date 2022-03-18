@@ -5,7 +5,8 @@ package com.example.flashgig.data;
  */
 public class Result<T> {
     // hide the private constructor to limit subclass types (Success, Error)
-    private Result() {}
+    private Result() {
+    }
 
     // Success sub-class
     public final static class Success<T> extends Result {

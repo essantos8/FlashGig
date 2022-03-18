@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.flashgig.models.Job;
 import com.example.flashgig.R;
+import com.example.flashgig.models.Job;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     ArrayList<Job> jobArrayList;
     ItemClickListener clickListener;
 
-    public JobRecyclerViewAdapter(Context ctx, ArrayList<Job> jobArrayList, ItemClickListener clickListener){
+    public JobRecyclerViewAdapter(Context ctx, ArrayList<Job> jobArrayList, ItemClickListener clickListener) {
         this.ctx = ctx;
         this.jobArrayList = jobArrayList;
         this.clickListener = clickListener;
@@ -90,10 +90,9 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     }
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         // grabbing the views from the row layout file
         // similar with oncreate
-
         TextView textViewTitle, textViewDescription, textViewDate, textViewClient, textViewLocation, textViewWorkers, textViewHide;
         Chip chipCarpentry, chipPlumbing, chipElectronics, chipElectrical, chipPersonalShopping, chipVirtualAssistant, chipOther;
         CardView jobCard;
