@@ -77,7 +77,6 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         holder.textViewDate.setText(curJob.getDate());
         holder.textViewClient.setText(curJob.getClient());
         holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()));
-//        String loc = jobArrayList.get(position).getLocation().getCity() + ", " + jobArrayList.get(position).getLocation().getBaranggay();
         String loc = jobArrayList.get(position).getLocation();
         holder.textViewLocation.setText(loc);
 
