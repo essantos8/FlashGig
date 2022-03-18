@@ -128,7 +128,7 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
         }
 
         DocumentReference doc = db.collection("jobs").document();
-        Job job = new Job(title, description, mAuth.getCurrentUser().getEmail(), dateButton.getText().toString(), categories, spinnerWorkers.getSelectedItemPosition() + 1, spinnerLocation.getSelectedItem().toString(), etMin.getText().toString() + etMax.getText().toString(), doc.getId());
+        Job job = new Job(title, description, mAuth.getCurrentUser().getEmail(), dateButton.getText().toString(), categories, spinnerWorkers.getSelectedItemPosition() + 1, spinnerLocation.getSelectedItem().toString(), etMin.getText().toString() + "-" + etMax.getText().toString(), doc.getId());
         doc.set(job);
 
         HashMap<String, Object> timestamp = new HashMap<String, Object>();

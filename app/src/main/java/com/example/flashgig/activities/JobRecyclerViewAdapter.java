@@ -79,6 +79,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()));
         String loc = jobArrayList.get(position).getLocation();
         holder.textViewLocation.setText(loc);
+        holder.textViewBudget.setText(curJob.getBudget());
 
         holder.jobCard.setOnClickListener(view -> clickListener.onItemClick(curJob.jobId));
     }
@@ -93,7 +94,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // grabbing the views from the row layout file
         // similar with oncreate
-        TextView textViewTitle, textViewDescription, textViewDate, textViewClient, textViewLocation, textViewWorkers, textViewHide;
+        TextView textViewTitle, textViewDescription, textViewDate, textViewBudget, textViewClient, textViewLocation, textViewWorkers, textViewHide;
         Chip chipCarpentry, chipPlumbing, chipElectronics, chipElectrical, chipPersonalShopping, chipVirtualAssistant, chipOther;
         CardView jobCard;
         Button btnAccept;
@@ -107,6 +108,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
             textViewClient = itemView.findViewById(R.id.textJobClient);
             textViewLocation = itemView.findViewById(R.id.textJobLocation);
             textViewWorkers = itemView.findViewById(R.id.textJobWorkers);
+            textViewBudget = itemView.findViewById(R.id.textJobBudget);
             chipCarpentry = itemView.findViewById(R.id.chipCarpentry);
             chipPlumbing = itemView.findViewById(R.id.chipPlumbing);
             chipElectronics = itemView.findViewById(R.id.chipElectronics);

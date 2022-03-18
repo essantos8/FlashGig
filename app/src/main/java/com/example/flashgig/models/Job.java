@@ -122,4 +122,12 @@ public class Job {
     public void setNumWorkers(Integer numWorkers) {
         this.numWorkers = numWorkers;
     }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
 }
