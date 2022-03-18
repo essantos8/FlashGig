@@ -5,24 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
+    android:tag="homer"
     android:background="@color/dashboard_blue">
-
-    <SearchView
-        android:id="@+id/searchviewHomeold"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:background="#FFFFFF"
-        android:clickable="false"
-        android:elevation="10dp"
-        android:visibility="gone"
-        app:circularflow_defaultRadius="20dp"
-        app:circularflow_radiusInDP="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </SearchView>
 
     <SearchView
         android:id="@+id/searchviewHome"
@@ -62,125 +46,42 @@
             android:layout_height="match_parent"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:background="#FFFFFF"
-            android:visibility="visible">
-
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/salmapromedium"
-                android:text="Year"
-                android:textColor="@color/mid_grey"
-                android:textSize="14sp"
-                android:textStyle="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/spinner7"
-                app:layout_constraintTop_toBottomOf="@+id/textView17"
-                app:layout_constraintVertical_bias="0.0" />
+            android:background="#FFFFFF">
 
             <Spinner
-                android:id="@+id/spinner8"
+                android:id="@+id/spinnerRegion"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
+                android:layout_marginStart="2dp"
+                android:backgroundTint="@color/dashboard_blue"
                 android:entries="@array/location_array"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView20"
-                app:layout_constraintTop_toTopOf="@+id/textView20" />
+                app:layout_constraintStart_toEndOf="@+id/textViewRegion"
+                app:layout_constraintTop_toTopOf="@+id/textViewRegion"
+                tools:visibility="gone" />
 
             <TextView
-                android:id="@+id/textView19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/salmapromedium"
-                android:text="Day"
-                android:textColor="@color/mid_grey"
-                android:textSize="14sp"
-                android:textStyle="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/spinner6"
-                app:layout_constraintTop_toBottomOf="@+id/textView17"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Spinner
-                android:id="@+id/spinner7"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
-                android:entries="@array/location_array"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView19"
-                app:layout_constraintTop_toTopOf="@+id/textView19" />
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/salmapromedium"
-                android:text="Month"
-                android:textColor="@color/mid_grey"
-                android:textSize="14sp"
-                android:textStyle="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView17"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Spinner
-                android:id="@+id/spinner6"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
-                android:entries="@array/location_array"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView18"
-                app:layout_constraintTop_toTopOf="@+id/textView18" />
-
-            <Spinner
-                android:id="@+id/spinner3"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
-                android:entries="@array/location_array"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView9"
-                app:layout_constraintTop_toTopOf="@+id/textView9" />
-
-            <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/textViewBaranggay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/salmapromedium"
+                android:maxWidth="100sp"
                 android:text="Baranggay"
                 android:textColor="@color/mid_grey"
                 android:textSize="14sp"
                 android:textStyle="normal"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/spinner"
+                app:layout_constraintStart_toEndOf="@+id/spinnerCity"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:visibility="gone" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroupCategories"
@@ -193,7 +94,6 @@
                 android:layout_marginBottom="8dp"
                 android:textAlignment="center"
                 android:visibility="visible"
-                app:checkedChip="@id/chipOther"
                 app:chipSpacingHorizontal="6dp"
                 app:chipSpacingVertical="6dp"
                 app:layout_constrainedHeight="true"
@@ -203,7 +103,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
                 app:layout_constraintVertical_bias="0.0"
-                app:selectionRequired="true">
+                app:selectionRequired="false"
+                app:singleSelection="false">
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipCarpentry"
@@ -454,15 +355,16 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                app:layout_constraintTop_toBottomOf="@+id/barrier"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/textViewRegion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -473,6 +375,38 @@
                 android:textColor="@color/mid_grey"
                 android:textSize="14sp"
                 android:textStyle="normal"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintVertical_bias="0.0"
+                tools:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/spinnerBaranggay"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:backgroundTint="@color/dashboard_blue"
+                android:entries="@array/location_array"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textViewBaranggay"
+                app:layout_constraintTop_toTopOf="@+id/textViewBaranggay"
+                tools:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/spinnerCity"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/dashboard_blue"
+                android:entries="@array/locationCity"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -481,51 +415,12 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
-                android:entries="@array/location_array"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView12"
-                app:layout_constraintTop_toTopOf="@+id/textView12" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="8dp"
-                android:fontFamily="@font/salmapromedium"
-                android:text="City"
-                android:textColor="@color/mid_grey"
-                android:textSize="14sp"
-                android:textStyle="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/spinner3"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
-                android:entries="@array/location_array"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView11"
-                app:layout_constraintTop_toTopOf="@+id/textView11" />
-
-            <Spinner
                 android:id="@+id/spinner4"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
+                android:layout_marginStart="2dp"
                 android:entries="@array/location_array"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
@@ -543,6 +438,7 @@
                 android:textColor="@color/mid_grey"
                 android:textSize="14sp"
                 android:textStyle="normal"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -561,6 +457,7 @@
                 android:textColor="@color/mid_grey"
                 android:textSize="14sp"
                 android:textStyle="normal"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -572,12 +469,21 @@
                 android:id="@+id/spinner5"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
+                android:layout_marginStart="2dp"
                 android:entries="@array/location_array"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textView16"
                 app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="spinnerCity"
+                tools:layout_editor_absoluteY="158dp" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -595,21 +501,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
-            <EditText
-                android:id="@+id/editTextTime"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnDatePicker"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-8dp"
-                android:layout_marginBottom="8dp"
-                android:ems="5"
-                android:hint="Time"
-                android:inputType="time"
+                android:layout_marginStart="-8dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/salmapromedium"
+                android:text="Jan 01 2022"
+                android:textColor="@color/mid_grey"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/spinner8"
-                app:layout_constraintTop_toTopOf="@+id/textView20" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView17"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -628,7 +534,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/floatingBtnAddJob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"

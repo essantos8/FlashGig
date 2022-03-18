@@ -10,4 +10,34 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="web_client_id">204986752191-177paeqqhdg2hl6jorrh3pfv01hslm9g.apps.googleusercontent.com</string>
+
+    <string-array name="numberOfWorkers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="locationCity">
+        <item>Select City</item>
+        <item>Caloocan City</item>
+        <item>Las Piñas City</item>
+        <item>Makati City</item>
+        <item>Malabon City</item>
+        <item>Mandaluyong City</item>
+        <item>Manila City</item>
+        <item>Marikina City</item>
+        <item>Muntinlupa City</item>
+        <item>Navotas City</item>
+        <item>Parañaque City</item>
+        <item>Pasay City</item>
+        <item>Pasig City</item>
+        <item>Pateros (Municipality)</item>
+        <item>Quezon City</item>
+        <item>San Juan</item>
+        <item>Taguig City</item>
+        <item>Valenzuela City</item>
+    </string-array>
 </resources>
