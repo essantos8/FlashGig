@@ -1,5 +1,6 @@
 package com.example.flashgig.fragments;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.flashgig.R;
 import com.example.flashgig.activities.JobAdderActivity;
+import com.example.flashgig.activities.ProfileEditActivity;
+import com.example.flashgig.activities.ReviewsActivity;
 import com.example.flashgig.activities.SplashActivity;
 import com.example.flashgig.databinding.FragmentProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,8 +87,18 @@ public class ProfileFragment extends Fragment {
             retrieveInfo();
         });
 
+        binding.btnEditProfile.setOnClickListener(view -> {
+            startActivity(new Intent(getContext(), ProfileEditActivity.class));
+
+        });
+
         binding.btnProfileAddJob.setOnClickListener(view -> {
             startActivity(new Intent(getContext(), JobAdderActivity.class));
+            
+        });
+
+        binding.btnReviews.setOnClickListener(view -> {
+            startActivity(new Intent(getContext(), ReviewsActivity.class));
         });
 
         binding.btnLogout.setOnClickListener(view ->{

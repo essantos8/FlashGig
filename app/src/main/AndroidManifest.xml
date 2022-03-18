@@ -23,6 +23,12 @@
             android:name=".activities.LoginActivity"
             android:exported="true" />
         <activity
+            android:name=".activities.ProfileEditActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.ReviewsActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.SplashActivity"
             android:exported="true">
             <intent-filter>

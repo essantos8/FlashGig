@@ -4,106 +4,461 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dashboard_blue">
+    android:background="@color/white">
 
-    <TextView
-        android:id="@+id/textName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:fontFamily="@font/salmapromedium"
-        android:text="Name"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textProfile" />
-
-    <TextView
-        android:id="@+id/textEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/salmapromedium"
-        android:text="Email"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textName" />
-
-    <TextView
-        android:id="@+id/textPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/salmapromedium"
-        android:text="Phone"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
-
-    <TextView
-        android:id="@+id/textProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/salmapromedium"
-        android:text="User Profile"
-        android:textColor="@color/white"
-        android:textSize="60sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067" />
+        app:layout_constraintTop_toBottomOf="@+id/chipGroupCategories" />
 
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/salmapromedium"
         android:text="Log out"
         android:textColor="@color/dashboard_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.948"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnProfileUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/salmapromedium"
-        android:text="Update Information"
+        android:text="UPDATE"
         android:textColor="@color/dashboard_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPhone"
-        app:layout_constraintVertical_bias="0.205"
+        app:layout_constraintTop_toTopOf="@+id/bluebox"
+        app:layout_constraintVertical_bias="0.972"
         app:rippleColor="@color/dashboard_blue" />
 
     <Button
         android:id="@+id/btnProfileAddJob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="664dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/salmapromedium"
         android:text="Add Job"
         android:textColor="@color/dashboard_blue"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.052"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnProfileUpdate"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toTopOf="@+id/bluebox"
         app:rippleColor="@color/dashboard_blue" />
+
+    <TextView
+        android:id="@+id/tvtitle1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/salmapromedium"
+        android:text="About Me"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bluebox" />
+
+    <TextView
+        android:id="@+id/tvdesc"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvtitle1" />
+
+    <TextView
+        android:id="@+id/tvtitle2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/salmapromedium"
+        android:text="Skills"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvdesc" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupCategories"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        app:checkedChip="@id/chipOther"
+        app:chipSpacingHorizontal="2dp"
+        app:chipSpacingVertical="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvtitle2"
+        app:selectionRequired="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipCarpentry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:checkable="false"
+            android:checked="false"
+            android:clickable="true"
+            android:minWidth="0dp"
+            android:text="Carpentry"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/dashboard_blue"
+            app:chipEndPadding="6dp"
+            app:chipMinHeight="16dp"
+            app:chipMinTouchTargetSize="0dp"
+            app:chipStartPadding="6dp"
+            app:chipStrokeColor="#00FFFFFF"
+            app:chipStrokeWidth="1dp"
+            app:closeIconEndPadding="0dp"
+            app:closeIconStartPadding="0dp"
+            app:textEndPadding="0dp"
+            app:textStartPadding="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipPlumbing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="false"
+            android:checked="false"
+            android:minWidth="0dp"
+            android:text="Plumbing"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/dashboard_blue"
+            app:chipEndPadding="6dp"
+            app:chipMinHeight="16dp"
+            app:chipMinTouchTargetSize="0dp"
+            app:chipStartPadding="6dp"
+            app:chipStrokeColor="#00FFFFFF"
+            app:chipStrokeWidth="1dp"
+            app:closeIconEndPadding="0dp"
+            app:closeIconStartPadding="0dp"
+            app:textEndPadding="0dp"
+            app:textStartPadding="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipElectrical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="false"
+            android:checked="false"
+            android:minWidth="0dp"
+            android:text="Electrical"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/dashboard_blue"
+            app:chipEndPadding="6dp"
+            app:chipMinHeight="16dp"
+            app:chipMinTouchTargetSize="0dp"
+            app:chipStartPadding="6dp"
+            app:chipStrokeColor="#00FFFFFF"
+            app:chipStrokeWidth="1dp"
+            app:closeIconEndPadding="0dp"
+            app:closeIconStartPadding="0dp"
+            app:textEndPadding="0dp"
+            app:textStartPadding="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipElectronics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="false"
+            android:checked="false"
+            android:minWidth="0dp"
+            android:text="Electronics"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/dashboard_blue"
+            app:chipEndPadding="6dp"
+            app:chipMinHeight="16dp"
+            app:chipMinTouchTargetSize="0dp"
+            app:chipStartPadding="6dp"
+            app:chipStrokeColor="#00FFFFFF"
+            app:chipStrokeWidth="1dp"
+            app:closeIconEndPadding="0dp"
+            app:closeIconStartPadding="0dp"
+            app:textEndPadding="0dp"
+            app:textStartPadding="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipPersonalShopping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="false"
+            android:checked="false"
+            android:minWidth="0dp"
+            android:text="Personal Shopping"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/dashboard_blue"
+            app:chipEndPadding="6dp"
+            app:chipMinHeight="16dp"
+            app:chipMinTouchTargetSize="0dp"
+            app:chipStartPadding="6dp"
+            app:chipStrokeColor="#00FFFFFF"
+            app:chipStrokeWidth="1dp"
+            app:closeIconEndPadding="0dp"
+            app:closeIconStartPadding="0dp"
+            app:textEndPadding="0dp"
+            app:textStartPadding="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipVirtualAssistant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="false"
+            android:checked="false"
+            android:minWidth="0dp"
+            android:text="Virtual Assistant"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/dashboard_blue"
+            app:chipEndPadding="6dp"
+            app:chipMinHeight="16dp"
+            app:chipMinTouchTargetSize="0dp"
+            app:chipStartPadding="6dp"
+            app:chipStrokeColor="#00FFFFFF"
+            app:chipStrokeWidth="1dp"
+            app:closeIconEndPadding="0dp"
+            app:closeIconStartPadding="0dp"
+            app:textEndPadding="0dp"
+            app:textStartPadding="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipOther"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="false"
+            android:checked="false"
+            android:minWidth="0dp"
+            android:text="Other"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:checkedIconEnabled="false"
+            app:chipBackgroundColor="@color/dashboard_blue"
+            app:chipEndPadding="6dp"
+            app:chipMinHeight="16dp"
+            app:chipMinTouchTargetSize="0dp"
+            app:chipStartPadding="6dp"
+            app:chipStrokeColor="#00FFFFFF"
+            app:chipStrokeWidth="1dp"
+            app:closeIconEndPadding="0dp"
+            app:closeIconStartPadding="0dp"
+            app:textEndPadding="0dp"
+            app:textStartPadding="0dp" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bluebox"
+        android:layout_width="0dp"
+        android:layout_height="320dp"
+        android:background="@color/dashboard_blue"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ProfilePic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/Circular"
+            app:shapeAppearanceOverlay="@style/Circular"
+            app:srcCompat="@drawable/default_profile" />
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapromedium"
+            android:text="Name"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ProfilePic" />
+
+        <TextView
+            android:id="@+id/textEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapromedium"
+            android:text="Email"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textName" />
+
+        <TextView
+            android:id="@+id/textPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapromedium"
+            android:text="Phone"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+
+        <ImageButton
+            android:id="@+id/btnEditProfile"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/dashboard_blue"
+            android:contentDescription="edit"
+            android:scaleType="fitCenter"
+            android:src="@drawable/edit_button"
+            android:tintMode="src_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btnOptions"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/dashboard_blue"
+            android:contentDescription="options"
+            android:scaleType="fitCenter"
+            android:tintMode="src_in"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/options_button"
+            app:tint="@color/white" />
+
+        <RatingBar
+            android:id="@+id/rbWorker"
+            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPhone" />
+
+        <RatingBar
+            android:id="@+id/rbClient"
+            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rbWorker" />
+
+        <ImageButton
+            android:id="@+id/btnReviews"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/dashboard_blue"
+            android:contentDescription="more reviews"
+            android:scaleType="center"
+            android:tintMode="src_atop"
+            app:layout_constraintBottom_toBottomOf="@+id/rbClient"
+            app:layout_constraintStart_toEndOf="@+id/rbWorker"
+            app:layout_constraintTop_toTopOf="@+id/rbWorker"
+            app:srcCompat="@drawable/searc_button"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvratinglabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/salmapromedium"
+            android:text="worker:"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/rbWorker"
+            app:layout_constraintEnd_toStartOf="@+id/rbWorker"
+            app:layout_constraintTop_toTopOf="@+id/rbWorker" />
+
+        <TextView
+            android:id="@+id/tvratinglabel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/salmapromedium"
+            android:text="client:"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/rbClient"
+            app:layout_constraintEnd_toStartOf="@+id/rbWorker"
+            app:layout_constraintTop_toTopOf="@+id/rbClient" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvdesc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
