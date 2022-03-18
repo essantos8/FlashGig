@@ -14,11 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.Toast;
 
 import com.example.flashgig.R;
 import com.example.flashgig.activities.JobAdderActivity;
@@ -98,21 +95,6 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
 
         // Inflate the layout for this fragment
         return binding.getRoot();
-    }
-
-    private void initLocations(FragmentHomeBinding binding) {
-
-//        ArrayList<String> baranggayList = new ArrayList<>();
-//        db.collection("locations").orderBy("baranggay", Query.Direction.ASCENDING).addSnapshotListener((value, error) ->{
-//            for(DocumentChange dc: value.getDocumentChanges()){
-//                if(dc.getType() == DocumentChange.Type.ADDED){
-//                    baranggayList.add(dc.getDocument().getString("baranggay"));
-////                    Toast.makeText(getContext(), dc.getDocument().getString("baranggay"), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, baranggayList);
-//            binding.spinnerBaranggay.setAdapter(spinnerArrayAdapter);
-//        });
     }
 
     private String getTodaysDate(){

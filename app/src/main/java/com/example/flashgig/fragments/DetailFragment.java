@@ -49,7 +49,7 @@ public class DetailFragment extends Fragment{
 
         db.collection("jobs").document(jobId).get().addOnCompleteListener(task -> {
             job = task.getResult().toObject(Job.class);
-            Toast.makeText(getContext(), "onFire", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "onFire", Toast.LENGTH_SHORT).show();
             setView(view);
         });
 

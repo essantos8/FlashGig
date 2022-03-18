@@ -1,6 +1,5 @@
 package com.example.flashgig.fragments;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,18 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
-import com.example.flashgig.R;
 import com.example.flashgig.activities.JobAdderActivity;
 import com.example.flashgig.activities.ProfileEditActivity;
 import com.example.flashgig.activities.ReviewsActivity;
 import com.example.flashgig.activities.SplashActivity;
 import com.example.flashgig.databinding.FragmentProfileBinding;
 import com.example.flashgig.models.User;
-import com.github.javafaker.Bool;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -94,8 +89,10 @@ public class ProfileFragment extends Fragment {
         binding.btnProfileUpdate.setOnClickListener(view -> {
             retrieveInfo(true);
         });
+
         binding.btnLogout.setOnClickListener(view ->{
             FirebaseAuth.getInstance().signOut();
+            db.clearPersistence();
             Toast.makeText(this.getContext(), "User logged out!", Toast.LENGTH_SHORT).show();
             getActivity().finish();
             startActivity(new Intent(getContext(), SplashActivity.class));
@@ -142,7 +139,7 @@ public class ProfileFragment extends Fragment {
                 QueryDocumentSnapshot user;
                 if(!task.getResult().iterator().hasNext()){
                     Toast.makeText(getContext(), "User not found in database!", Toast.LENGTH_SHORT).show();
-                    Log.d("TAG","user not in database");
+                    Log.d("Profile","user not in database");
                     return;
                 }
                 user = task.getResult().iterator().next();
@@ -153,7 +150,7 @@ public class ProfileFragment extends Fragment {
 
             }
             else{
-                Log.d("TAG","mission failed");
+                Log.d("Profile","Database error");
             }
         });
     }

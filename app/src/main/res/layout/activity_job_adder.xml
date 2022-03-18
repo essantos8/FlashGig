@@ -1,182 +1,387 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_grey"
-    tools:context=".activities.JobAdderActivity">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroupCategories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="48dp"
-        android:textAlignment="center"
-        app:checkedChip="@id/chipOther"
-        app:chipSpacingHorizontal="6dp"
-        app:chipSpacingVertical="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:selectionRequired="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".activities.JobAdderActivityV2">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipCarpentry"
+        <TextView
+            android:id="@+id/textView_screenTitle"
+            android:layout_width="411dp"
+            android:layout_height="84dp"
+            android:background="#006DFE"
+            android:fontFamily="@font/salmapromedium"
+            android:letterSpacing="0.08"
+            android:paddingStart="10dp"
+            android:paddingTop="20dp"
+            android:text="Create a Job Post"
+            android:textColor="#FFFFFF"
+            android:textSize="34dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_jobTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight=".2"
-            android:checkable="true"
-            android:checked="false"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="92dp"
+            android:letterSpacing="0.08"
+            android:text="Title"
+            android:textColor="#444444"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_jobDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:letterSpacing="0.08"
+            android:text="Description"
+            android:textColor="#444444"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.107"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_jobTitle" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_jobTitle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Enter job title"
+        app:helperText="Required*"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_jobTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tietJobTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E2E4E9"
+            android:capitalize="sentences"
+            android:inputType="textShortMessage"
+            android:textSize="14dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_jobDesc"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Explain job details"
+        app:counterEnabled="true"
+        app:counterMaxLength="1000"
+        app:helperText="Required*"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_jobDesc">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tietJobDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E2E4E9"
+            android:capitalize="characters"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textSize="14dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView_jobCateg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Job Category"
+            android:textColor="#444444"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.112"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_jobDesc" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup_jobCateg"
+            android:layout_width="343dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            app:checkedChip="@id/chip_other"
+            app:chipSpacingHorizontal="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.426"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_jobCateg"
+            app:selectionRequired="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_carpentry"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="false"
+                android:fontFamily="@font/salmapromedium"
+                android:text="Carpentry"
+                android:textSize="12dp"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/chip_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_plumbing"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="false"
+                android:fontFamily="@font/salmapromedium"
+                android:text="Plumbing"
+                android:textSize="12dp"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/chip_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_elctrical"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="false"
+                android:fontFamily="@font/salmapromedium"
+                android:text="Electrical"
+                android:textSize="12dp"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/chip_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_electronics"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="false"
+                android:fontFamily="@font/salmapromedium"
+                android:text="Electronics"
+                android:textSize="12dp"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/chip_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_pShopping"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="false"
+                android:fontFamily="@font/salmapromedium"
+                android:text="Personal Shopping"
+                android:textSize="12dp"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/chip_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_vAssistant"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="false"
+                android:fontFamily="@font/salmapromedium"
+                android:text="Virtual Assistant"
+                android:textSize="12dp"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/chip_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_other"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="true"
+                android:fontFamily="@font/salmapromedium"
+                android:text="Other"
+                android:textSize="12dp"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/chip_color" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/textView_numWorker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="Number of Workers"
+            android:textColor="#444444"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroup_jobCateg" />
+
+        <TextView
+            android:id="@+id/textView_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Location"
+            android:textColor="#444444"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.094"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_numWorker" />
+
+        <Spinner
+            android:id="@+id/spinner_noOfWorkers"
+            android:layout_width="80dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.37"
+            app:layout_constraintStart_toEndOf="@+id/textView_numWorker"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroup_jobCateg" />
+
+        <Spinner
+            android:id="@+id/spinner_location"
+            android:layout_width="220dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.19"
+            app:layout_constraintStart_toEndOf="@+id/textView_location"
+            app:layout_constraintTop_toBottomOf="@+id/textView_numWorker" />
+
+        <TextView
+            android:id="@+id/textView_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Budget"
+            android:textColor="#444444"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_location" />
+
+        <EditText
+            android:id="@+id/editText_minAmt"
+            android:layout_width="69dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="min"
+            android:inputType="number"
+            android:textColor="#444444"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.108"
+            app:layout_constraintStart_toEndOf="@+id/textView_budget"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_location" />
+
+        <EditText
+            android:id="@+id/editText_maxAmt"
+            android:layout_width="69dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="max"
+            android:inputType="number"
+            android:textColor="#444444"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toEndOf="@+id/textView_budget"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_location" />
+
+        <TextView
+            android:id="@+id/textView_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="-"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/editText_maxAmt"
+            app:layout_constraintStart_toEndOf="@+id/editText_minAmt"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_location" />
+
+        <TextView
+            android:id="@+id/textView_startDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="Start Date"
+            android:textColor="#444444"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_budget" />
+
+        <Button
+            android:id="@+id/button_postJob"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:clickable="true"
-            android:fontFamily="@font/salmapromedium"
-            android:text="Carpentry"
-            android:visibility="visible"
-            app:checkedIconEnabled="false"
-            app:chipBackgroundColor="@color/chip_color"
-            app:chipStrokeWidth="1dp" />
+            android:longClickable="false"
+            android:text="Post Job"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_startDate" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipPlumbing"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnDatePicker"
+            style="?android:spinnerStyle"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".2"
-            android:checkable="true"
-            android:checked="false"
-            android:fontFamily="@font/salmapromedium"
-            android:text="Plumbing"
-            app:checkedIconEnabled="false"
-            app:chipBackgroundColor="@color/chip_color"
-            app:chipStrokeWidth="1dp" />
+            android:onClick="openDatePicker"
+            android:text="Jan 01 2022"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/button_postJob"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toEndOf="@+id/textView_startDate"
+            app:layout_constraintTop_toBottomOf="@+id/editText_maxAmt" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipElectrical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".2"
-            android:checkable="true"
-            android:checked="false"
-            android:fontFamily="@font/salmapromedium"
-            android:text="Electrical"
-            app:checkedIconEnabled="false"
-            app:chipBackgroundColor="@color/chip_color"
-            app:chipStrokeWidth="1dp" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipElectronics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checkable="true"
-            android:checked="false"
-            android:fontFamily="@font/salmapromedium"
-            android:text="Electronics"
-            app:checkedIconEnabled="false"
-            app:chipBackgroundColor="@color/chip_color"
-            app:chipStrokeWidth="1dp" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipPersonalShopping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checkable="true"
-            android:checked="false"
-            android:fontFamily="@font/salmapromedium"
-            android:text="Personal Shopping"
-            app:checkedIconEnabled="false"
-            app:chipBackgroundColor="@color/chip_color"
-            app:chipStrokeWidth="1dp" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipVirtualAssistant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checkable="true"
-            android:checked="false"
-            android:fontFamily="@font/salmapromedium"
-            android:text="Virtual Assistant"
-            app:checkedIconEnabled="false"
-            app:chipBackgroundColor="@color/chip_color"
-            app:chipStrokeWidth="1dp" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipOther"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checkable="true"
-            android:checked="false"
-            android:fontFamily="@font/salmapromedium"
-            android:text="Other"
-            app:checkedIconEnabled="false"
-            app:chipBackgroundColor="@color/chip_color"
-            app:chipStrokeWidth="1dp" />
-
-    </com.google.android.material.chip.ChipGroup>
-
-    <Button
-        android:id="@+id/btnAddJob"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/dashboard_blue"
-        android:fontFamily="@font/salmapromedium"
-        android:text="Add Job"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroupCategories" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="#000000"
-        android:fontFamily="@font/salmapromedium"
-        android:text="Categories"
-        android:textColor="@color/dashboard_blue"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.101"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tildescriptionjobadder" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiltitlejobadder"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiettitlejobadder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:hint="Title" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tildescriptionjobadder"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tiltitlejobadder">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietdescriptionjobadder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:hint="Description" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

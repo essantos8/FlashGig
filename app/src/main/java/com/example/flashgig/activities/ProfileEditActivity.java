@@ -105,14 +105,15 @@ public class ProfileEditActivity extends AppCompatActivity {
         }
 //        hashMap.put("skills", binding.etAboutMe.getText().toString()); // arraylist
         if(hashMap.size() == 0){
-            Snackbar.make(binding.getRoot(), "No changes were made", Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(this, "No changes were made", Toast.LENGTH_SHORT).show();
+            onBackPressed();
             return;
         }
         db.collection("users").document(currentUser.getUid()).update(hashMap).addOnSuccessListener(unused ->
-            Snackbar.make(binding.getRoot(), "User Information Updated!", Snackbar.LENGTH_SHORT).show()
+                        Toast.makeText(this, "User Information Updated", Toast.LENGTH_SHORT).show()
         ).addOnFailureListener(e ->
-            Snackbar.make(binding.getRoot(), "Failed to update User Information!", Snackbar.LENGTH_SHORT).show()
-        );
+                        Toast.makeText(this, "Failed to update User Information!", Toast.LENGTH_SHORT).show()
+        ).addOnCompleteListener(task -> onBackPressed());
     }
 
     private void fetchUserInfo() {

@@ -98,25 +98,10 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     GoogleSignInAccount account = task.getResult(ApiException.class);
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    // Check if account is in database
-                    db.collection("users").whereEqualTo("email", account.getEmail()).get().addOnCompleteListener(task1 -> {
-                        if(task1.isSuccessful()){
-                            if(task1.getResult().size() > 0){
-                                Log.d("Google Sign In", "Existing account");
-                            }
-                            else {
-                                Log.d("Google Sign In", "New account, adding to Database");
-                                User userData = new User(account.getDisplayName(), account.getEmail(), "", account.getId());
-                                db.collection("users").document(account.getId()).set(userData);
-                            }
-                        }
-                        else{
-                            Toast.makeText(this, "Error accessing database!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    mAuth = FirebaseAuth.getInstance();
 
-                    firebaseAuthWithGoogle(account.getIdToken());
+
+                    firebaseAuthWithGoogle(account.getIdToken(), account);
                 } catch (ApiException ex) {
                     // Google Sign In failed, update UI appropriately
                     Log.w("Google Sign In", "Google sign in failed", ex);
@@ -167,13 +152,31 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void firebaseAuthWithGoogle(String idToken) {
+    private void firebaseAuthWithGoogle(String idToken, GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("Google Sign In", "signInWithCredential:success");
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        // Check if account is in database
+                        db.collection("users").whereEqualTo("email", account.getEmail()).get().addOnCompleteListener(task1 -> {
+                            if(task1.isSuccessful()){
+                                if(task1.getResult().size() > 0){
+                                    Log.d("Google Sign In", "Existing account");
+                                }
+                                else {
+                                    Log.d("Google Sign In", "New account, adding to Database");
+                                    User userData = new User(account.getDisplayName(), account.getEmail(), "", mAuth.getCurrentUser().getUid());
+
+                                    db.collection("users").document(mAuth.getCurrentUser().getUid()).set(userData);
+                                }
+                            }
+                            else{
+                                Toast.makeText(this, "Error accessing database!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         startActivity(new Intent(this, MainActivity.class));
                     } else {
                         // If sign in fails, display a message to the user.

@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 public class Job {
 
-    public String title, description, client, date, jobId;
-    public Location location;
+    public String title, description, client, date, jobId, location, budget;
+
+    public Integer numWorkers;
 
     public ArrayList<String> categories, workers;
 
@@ -20,7 +21,8 @@ public class Job {
 
         // placeholder location
         Faker faker = new Faker();
-        this.location = new Location(faker.address().country(), faker.address().city(), faker.address().streetName());
+//        this.location = new Location(faker.address().country(), faker.address().city(), faker.address().streetName());
+        this.location = faker.address().country()+", "+faker.address().city()+", "+faker.address().streetName();
         this.date = date;
 
         this.workers = new ArrayList<>();
@@ -28,8 +30,23 @@ public class Job {
         this.categories = categories;
         this.jobId = jobId;
     }
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, String jobId) {
 
-    public void setTitle(String title) {
+        this.title = title;
+        this.description = description;
+        this.client = client;
+        this.date = date;
+        this.categories = categories;
+        this.numWorkers = numWorkers;
+        this.location = location;
+        this.budget = budget;
+
+        this.workers = new ArrayList<>();
+        this.jobId = jobId;
+    }
+
+
+        public void setTitle(String title) {
         this.title = title;
     }
 
@@ -72,11 +89,11 @@ public class Job {
         this.client = client;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
@@ -94,5 +111,13 @@ public class Job {
 
     public void setWorkers(ArrayList<String> workers) {
         this.workers = workers;
+    }
+
+    public Integer getNumWorkers() {
+        return numWorkers;
+    }
+
+    public void setNumWorkers(Integer numWorkers) {
+        this.numWorkers = numWorkers;
     }
 }

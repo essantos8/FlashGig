@@ -16,7 +16,7 @@
             android:name=".activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.JobAdderActivityV2"
+            android:name=".activities.JobAdderActivity"
             android:exported="true" />
         <activity
             android:name=".activities.SignUpActivity"
