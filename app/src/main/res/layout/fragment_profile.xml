@@ -21,6 +21,7 @@
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/salmapromedium"
@@ -28,37 +29,42 @@
         android:textColor="@color/dashboard_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.948"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/btnProfileUpdate"
+        app:layout_constraintTop_toTopOf="@+id/btnProfileUpdate"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnProfileUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/salmapromedium"
         android:text="UPDATE"
         android:textColor="@color/dashboard_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bluebox"
-        app:layout_constraintVertical_bias="0.972"
+        app:layout_constraintVertical_bias="1.0"
         app:rippleColor="@color/dashboard_blue" />
 
     <Button
         android:id="@+id/btnProfileAddJob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="664dp"
+        android:layout_marginStart="16dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/salmapromedium"
         android:text="Add Job"
         android:textColor="@color/dashboard_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnProfileUpdate"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bluebox"
+        app:layout_constraintTop_toTopOf="@+id/btnProfileUpdate"
+        app:layout_constraintVertical_bias="0.0"
         app:rippleColor="@color/dashboard_blue" />
 
     <TextView
@@ -362,8 +368,8 @@
 
         <ImageButton
             android:id="@+id/btnEditProfile"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:background="@color/dashboard_blue"
@@ -377,8 +383,8 @@
 
         <ImageButton
             android:id="@+id/btnOptions"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@color/dashboard_blue"
