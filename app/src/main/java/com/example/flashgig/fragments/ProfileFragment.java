@@ -11,11 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
-import com.example.flashgig.activities.JobAdderActivity;
-import com.example.flashgig.activities.ProfileEditActivity;
+import com.example.flashgig.JobAdderFragment;
+import com.example.flashgig.R;
 import com.example.flashgig.activities.ReviewsActivity;
 import com.example.flashgig.activities.SplashActivity;
 import com.example.flashgig.databinding.FragmentProfileBinding;
@@ -71,13 +72,13 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.btnEditProfile.setOnClickListener(view -> {
-            startActivity(new Intent(getContext(), ProfileEditActivity.class));
-
+//            startActivity(new Intent(getContext(), ProfileEditActivity.class));
+            replaceFragment(new ProfileEditFragment(), "profileEdit");
         });
 
         binding.btnProfileAddJob.setOnClickListener(view -> {
-            startActivity(new Intent(getContext(), JobAdderActivity.class));
-
+//            startActivity(new Intent(getContext(), JobAdderActivity.class));
+            replaceFragment(new JobAdderFragment(), "jobAdder");
         });
 
         binding.btnReviews.setOnClickListener(view -> {
@@ -97,6 +98,12 @@ public class ProfileFragment extends Fragment {
         });
         // Inflate the layout for this fragment
         return binding.getRoot();
+    }
+    private void replaceFragment(Fragment newFragment, String tag){
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, newFragment, tag)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void retrieveInfo(Boolean refresh) {

@@ -87,9 +87,9 @@
             android:id="@+id/tietnamesignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:background="@color/white"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -105,10 +105,11 @@
             android:id="@+id/tietemailsignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:background="@color/white"
             android:hint="email"
-            android:singleLine="true" />
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -125,10 +126,11 @@
             android:id="@+id/tietpasswordsignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:background="@color/white"
             android:hint="password"
-            android:singleLine="true" />
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -145,10 +147,11 @@
             android:id="@+id/tietnumbersignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:background="@color/white"
             android:hint="number"
-            android:singleLine="true" />
+            android:inputType="phone"
+            android:singleLine="true"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

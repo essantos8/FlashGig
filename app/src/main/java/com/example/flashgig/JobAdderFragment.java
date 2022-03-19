@@ -1,9 +1,15 @@
-package com.example.flashgig.activities;
+package com.example.flashgig;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,10 +18,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.flashgig.R;
-import com.example.flashgig.databinding.ActivityJobAdderBinding;
+import com.example.flashgig.databinding.FragmentJobAdderBinding;
 import com.example.flashgig.models.Job;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputEditText;
@@ -28,11 +31,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class JobAdderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+public class JobAdderFragment extends Fragment{
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
-    private ActivityJobAdderBinding binding;
+    private FragmentJobAdderBinding binding;
 
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
@@ -42,26 +46,45 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
     private EditText etMin, etMax;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityJobAdderBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+    }
 
-
-        Spinner spinner_noOfWorkers = findViewById(R.id.spinner_noOfWorkers);
-        ArrayAdapter<CharSequence> adapter_noOfWorkers = ArrayAdapter.createFromResource(this, R.array.numberOfWorkers, android.R.layout.simple_spinner_item);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentJobAdderBinding.inflate(inflater, container, false);
+        Spinner spinner_noOfWorkers = binding.spinnerNoOfWorkers;
+        ArrayAdapter<CharSequence> adapter_noOfWorkers = ArrayAdapter.createFromResource(getActivity(), R.array.numberOfWorkers, android.R.layout.simple_spinner_item);
         adapter_noOfWorkers.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_noOfWorkers.setAdapter(adapter_noOfWorkers);
-        spinner_noOfWorkers.setOnItemSelectedListener(this);
+        spinner_noOfWorkers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String text = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
-        Spinner spinner_locationCity = findViewById(R.id.spinner_location);
-        ArrayAdapter<CharSequence> adapter_locationCity = ArrayAdapter.createFromResource(this, R.array.locationCity, android.R.layout.simple_spinner_item);
+        Spinner spinner_locationCity = binding.spinnerLocation;
+        ArrayAdapter<CharSequence> adapter_locationCity = ArrayAdapter.createFromResource(getActivity(), R.array.locationCity, android.R.layout.simple_spinner_item);
         adapter_locationCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_locationCity.setAdapter(adapter_locationCity);
-        spinner_locationCity.setOnItemSelectedListener(this);
+        spinner_locationCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String text = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
 
         initDatePicker();
@@ -75,13 +98,14 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
 
         etMin = binding.editTextMinAmt;
         etMax = binding.editTextMaxAmt;
-
         dateButton.setText(getTodaysDate());
-
+        dateButton.setOnClickListener(view -> {
+            datePickerDialog.show();
+        });
         binding.buttonPostJob.setOnClickListener(view -> {
             addJob();
         });
-
+        return binding.getRoot();
     }
 
     private void addJob() {
@@ -117,7 +141,6 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
             }
         }
 
-
         if (title.isEmpty()) {
             tietTitle.setError("Job Title is required!");
             return;
@@ -134,8 +157,9 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
         HashMap<String, Object> timestamp = new HashMap<String, Object>();
         timestamp.put("timestamp", FieldValue.serverTimestamp());
         doc.update(timestamp);
-        Toast.makeText(this, "Job Added to Database", Toast.LENGTH_SHORT).show();
-        finish();
+        Toast.makeText(getContext(), "Job Added to Database", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().popBackStackImmediate();
+//        finish();
     }
 
     private String getTodaysDate() {
@@ -165,7 +189,7 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
 
         int style = AlertDialog.THEME_HOLO_LIGHT;
 
-        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
+        datePickerDialog = new DatePickerDialog(getContext(), style, dateSetListener, year, month, day);
     }
 
     private String makeDateString(int day, int month, int year) {
@@ -199,21 +223,5 @@ public class JobAdderActivity extends AppCompatActivity implements AdapterView.O
             return "DEC";
 
         return "JAN";
-    }
-
-    public void openDatePicker(View view) {
-        datePickerDialog.show();
-    }
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String text = adapterView.getItemAtPosition(i).toString();
-        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 }

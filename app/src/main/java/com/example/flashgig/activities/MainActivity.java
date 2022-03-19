@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.flashgig.JobAdderFragment;
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.ActivityMainBinding;
 import com.example.flashgig.fragments.DetailFragment;
 import com.example.flashgig.fragments.HomeFragment;
 import com.example.flashgig.fragments.MessagesFragment;
 import com.example.flashgig.fragments.MyJobsFragment;
+import com.example.flashgig.fragments.ProfileEditFragment;
 import com.example.flashgig.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment curFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
-        if (curFragment instanceof DetailFragment) {
+        if (curFragment instanceof DetailFragment || curFragment instanceof JobAdderFragment || curFragment instanceof ProfileEditFragment) {
             super.onBackPressed();
             return;
         }

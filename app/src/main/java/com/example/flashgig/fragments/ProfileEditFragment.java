@@ -1,19 +1,27 @@
-package com.example.flashgig.activities;
+package com.example.flashgig.fragments;
+
+import static android.app.Activity.RESULT_OK;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
-import com.example.flashgig.databinding.ActivityProfileEditBinding;
+import com.example.flashgig.R;
+import com.example.flashgig.databinding.FragmentProfileEditBinding;
 import com.example.flashgig.models.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,32 +32,34 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
-public class ProfileEditActivity extends AppCompatActivity {
+public class ProfileEditFragment extends Fragment {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private final Integer getPicRC = 100;
 
-    private ActivityProfileEditBinding binding;
+    private FragmentProfileEditBinding binding;
     private ImageView profilePicture;
-    private Uri imageUri;
+    private Uri imageUri = null;
     private FirebaseFirestore db;
 
     private User user;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityProfileEditBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
-        mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentProfileEditBinding.inflate(inflater, container, false);
         profilePicture = binding.profilePic2;
 
         fetchUserInfo();
@@ -58,13 +68,12 @@ public class ProfileEditActivity extends AppCompatActivity {
             getPicture();
         });
 
-        binding.btnCancel.setOnClickListener(view -> onBackPressed());
+        binding.btnCancel.setOnClickListener(view -> getActivity().onBackPressed());
 
         binding.btnConfirm.setOnClickListener(view -> {
-            // Only upload to storage if new image is selected
-            if (imageUri != null) uploadPicture();
             pushUserInfo();
         });
+        return binding.getRoot();
     }
 
     private void pushUserInfo() {
@@ -78,15 +87,16 @@ public class ProfileEditActivity extends AppCompatActivity {
         }
 //        hashMap.put("skills", binding.etAboutMe.getText().toString()); // arraylist
         if (hashMap.size() == 0) {
-            Toast.makeText(this, "No changes were made", Toast.LENGTH_SHORT).show();
-            onBackPressed();
-            return;
+            Log.d("User info update", "No changes were made");
+            uploadPicture();
         }
-        db.collection("users").document(currentUser.getUid()).update(hashMap).addOnSuccessListener(unused ->
-                Toast.makeText(this, "User Information Updated", Toast.LENGTH_SHORT).show()
-        ).addOnFailureListener(e ->
-                Toast.makeText(this, "Failed to update User Information!", Toast.LENGTH_SHORT).show()
-        ).addOnCompleteListener(task -> onBackPressed());
+        else{
+            db.collection("users").document(currentUser.getUid()).update(hashMap).addOnSuccessListener(unused ->
+                    Snackbar.make(getActivity().findViewById(R.id.frameLayout), "User information updated!", Snackbar.LENGTH_SHORT).show()
+            ).addOnFailureListener(e ->
+                    Toast.makeText(getContext(), "Failed to update User Information!", Toast.LENGTH_SHORT).show()
+            ).addOnCompleteListener(task -> uploadPicture());
+        }
     }
 
     private void fetchUserInfo() {
@@ -121,7 +131,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == getPicRC && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
@@ -130,19 +140,23 @@ public class ProfileEditActivity extends AppCompatActivity {
     }
 
     private void uploadPicture() {
-        final ProgressDialog pd = new ProgressDialog(this);
+        final ProgressDialog pd = new ProgressDialog(getContext());
         pd.setTitle("Uploading...");
+        // Only upload to storage if new image is selected
+        if (imageUri == null) {
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+            return;
+        }
         pd.show();
-
         StorageReference imageRef = storageRef.child("media/images/profile_pictures/" + currentUser.getUid());
         imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
-//            Toast.makeText(this, "Image uploaded!", Toast.LENGTH_SHORT).show();
-            Snackbar.make(binding.getRoot(), "Image uploaded!", Snackbar.LENGTH_SHORT).show();
+            Log.d("Cloud Storage", "Image uploaded!");
             pd.dismiss();
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
         }).addOnFailureListener(e -> {
-            Snackbar.make(binding.getRoot(), "Error uploading image!", Snackbar.LENGTH_SHORT).show();
+            Log.d("Cloud Storage", "Error uploading image!");
             pd.dismiss();
-//            Toast.makeText(this, "Error ", Toast.LENGTH_SHORT).show();
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
         }).addOnProgressListener(snapshot -> {
             double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
             pd.setMessage("Progress: " + progress + "%");
