@@ -42,6 +42,7 @@ public class DetailFragment extends Fragment {
     DocumentSnapshot document;
     Task<QuerySnapshot> curJob;
     FragmentManager fm;
+    Job job;
 
     private TextView textJobTitle, textJobDate, textJobBudget, textJobLocation, textJobClient, textJobDescription;
 
@@ -69,50 +70,21 @@ public class DetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
+        curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
         curJob = db.collection("jobs").whereEqualTo("jobId",mParam1).get();
-        Log.d("nothing", "onCreate: " +curJob.getClass());
     }
 
-
-    public void jobFinder(){
-//        db.collection("jobs").whereEqualTo("jobId", mParam1)
-        curJob.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            document = task.getResult().getDocuments().get(0);
-//                            location = document.get("location.baranggay");
-////
-//
-//                            String barangay = document.get("location.baranggay").toString();
-
-
-                            Log.d("TAG", "Data obtained: " +document.get("location.baranggay"));
-
-                            textJobTitle.setText(document.getString("title"));
-//                            textJobLocation.setText((String) document.get("location.baranggay") +", " + document.get("location.city"));
-                            textJobLocation.setText(document.getString("location"));
-                            textJobDate.setText(document.getString("date"));
-                            textJobBudget.setText(document.getString("budget"));
-                            textJobClient.setText(document.getString("client"));
-                            textJobDescription.setText(document.getString("description"));
-
-                    }
-                }
-                });
-    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_detail, container, false);
+
 
         FragmentDetailBinding binding = FragmentDetailBinding.inflate(inflater, container, false);
-//        JobTitle.setText(document.get("title").toString());
 
         textJobTitle = binding.textJobTitle;
         textJobLocation = binding.textJobLocation;
@@ -121,25 +93,74 @@ public class DetailFragment extends Fragment {
         textJobDescription = binding.textJobDescription;
         textJobBudget = binding.textJobBudget;
 
-        jobFinder();
+        curJob.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    document = task.getResult().getDocuments().get(0);
+                    job = document.toObject(Job.class);
+                    textJobTitle.setText(job.getTitle());
+                    textJobLocation.setText(job.getLocation());
+                    textJobDate.setText(job.getDate());
+                    textJobClient.setText(job.getClient());
+                    textJobDescription.setText(job.getDescription());
+                    textJobBudget.setText(job.getBudget());
 
+                    for (String category : job.getCategories()){
+                        switch (category) {
+                            case "Carpentry":
+                                binding.chipCarpentry.setVisibility(View.VISIBLE);
+                                break;
+                            case "Plumbing":
+                                binding.chipPlumbing.setVisibility(View.VISIBLE);
+                                break;
+                            case "Electrical":
+                                binding.chipElectrical.setVisibility(View.VISIBLE);
+                                break;
+                            case "Electronics":
+                                binding.chipElectronics.setVisibility(View.VISIBLE);
+                                break;
+                            case "Personal Shopping":
+                            case "Shopping":
+                                binding.chipPersonalShopping.setVisibility(View.VISIBLE);
+                                break;
+                            case "Virtual Assistant":
+                            case "Assistant":
+                                binding.chipVirtualAssistant.setVisibility(View.VISIBLE);
+                                break;
+                            case "Other":
+                                binding.chipOther.setVisibility(View.VISIBLE);
+                                break;
+                        }
+                    }
+                    if(job.getBidders().contains(curUser)){
+                        binding.btnAcceptJob.setBackgroundColor(808080);
+                    }
+                }
+            }
+        });
 
         binding.backButton.setOnClickListener(view ->{
-
             fm = getActivity().getSupportFragmentManager();
             fm.popBackStackImmediate();
         });
 
         binding.btnAcceptJob.setOnClickListener(view ->{
+             if(job.getBidders().contains(curUser)){
+                 binding.btnAcceptJob.setBackgroundColor(808080);
+                 Toast.makeText(getActivity(),"Applied for job already!",Toast.LENGTH_SHORT).show();
+             } else {
+                 final Map<String, Object> addUsertoArrayMap = new HashMap<>();
+                 addUsertoArrayMap.put("bidders", FieldValue.arrayUnion(FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+                 curJob.addOnCompleteListener(task -> {
+                     if (task.isSuccessful()) {
+                         db.collection("jobs").document(document.getId()).update(addUsertoArrayMap);
+                         Toast.makeText(getActivity(),"Applied for job already!",Toast.LENGTH_SHORT).show();
+                         binding.btnAcceptJob.setBackgroundColor(808080);
+                     }
+                 });
+             }
 
-            final Map<String, Object> addUsertoArrayMap = new HashMap<>();
-            addUsertoArrayMap.put("workers", FieldValue.arrayUnion(FirebaseAuth.getInstance().getCurrentUser().getEmail()));
-            curJob.addOnCompleteListener(task -> {
-               if (task.isSuccessful()) {
-                   db.collection("jobs").document(document.getId()).update(addUsertoArrayMap);
-               }
-            });
-//            Log.d("user", "meron: "+ FirebaseAuth.getInstance().getCurrentUser());
 
         });
 

@@ -87,6 +87,7 @@
             android:id="@+id/tietnamesignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:background="@color/white"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -104,6 +105,7 @@
             android:id="@+id/tietemailsignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:background="@color/white"
             android:hint="email"
             android:singleLine="true" />
@@ -123,6 +125,7 @@
             android:id="@+id/tietpasswordsignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:background="@color/white"
             android:hint="password"
             android:singleLine="true" />
@@ -142,6 +145,7 @@
             android:id="@+id/tietnumbersignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:background="@color/white"
             android:hint="number"
             android:singleLine="true" />

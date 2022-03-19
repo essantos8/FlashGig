@@ -10,12 +10,12 @@ public class Job {
 
     public Integer numWorkers;
 
-    public ArrayList<String> categories, workers;
+    public ArrayList<String> categories, workers, bidders;
 
     public Job() {
     }
 
-    public Job(String title, String description, String client, String date, ArrayList<String> categories, String jobId) {
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, String jobId,  ArrayList<String> bidders) {
 
         this.title = title;
         this.description = description;
@@ -64,6 +64,10 @@ public class Job {
         this.categories = categories;
     }
 
+    public void setBidders(ArrayList<String> bidders) {
+        this.bidders = bidders;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -81,6 +85,10 @@ public class Job {
 
     public ArrayList<String> getCategories() {
         return categories;
+    }
+
+    public ArrayList<String> getBidders() {
+        return bidders;
     }
 
     public String getClient() {
