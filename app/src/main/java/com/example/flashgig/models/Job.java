@@ -1,5 +1,7 @@
 package com.example.flashgig.models;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 
 public class Job {
@@ -135,5 +137,13 @@ public class Job {
 
     public void setBudget(String budget) {
         this.budget = budget;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj != null && obj.getClass() == Job.class){
+            return ((Job) obj).getJobId().equals(this.getJobId());
+        }
+        return false;
     }
 }

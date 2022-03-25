@@ -18,6 +18,7 @@ import com.example.flashgig.databinding.FragmentCompletedJobsBinding;
 import com.example.flashgig.databinding.FragmentInProgressJobsBinding;
 import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -43,10 +44,19 @@ public class CompletedJobsFragment extends Fragment implements JobRecyclerViewAd
             if (error != null) {
                 Log.d("error", "Firebase error");
             }else{
-                for (DocumentSnapshot dc : value.getDocuments()) {
-                    jobList.add(dc.toObject(Job.class));
-                    adapter.notifyDataSetChanged();
+                for (DocumentChange dc : value.getDocumentChanges()) {
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        jobList.add(dc.getDocument().toObject(Job.class));
+                    }
+                    else if(dc.getType() == DocumentChange.Type.REMOVED){
+                        jobList.remove(dc.getDocument().toObject(Job.class));
+                    }
+                    else{
+                        jobList.add(dc.getDocument().toObject(Job.class));
+                        jobList.remove(dc.getDocument().toObject(Job.class));
+                    }
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }

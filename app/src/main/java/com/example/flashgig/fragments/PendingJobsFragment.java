@@ -15,6 +15,7 @@ import com.example.flashgig.activities.JobRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentPendingJobsBinding;
 import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -39,11 +40,21 @@ public class PendingJobsFragment extends Fragment implements JobRecyclerViewAdap
         db.collection("jobs").whereEqualTo("client",curUser).whereEqualTo("status","pending").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
             if (error != null) {
                 Log.d("error", "Firebase error");
-            }else{
-                for (DocumentSnapshot dc : value.getDocuments()) {
-                    jobList.add(dc.toObject(Job.class));
-                    adapter.notifyDataSetChanged();
+            }
+            else{
+                for (DocumentChange dc : value.getDocumentChanges()) {
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        jobList.add(dc.getDocument().toObject(Job.class));
+                    }
+                    else if(dc.getType() == DocumentChange.Type.REMOVED){
+                        jobList.remove(dc.getDocument().toObject(Job.class));
+                    }
+                    else{
+                        jobList.add(dc.getDocument().toObject(Job.class));
+                        jobList.remove(dc.getDocument().toObject(Job.class));
+                    }
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }

@@ -104,8 +104,7 @@ public class ProfileEditFragment extends Fragment {
         userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
             GlideApp.with(this)
                     .load(userRef)
-                    .signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
-//                    .transform(new CircleCrop())
+                    .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
                     .fitCenter()
                     .into(profilePicture);
         }).addOnFailureListener(e -> {

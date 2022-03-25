@@ -1,18 +1,26 @@
 package com.example.flashgig.fragments;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.JobAdderFragment;
@@ -40,6 +48,7 @@ public class ProfileFragment extends Fragment {
     private TextView textName, textEmail, textPhone;
     private ImageView profilePicture;
 
+    private ProgressBar progressBar;
     private User user;
 
     @Override
@@ -60,16 +69,14 @@ public class ProfileFragment extends Fragment {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
 
+        progressBar = binding.progressBar;
+
         textName = binding.textName;
         textEmail = binding.textEmail;
         textPhone = binding.textPhone;
         profilePicture = binding.ProfilePic;
 
         retrieveInfo(false);
-
-        binding.btnProfileUpdate.setOnClickListener(view -> {
-            retrieveInfo(false);
-        });
 
         binding.btnEditProfile.setOnClickListener(view -> {
 //            startActivity(new Intent(getContext(), ProfileEditActivity.class));
@@ -111,21 +118,17 @@ public class ProfileFragment extends Fragment {
         userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
 //            Snackbar.make(binding.getRoot(), "File exists!", Snackbar.LENGTH_SHORT).show();
             if (refresh) {
-                GlideApp.with(this)
-                        .load(userRef)
-                        .signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
-//                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                        .skipMemoryCache(true)
-                        .fitCenter()
-                        .into(profilePicture);
+                //
             } else {
                 GlideApp.with(this)
                         .load(userRef)
-//                .signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
+                        .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
                         .fitCenter()
                         .into(profilePicture);
             }
+            progressBar.setVisibility(View.GONE);
         }).addOnFailureListener(e -> {
+            Log.d("Profile", "retrieveInfo: "+e.toString());
 //            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
         });
         db.collection("users").document(currentUser.getUid()).get().addOnCompleteListener(task -> {
