@@ -8,21 +8,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
+import com.example.flashgig.JobAdderFragment;
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.ActivityMainBinding;
 import com.example.flashgig.fragments.DetailFragment;
 import com.example.flashgig.fragments.HomeFragment;
 import com.example.flashgig.fragments.MessagesFragment;
 import com.example.flashgig.fragments.MyJobsFragment;
+import com.example.flashgig.fragments.ProfileEditFragment;
 import com.example.flashgig.fragments.ProfileFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
-
-    String curUser;
-
-    BottomNavigationView bottomNavigationView;
 
     HomeFragment homeFragment = new HomeFragment();
     ProfileFragment profileFragment = new ProfileFragment();
@@ -33,10 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         replaceFragment(new HomeFragment(), "home", "LtoR");
+
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment curFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment curFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
-        if (curFragment instanceof DetailFragment) {
+        if (curFragment instanceof DetailFragment || curFragment instanceof JobAdderFragment || curFragment instanceof ProfileEditFragment) {
             super.onBackPressed();
             return;
         }

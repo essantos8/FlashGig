@@ -2,7 +2,6 @@ package com.example.flashgig.fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.R;
-import com.example.flashgig.activities.JobAdderActivity;
 import com.example.flashgig.activities.JobRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentHomeBinding;
 import com.example.flashgig.models.Job;
@@ -89,7 +87,8 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
         });
 
         binding.floatingBtnAddJob.setOnClickListener(view -> {
-            startActivity(new Intent(this.getContext(), JobAdderActivity.class));
+            // add job fragment here
+//            startActivity(new Intent(this.getContext(), JobAdderActivity.class));
         });
 
         // Inflate the layout for this fragment

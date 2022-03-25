@@ -1,12 +1,10 @@
 package com.example.flashgig.models;
 
-import com.github.javafaker.Faker;
-
 import java.util.ArrayList;
 
 public class Job {
 
-    public String title, description, client, date, jobId, location, budget;
+    public String title, description, client, date, jobId, location, budget, status;
 
     public Integer numWorkers;
 
@@ -14,26 +12,8 @@ public class Job {
 
     public Job() {
     }
-
-    public Job(String title, String description, String client, String date, ArrayList<String> categories, String jobId,  ArrayList<String> bidders) {
-
-        this.title = title;
-        this.description = description;
-
-        // placeholder location
-        Faker faker = new Faker();
-//        this.location = new Location(faker.address().country(), faker.address().city(), faker.address().streetName());
-        this.location = faker.address().country() + ", " + faker.address().city() + ", " + faker.address().streetName();
-        this.date = date;
-
-        this.workers = new ArrayList<>();
-        this.client = client;
-        this.categories = categories;
-        this.jobId = jobId;
-    }
-
+    // Constructor for new jobs
     public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, String jobId) {
-
         this.title = title;
         this.description = description;
         this.client = client;
@@ -42,11 +22,26 @@ public class Job {
         this.numWorkers = numWorkers;
         this.location = location;
         this.budget = budget;
-
+        this.bidders = new ArrayList<>();
         this.workers = new ArrayList<>();
         this.jobId = jobId;
+        this.status = "pending";
     }
-
+    //
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, ArrayList<String> workers, ArrayList<String> bidders, String jobId) {
+        this.title = title;
+        this.description = description;
+        this.client = client;
+        this.date = date;
+        this.categories = categories;
+        this.numWorkers = numWorkers;
+        this.location = location;
+        this.budget = budget;
+        this.bidders = bidders;
+        this.workers = workers;
+        this.jobId = jobId;
+        this.status = "pending";
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -67,6 +62,9 @@ public class Job {
     public void setBidders(ArrayList<String> bidders) {
         this.bidders = bidders;
     }
+
+    public void setStatus(String status) {this.status = status;}
+    public String getStatus() {return status;}
 
     public String getTitle() {
         return title;

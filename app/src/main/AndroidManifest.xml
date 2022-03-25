@@ -16,16 +16,10 @@
             android:name=".activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.JobAdderActivity"
-            android:exported="true" />
-        <activity
             android:name=".activities.SignUpActivity"
             android:exported="true" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activities.ProfileEditActivity"
             android:exported="true" />
         <activity
             android:name=".activities.ReviewsActivity"
