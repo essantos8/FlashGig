@@ -1,15 +1,12 @@
 package com.example.flashgig.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.ActivitySplashBinding;
@@ -39,7 +36,6 @@ public class SplashActivity extends AppCompatActivity {
             Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
         });
 
         btnSignup.setOnClickListener(view -> {
@@ -54,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Toast.makeText(this, "User already signed in!", Toast.LENGTH_SHORT).show();
             finish();
             startActivity(new Intent(this, MainActivity.class));
