@@ -2,17 +2,14 @@ package com.example.flashgig.fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.SearchableInfo;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -25,17 +22,14 @@ import com.example.flashgig.R;
 import com.example.flashgig.activities.JobRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentHomeBinding;
 import com.example.flashgig.models.Job;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.ItemClickListener {
@@ -62,25 +56,39 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
     }
 
     private void eventChangeListener() {
+//        final ProgressDialog pd = new ProgressDialog(getContext());
+//        pd.setTitle("Loading...");
+//        pd.show();
+        ProgressBar pb = binding.progressBarHome;
+        AtomicBoolean firstRun = new AtomicBoolean(true);
         db.collection("jobs").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
-            if (error != null) {
+            if (error != null || value.isEmpty()) {
                 Log.d("error", "Firebase error");
+                Toast.makeText(getContext(), "Database Error!", Toast.LENGTH_SHORT).show();
+                pb.setVisibility(View.GONE);
+                return;
             }
             for (DocumentChange dc : value.getDocumentChanges()) {
+                Job newJob = dc.getDocument().toObject(Job.class);
                 if(dc.getType() == DocumentChange.Type.ADDED){
-                    jobList.add(dc.getDocument().toObject(Job.class));
+                    if(firstRun.get()) jobList.add(newJob);
+                    else jobList.add(0, newJob);
                 }
                 else if(dc.getType() == DocumentChange.Type.REMOVED){
-                    jobList.remove(dc.getDocument().toObject(Job.class));
+                    jobList.remove(newJob);
                 }
+
                 else{
-                    jobList.add(dc.getDocument().toObject(Job.class));
-                    jobList.remove(dc.getDocument().toObject(Job.class));
+                    int oldIndex = jobList.indexOf(newJob);
+                    jobList.remove(newJob);
+                    jobList.add(oldIndex,newJob);
                 }
             }
+            firstRun.set(false);
             adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
             recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+            pb.setVisibility(View.GONE);
         });
     }
 
@@ -92,13 +100,10 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         FloatingActionButton fltBtnAddJob = binding.floatingBtnAddJob;
 
-        fltBtnAddJob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
-                fragment.replace(R.id.frameLayout, new JobAdderFragment());
-                fragment.commit();
-            }
+        fltBtnAddJob.setOnClickListener(view -> {
+            FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
+            fragment.replace(R.id.frameLayout, new JobAdderFragment());
+            fragment.commit();
         });
 
 

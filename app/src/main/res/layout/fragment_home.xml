@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:tag="homer"
-    android:background="@color/dashboard_blue">
+    android:background="@color/dashboard_blue"
+    android:tag="homer">
 
     <SearchView
         android:id="@+id/searchviewHome"
@@ -551,5 +551,18 @@
         app:maxImageSize="64dp"
         app:srcCompat="@drawable/ic_add_job"
         app:tint="@color/dashboard_blue" />
+
+    <ProgressBar
+        android:id="@+id/progressBarHome"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateBehavior="cycle"
+        android:indeterminateTint="@color/dashboard_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewJobs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recyclerViewJobs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

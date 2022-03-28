@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment curFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
-        if (curFragment instanceof DetailFragment || curFragment instanceof JobAdderFragment || curFragment instanceof ProfileEditFragment) {
+        if (curFragment instanceof DetailFragment || curFragment instanceof JobAdderFragment || curFragment instanceof ProfileEditFragment || curFragment instanceof JobAdderFragment) {
             super.onBackPressed();
             return;
         }
