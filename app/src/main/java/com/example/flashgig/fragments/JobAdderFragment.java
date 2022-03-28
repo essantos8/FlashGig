@@ -1,12 +1,19 @@
-package com.example.flashgig;
+package com.example.flashgig.fragments;
+
+import static android.app.Activity.RESULT_OK;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +22,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.flashgig.R;
 import com.example.flashgig.databinding.FragmentJobAdderBinding;
 import com.example.flashgig.models.Job;
 import com.google.android.material.chip.Chip;
@@ -26,10 +35,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.UUID;
 
 
 public class JobAdderFragment extends Fragment{
@@ -45,11 +58,15 @@ public class JobAdderFragment extends Fragment{
     private Spinner spinnerWorkers, spinnerLocation;
     private EditText etMin, etMax;
 
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
     }
 
     @Override
@@ -109,8 +126,8 @@ public class JobAdderFragment extends Fragment{
     }
 
     private void addJob() {
-        String title = tietTitle.getText().toString(),
-                description = tietDescription.getText().toString();
+        String title = tietTitle.getText().toString(), description = tietDescription.getText().toString();
+
         ArrayList<String> categories = new ArrayList<>();
         for (int i = 0; i < binding.chipGroupJobCateg.getChildCount(); i++) {
             Chip chip = (Chip) binding.chipGroupJobCateg.getChildAt(i);
@@ -150,8 +167,10 @@ public class JobAdderFragment extends Fragment{
             return;
         }
 
+        ArrayList<String> jobImages = new ArrayList<>();
+
         DocumentReference doc = db.collection("jobs").document();
-        Job job = new Job(title, description, mAuth.getCurrentUser().getEmail(), dateButton.getText().toString(), categories, spinnerWorkers.getSelectedItemPosition() + 1, spinnerLocation.getSelectedItem().toString(), etMin.getText().toString() + "-" + etMax.getText().toString(), doc.getId());
+        Job job = new Job(title, description, mAuth.getCurrentUser().getEmail(), dateButton.getText().toString(), categories, spinnerWorkers.getSelectedItemPosition() + 1, spinnerLocation.getSelectedItem().toString(), etMin.getText().toString() + "-" + etMax.getText().toString(), doc.getId(), jobImages);
         doc.set(job);
 
         HashMap<String, Object> timestamp = new HashMap<String, Object>();

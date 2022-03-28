@@ -27,6 +27,7 @@ import com.example.flashgig.databinding.FragmentHomeBinding;
 import com.example.flashgig.models.Job;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -89,6 +90,17 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
                              Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        FloatingActionButton fltBtnAddJob = binding.floatingBtnAddJob;
+
+        fltBtnAddJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
+                fragment.replace(R.id.frameLayout, new JobAdderFragment());
+                fragment.commit();
+            }
+        });
+
 
         recyclerView = binding.recyclerViewJobs;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -130,10 +142,10 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
             datePickerDialog.show();
         });
 
-        binding.floatingBtnAddJob.setOnClickListener(view -> {
+//        binding.floatingBtnAddJob.setOnClickListener(view -> {
             // add job fragment here
 //            startActivity(new Intent(this.getContext(), JobAdderActivity.class));
-        });
+//        });
 
         // Inflate the layout for this fragment
         return binding.getRoot();
