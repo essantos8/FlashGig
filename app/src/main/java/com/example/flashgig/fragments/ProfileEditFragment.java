@@ -111,19 +111,6 @@ public class ProfileEditFragment extends Fragment {
         }
     }
 
-    private ArrayList<String> getSkills() {
-        ArrayList<String> checkedChips = new ArrayList<>();
-        if(binding.chipCarpentry.isChecked()) checkedChips.add("Carpentry");
-        if(binding.chipPlumbing.isChecked()) checkedChips.add("Plumbing");
-        if(binding.chipElectrical.isChecked()) checkedChips.add("Electrical");
-        if(binding.chipElectronics.isChecked()) checkedChips.add("Electronics");
-        if(binding.chipPersonalShopping.isChecked()) checkedChips.add("Shopping");
-        if(binding.chipVirtualAssistant.isChecked()) checkedChips.add("Assistant");
-        if(binding.chipOther.isChecked()) checkedChips.add("Other");
-        return checkedChips;
-    }
-
-
     private void fetchUserInfo() {
         StorageReference userRef = storageRef.child("media/images/profile_pictures/" + currentUser.getUid());
         userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
@@ -142,9 +129,49 @@ public class ProfileEditFragment extends Fragment {
                 binding.etAboutMe.setHint(user.getAbout());
             }
             if (user.getSkills().size() > 0) {
-//                binding.
+                setSkills();
             }
         });
+    }
+
+    private ArrayList<String> getSkills() {
+        ArrayList<String> checkedChips = new ArrayList<>();
+        if(binding.chipCarpentry.isChecked()) checkedChips.add("Carpentry");
+        if(binding.chipPlumbing.isChecked()) checkedChips.add("Plumbing");
+        if(binding.chipElectrical.isChecked()) checkedChips.add("Electrical");
+        if(binding.chipElectronics.isChecked()) checkedChips.add("Electronics");
+        if(binding.chipPersonalShopping.isChecked()) checkedChips.add("Shopping");
+        if(binding.chipVirtualAssistant.isChecked()) checkedChips.add("Assistant");
+        if(binding.chipOther.isChecked()) checkedChips.add("Other");
+        return checkedChips;
+    }
+
+    private void setSkills() {
+        for(String skill: user.getSkills()){
+            switch(skill){
+                case "Carpentry":
+                    binding.chipCarpentry.setChecked(true);
+                    break;
+                case "Plumbing":
+                    binding.chipPlumbing.setChecked(true);
+                    break;
+                case "Electrical":
+                    binding.chipElectrical.setChecked(true);
+                    break;
+                case "Electronics":
+                    binding.chipElectronics.setChecked(true);
+                    break;
+                case "Shopping":
+                    binding.chipPersonalShopping.setChecked(true);
+                    break;
+                case "Assistant":
+                    binding.chipVirtualAssistant.setChecked(true);
+                    break;
+                case "Other":
+                    binding.chipOther.setChecked(true);
+                    break;
+            }
+        }
     }
 
     private void getPicture() {

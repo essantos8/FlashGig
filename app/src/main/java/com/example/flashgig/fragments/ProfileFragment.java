@@ -170,7 +170,6 @@ public class ProfileFragment extends Fragment {
                                 break;
                         }
                     }
-                    //                binding.
                 }
             }
             else{
