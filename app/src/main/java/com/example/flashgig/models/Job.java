@@ -2,6 +2,7 @@ package com.example.flashgig.models;
 
 import androidx.annotation.Nullable;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class Job {
@@ -10,12 +11,16 @@ public class Job {
 
     public Integer numWorkers;
 
-    public ArrayList<String> categories, workers, bidders;
+    public ArrayList<String> categories;
+    public ArrayList<String> workers;
+    public ArrayList<String> bidders;
+
+    public ArrayList<String> jobImages;
 
     public Job() {
     }
     // Constructor for new jobs
-    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, String jobId) {
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, String jobId, ArrayList<String> jobImages) {
         this.title = title;
         this.description = description;
         this.client = client;
@@ -26,11 +31,12 @@ public class Job {
         this.budget = budget;
         this.bidders = new ArrayList<>();
         this.workers = new ArrayList<>();
+        this.jobImages = new ArrayList<>();
         this.jobId = jobId;
         this.status = "pending";
     }
     //
-    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, ArrayList<String> workers, ArrayList<String> bidders, String jobId) {
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, ArrayList<String> workers, ArrayList<String> bidders, String jobId, ArrayList<String> jobImages) {
         this.title = title;
         this.description = description;
         this.client = client;
@@ -41,6 +47,7 @@ public class Job {
         this.budget = budget;
         this.bidders = bidders;
         this.workers = workers;
+        this.jobImages = jobImages;
         this.jobId = jobId;
         this.status = "pending";
     }
@@ -90,6 +97,10 @@ public class Job {
     public ArrayList<String> getBidders() {
         return bidders;
     }
+
+    public ArrayList<String> getJobImages() { return jobImages; }
+
+    public void setJobImages(ArrayList<String> jobImages) { this.jobImages = jobImages; }
 
     public String getClient() {
         return client;
