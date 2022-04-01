@@ -1,7 +1,6 @@
 package com.example.flashgig.fragments;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,11 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.flashgig.R;
 import com.example.flashgig.activities.JobRecyclerViewAdapter;
-import com.example.flashgig.databinding.FragmentCompletedJobsBinding;
-import com.example.flashgig.databinding.FragmentInProgressJobsBinding;
+import com.example.flashgig.activities.PARecyclerViewAdapter;
+import com.example.flashgig.databinding.FragmentPostedBinding;
 import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -25,10 +23,10 @@ import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
-public class CompletedJobsFragment extends Fragment implements JobRecyclerViewAdapter.ItemClickListener {
+public class PostedFragment extends Fragment implements PARecyclerViewAdapter.ItemClickListener {
     private FirebaseFirestore db;
     private ArrayList<Job> jobList = new ArrayList<>();
-    private JobRecyclerViewAdapter adapter;
+    private PARecyclerViewAdapter adapter;
     String curUser;
 
     @Override
@@ -40,10 +38,11 @@ public class CompletedJobsFragment extends Fragment implements JobRecyclerViewAd
     }
 
     private void eventChangeListener() {
-        db.collection("jobs").whereEqualTo("client",curUser).whereEqualTo("status","completed").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
+        db.collection("jobs").whereEqualTo("client",curUser).orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
             if (error != null) {
                 Log.d("error", "Firebase error");
-            }else{
+            }
+            else{
                 for (DocumentChange dc : value.getDocumentChanges()) {
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         jobList.add(dc.getDocument().toObject(Job.class));
@@ -61,18 +60,16 @@ public class CompletedJobsFragment extends Fragment implements JobRecyclerViewAd
         });
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FragmentCompletedJobsBinding binding = FragmentCompletedJobsBinding.inflate(inflater, container, false);
+        FragmentPostedBinding binding = FragmentPostedBinding.inflate(inflater, container, false);
 
-        RecyclerView recyclerView = binding.recyclerViewCompletedJobs;
+        RecyclerView recyclerView = binding.recyclerViewPosted;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
+        adapter = new PARecyclerViewAdapter(this.getContext(), jobList, this);
         recyclerView.setAdapter(adapter);
 
         // Inflate the layout for this fragment
