@@ -52,13 +52,16 @@
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_job_adder.xml" value="0.1765625" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_messages.xml" value="0.15833333333333333" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_my_jobs.xml" value="0.15833333333333333" />
-        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_profile_edit.xml" value="0.264" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/profile_drawer_header.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/recycler_view_row.xml" value="0.264" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/splash_intro.xml" value="0.14351851851851852" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/splash_logo.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/switch_item.xml" value="0.17604166666666668" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/menu/jobs_navbar.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/menu/nav_bar.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/menu/profile_drawer.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/menu/search_bar.xml" value="0.13148148148148148" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FlashGig/app/src/main/res/layout/activity_signup.xml" value="0.1" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/Flash_Gig/app/src/main/res/layout/activity_job_adder.xml" value="0.25416666666666665" />

@@ -106,6 +106,10 @@ public class DetailFragment extends Fragment {
                     textJobDescription.setText(job.getDescription());
                     textJobBudget.setText(job.getBudget());
 
+                    if (job.getClient().equals(curUser)){
+                        binding.btnAcceptJob.setVisibility(View.GONE);
+                    }
+
                     for (String category : job.getCategories()){
                         switch (category) {
                             case "Carpentry":
