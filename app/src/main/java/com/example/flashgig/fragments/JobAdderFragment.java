@@ -229,27 +229,58 @@ public class JobAdderFragment extends Fragment{
 
         final ProgressDialog pd = new ProgressDialog(getContext());
         pd.setTitle("Uploading...");
-        // Only upload to storage if new image is selected
-        if (imageUri1 == null) {
-            getActivity().getSupportFragmentManager().popBackStackImmediate();
-            return;
-        }
         pd.show();
 
-        final String randomKey = UUID.randomUUID().toString();
-        jobImages.add(randomKey);
-        StorageReference imageRef = storageReference.child("media/images/addjob_pictures/" + randomKey);
+        if (imageUri1 != null) {
+            final String randomKey1 = UUID.randomUUID().toString();
+            jobImages.add(randomKey1);
+            StorageReference imageRef1 = storageReference.child("media/images/addjob_pictures/" + randomKey1);
 
-        imageRef.putFile(imageUri1).addOnSuccessListener(taskSnapshot -> {
-            Log.d("Cloud Storage", "Image uploaded!");
-            pd.dismiss();
-        }).addOnFailureListener(e -> {
-            Log.d("Cloud Storage", "Error uploading image!");
-            pd.dismiss();
-        }).addOnProgressListener(snapshot -> {
-            double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-            pd.setMessage("Progress: " + progress + "%");
-        });
+            imageRef1.putFile(imageUri1).addOnSuccessListener(taskSnapshot -> {
+                Log.d("Cloud Storage", "Image uploaded!");
+                pd.dismiss();
+            }).addOnFailureListener(e -> {
+                Log.d("Cloud Storage", "Error uploading image!");
+                pd.dismiss();
+            }).addOnProgressListener(snapshot -> {
+                double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                pd.setMessage("Progress: " + progress + "%");
+            });
+        }
+
+        if (imageUri2 != null) {
+            final String randomKey2 = UUID.randomUUID().toString();
+            jobImages.add(randomKey2);
+            StorageReference imageRef2 = storageReference.child("media/images/addjob_pictures/" + randomKey2);
+
+            imageRef2.putFile(imageUri2).addOnSuccessListener(taskSnapshot -> {
+                Log.d("Cloud Storage", "Image uploaded!");
+                pd.dismiss();
+            }).addOnFailureListener(e -> {
+                Log.d("Cloud Storage", "Error uploading image!");
+                pd.dismiss();
+            }).addOnProgressListener(snapshot -> {
+                double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                pd.setMessage("Progress: " + progress + "%");
+            });
+        }
+
+        if (imageUri3 != null) {
+            final String randomKey3 = UUID.randomUUID().toString();
+            jobImages.add(randomKey3);
+            StorageReference imageRef3 = storageReference.child("media/images/addjob_pictures/" + randomKey3);
+
+            imageRef3.putFile(imageUri3).addOnSuccessListener(taskSnapshot -> {
+                Log.d("Cloud Storage", "Image uploaded!");
+                pd.dismiss();
+            }).addOnFailureListener(e -> {
+                Log.d("Cloud Storage", "Error uploading image!");
+                pd.dismiss();
+            }).addOnProgressListener(snapshot -> {
+                double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                pd.setMessage("Progress: " + progress + "%");
+            });
+        }
 
 
         DocumentReference doc = db.collection("jobs").document();
