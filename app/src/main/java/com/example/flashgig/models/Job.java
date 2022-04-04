@@ -31,7 +31,6 @@ public class Job {
         this.jobImages = jobImages;
         this.bidders = new ArrayList<>();
         this.workers = new ArrayList<>();
-        this.jobImages = new ArrayList<>();
         this.jobId = jobId;
         this.status = "pending";
     }
