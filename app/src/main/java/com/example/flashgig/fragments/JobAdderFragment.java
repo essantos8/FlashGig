@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.FragmentJobAdderBinding;
+import com.example.flashgig.databinding.FragmentProfileEditBinding;
 import com.example.flashgig.models.Job;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputEditText;
@@ -58,7 +59,11 @@ public class JobAdderFragment extends Fragment{
     private Spinner spinnerWorkers, spinnerLocation;
     private EditText etMin, etMax;
 
-
+    private ImageView jobPicture1;
+    public Uri imageUri;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private final Integer getPicRC = 100;
 
 
     @Override
@@ -67,12 +72,63 @@ public class JobAdderFragment extends Fragment{
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+    }
+
+    private void choosePicture(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, getPicRC);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==getPicRC && resultCode==RESULT_OK && data!=null && data.getData()!=null){
+            imageUri = data.getData();
+            binding.jobImage1.setImageURI(imageUri);
+        }
+    }
+
+    private void uploadPicture() {
+        final ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setTitle("Uploading...");
+        // Only upload to storage if new image is selected
+        if (imageUri == null) {
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+            return;
+        }
+        pd.show();
+
+        final String randomKey = UUID.randomUUID().toString();
+        StorageReference imageRef = storageReference.child("media/images/addjob_pictures/" + randomKey);
+
+        imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+            Log.d("Cloud Storage", "Image uploaded!");
+            pd.dismiss();
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+        }).addOnFailureListener(e -> {
+            Log.d("Cloud Storage", "Error uploading image!");
+            pd.dismiss();
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+        }).addOnProgressListener(snapshot -> {
+            double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+            pd.setMessage("Progress: " + progress + "%");
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         binding = FragmentJobAdderBinding.inflate(inflater, container, false);
+
+        jobPicture1 = binding.jobImage1;
+        jobPicture1.setOnClickListener(view -> choosePicture());
+
         Spinner spinner_noOfWorkers = binding.spinnerNoOfWorkers;
         ArrayAdapter<CharSequence> adapter_noOfWorkers = ArrayAdapter.createFromResource(getActivity(), R.array.numberOfWorkers, android.R.layout.simple_spinner_item);
         adapter_noOfWorkers.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -166,8 +222,35 @@ public class JobAdderFragment extends Fragment{
             tietDescription.setError("Description is required!");
             return;
         }
-
+        //uploadPicture();
         ArrayList<String> jobImages = new ArrayList<>();
+
+        final ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setTitle("Uploading...");
+        // Only upload to storage if new image is selected
+        if (imageUri == null) {
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+            return;
+        }
+        pd.show();
+
+        final String randomKey = UUID.randomUUID().toString();
+        jobImages.add(randomKey);
+        StorageReference imageRef = storageReference.child("media/images/addjob_pictures/" + randomKey);
+
+        imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+            Log.d("Cloud Storage", "Image uploaded!");
+            pd.dismiss();
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+        }).addOnFailureListener(e -> {
+            Log.d("Cloud Storage", "Error uploading image!");
+            pd.dismiss();
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+        }).addOnProgressListener(snapshot -> {
+            double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+            pd.setMessage("Progress: " + progress + "%");
+        });
+
 
         DocumentReference doc = db.collection("jobs").document();
         Job job = new Job(title, description, mAuth.getCurrentUser().getEmail(), dateButton.getText().toString(), categories, spinnerWorkers.getSelectedItemPosition() + 1, spinnerLocation.getSelectedItem().toString(), etMin.getText().toString() + "-" + etMax.getText().toString(), doc.getId(), jobImages);

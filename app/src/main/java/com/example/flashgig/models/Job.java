@@ -14,7 +14,6 @@ public class Job {
     public ArrayList<String> categories;
     public ArrayList<String> workers;
     public ArrayList<String> bidders;
-
     public ArrayList<String> jobImages;
 
     public Job() {
@@ -29,6 +28,7 @@ public class Job {
         this.numWorkers = numWorkers;
         this.location = location;
         this.budget = budget;
+        this.jobImages = jobImages;
         this.bidders = new ArrayList<>();
         this.workers = new ArrayList<>();
         this.jobImages = new ArrayList<>();
