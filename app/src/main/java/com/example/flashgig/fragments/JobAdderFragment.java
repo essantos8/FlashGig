@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -239,12 +240,14 @@ public class JobAdderFragment extends Fragment{
             imageRef1.putFile(imageUri1).addOnSuccessListener(taskSnapshot -> {
                 Log.d("Cloud Storage", "Image uploaded!");
                 pd.dismiss();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnFailureListener(e -> {
                 Log.d("Cloud Storage", "Error uploading image!");
                 pd.dismiss();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnProgressListener(snapshot -> {
                 double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                pd.setMessage("Progress: " + progress + "%");
+                pd.setMessage("Uploading Image 1: " + Math.round(progress) + "%");
             });
         }
 
@@ -256,12 +259,14 @@ public class JobAdderFragment extends Fragment{
             imageRef2.putFile(imageUri2).addOnSuccessListener(taskSnapshot -> {
                 Log.d("Cloud Storage", "Image uploaded!");
                 pd.dismiss();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnFailureListener(e -> {
                 Log.d("Cloud Storage", "Error uploading image!");
                 pd.dismiss();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnProgressListener(snapshot -> {
                 double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                pd.setMessage("Progress: " + progress + "%");
+                pd.setMessage("Uploading Image 2: " + Math.round(progress) + "%");
             });
         }
 
@@ -273,12 +278,14 @@ public class JobAdderFragment extends Fragment{
             imageRef3.putFile(imageUri3).addOnSuccessListener(taskSnapshot -> {
                 Log.d("Cloud Storage", "Image uploaded!");
                 pd.dismiss();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnFailureListener(e -> {
                 Log.d("Cloud Storage", "Error uploading image!");
                 pd.dismiss();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnProgressListener(snapshot -> {
                 double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                pd.setMessage("Progress: " + progress + "%");
+                pd.setMessage("Uploading Image 3: " + Math.round(progress) + "%");
             });
         }
 
@@ -291,7 +298,7 @@ public class JobAdderFragment extends Fragment{
         timestamp.put("timestamp", FieldValue.serverTimestamp());
         doc.update(timestamp);
         Toast.makeText(getContext(), "Job Added to Database", Toast.LENGTH_SHORT).show();
-        getActivity().getSupportFragmentManager().popBackStackImmediate();
+
     }
 
     private String getTodaysDate() {
