@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
-                fragment.replace(R.id.frameLayout, new JobAdderFragment());
+                fragment.replace(R.id.frameLayout, new JobAdderFragment(), "jobAdder");
                 fragment.commit();
             }
         });

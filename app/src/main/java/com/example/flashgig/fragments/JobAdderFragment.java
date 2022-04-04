@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
@@ -230,9 +231,10 @@ public class JobAdderFragment extends Fragment{
 
         final ProgressDialog pd = new ProgressDialog(getContext());
         pd.setTitle("Uploading...");
-        pd.show();
+
 
         if (imageUri1 != null) {
+            pd.show();
             final String randomKey1 = UUID.randomUUID().toString();
             jobImages.add(randomKey1);
             StorageReference imageRef1 = storageReference.child("media/images/addjob_pictures/" + randomKey1);
@@ -240,11 +242,9 @@ public class JobAdderFragment extends Fragment{
             imageRef1.putFile(imageUri1).addOnSuccessListener(taskSnapshot -> {
                 Log.d("Cloud Storage", "Image uploaded!");
                 pd.dismiss();
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnFailureListener(e -> {
                 Log.d("Cloud Storage", "Error uploading image!");
                 pd.dismiss();
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnProgressListener(snapshot -> {
                 double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
                 pd.setMessage("Uploading Image 1: " + Math.round(progress) + "%");
@@ -252,6 +252,7 @@ public class JobAdderFragment extends Fragment{
         }
 
         if (imageUri2 != null) {
+            pd.show();
             final String randomKey2 = UUID.randomUUID().toString();
             jobImages.add(randomKey2);
             StorageReference imageRef2 = storageReference.child("media/images/addjob_pictures/" + randomKey2);
@@ -259,11 +260,9 @@ public class JobAdderFragment extends Fragment{
             imageRef2.putFile(imageUri2).addOnSuccessListener(taskSnapshot -> {
                 Log.d("Cloud Storage", "Image uploaded!");
                 pd.dismiss();
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnFailureListener(e -> {
                 Log.d("Cloud Storage", "Error uploading image!");
                 pd.dismiss();
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnProgressListener(snapshot -> {
                 double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
                 pd.setMessage("Uploading Image 2: " + Math.round(progress) + "%");
@@ -271,6 +270,7 @@ public class JobAdderFragment extends Fragment{
         }
 
         if (imageUri3 != null) {
+            pd.show();
             final String randomKey3 = UUID.randomUUID().toString();
             jobImages.add(randomKey3);
             StorageReference imageRef3 = storageReference.child("media/images/addjob_pictures/" + randomKey3);
@@ -278,11 +278,9 @@ public class JobAdderFragment extends Fragment{
             imageRef3.putFile(imageUri3).addOnSuccessListener(taskSnapshot -> {
                 Log.d("Cloud Storage", "Image uploaded!");
                 pd.dismiss();
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnFailureListener(e -> {
                 Log.d("Cloud Storage", "Error uploading image!");
                 pd.dismiss();
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }).addOnProgressListener(snapshot -> {
                 double progress = 100.0 * ((double) snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
                 pd.setMessage("Uploading Image 3: " + Math.round(progress) + "%");
@@ -298,6 +296,11 @@ public class JobAdderFragment extends Fragment{
         timestamp.put("timestamp", FieldValue.serverTimestamp());
         doc.update(timestamp);
         Toast.makeText(getContext(), "Job Added to Database", Toast.LENGTH_SHORT).show();
+
+
+        FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
+        fragment.replace(R.id.frameLayout, new HomeFragment(), "home");
+        fragment.commit();
 
     }
 
