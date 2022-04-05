@@ -14,7 +14,6 @@ public class Job {
     public ArrayList<String> categories;
     public ArrayList<String> workers;
     public ArrayList<String> bidders;
-
     public ArrayList<String> jobImages;
 
     public Job() {
@@ -29,9 +28,9 @@ public class Job {
         this.numWorkers = numWorkers;
         this.location = location;
         this.budget = budget;
+        this.jobImages = jobImages;
         this.bidders = new ArrayList<>();
         this.workers = new ArrayList<>();
-        this.jobImages = new ArrayList<>();
         this.jobId = jobId;
         this.status = "pending";
     }
@@ -98,7 +97,11 @@ public class Job {
         return bidders;
     }
 
-    public ArrayList<String> getJobImages() { return jobImages; }
+    public ArrayList<String> getJobImages() {
+        if(jobImages == null){
+            return new ArrayList<String>();
+        }
+        return jobImages; }
 
     public void setJobImages(ArrayList<String> jobImages) { this.jobImages = jobImages; }
 

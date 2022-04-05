@@ -9,5 +9,5 @@
 
     <item
         android:icon="@drawable/ic_cross"
-        android:title="Log out" />
+        android:title="Log Out" />
 </menu>

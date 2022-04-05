@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.flashgig.R;
-import com.example.flashgig.activities.JobRecyclerViewAdapter;
+import com.example.flashgig.adapters.JobRecyclerViewAdapter;
 
 import com.example.flashgig.databinding.FragmentAppliedBinding;
 import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
