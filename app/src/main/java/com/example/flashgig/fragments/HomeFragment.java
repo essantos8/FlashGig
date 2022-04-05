@@ -16,6 +16,8 @@ import android.widget.CompoundButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -69,13 +71,16 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
             for (DocumentChange dc : value.getDocumentChanges()) {
                 if(dc.getType() == DocumentChange.Type.ADDED){
                     jobList.add(dc.getDocument().toObject(Job.class));
+//                    Log.d("jobss", "eventChangeListener: added");
                 }
                 else if(dc.getType() == DocumentChange.Type.REMOVED){
                     jobList.remove(dc.getDocument().toObject(Job.class));
+//                    Log.d("jobss", "eventChangeListener: removed");
                 }
                 else{
                     jobList.add(dc.getDocument().toObject(Job.class));
                     jobList.remove(dc.getDocument().toObject(Job.class));
+//                    Log.d("jobss", "eventChangeListener: modified");
                 }
             }
             adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
