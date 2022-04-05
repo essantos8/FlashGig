@@ -211,8 +211,6 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
             chipVirtualAssistant = itemView.findViewById(R.id.chipVirtualAssistant);
             chipOther = itemView.findViewById(R.id.chipOther);
             jobCard = itemView.findViewById(R.id.jobCardPopup);
-            textViewHide = itemView.findViewById(R.id.textViewHide);
-            btnAccept = itemView.findViewById(R.id.btnAcceptJob);
         }
     }
 

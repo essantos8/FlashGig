@@ -75,6 +75,8 @@ dependencies {
     implementation 'com.github.MikeOrtiz:TouchImageView:1.4.1'
     // Photoview
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    //textfab
+    implementation 'com.google.android.material:material:1.1.0'
 }
 
 

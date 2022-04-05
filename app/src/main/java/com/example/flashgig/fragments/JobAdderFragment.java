@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +29,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.FragmentJobAdderBinding;
 import com.example.flashgig.databinding.FragmentProfileEditBinding;
 import com.example.flashgig.models.Job;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -109,14 +112,23 @@ public class JobAdderFragment extends Fragment{
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==getPicRC1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imageUri1 = data.getData();
+//            GlideApp.with(this)
+//                    .load(imageUri1)
+//                    .into(binding.jobImage1);
             binding.jobImage1.setImageURI(imageUri1);
         }
         if(requestCode==getPicRC2 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imageUri2 = data.getData();
+//            GlideApp.with(this)
+//                    .load(imageUri1)
+//                    .into(binding.jobImage2);
             binding.jobImage2.setImageURI(imageUri2);
         }
         if(requestCode==getPicRC3 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imageUri3 = data.getData();
+//            GlideApp.with(this)
+//                    .load(imageUri1)
+//                    .into(binding.jobImage3);
             binding.jobImage3.setImageURI(imageUri3);
         }
     }
@@ -232,7 +244,6 @@ public class JobAdderFragment extends Fragment{
         final ProgressDialog pd = new ProgressDialog(getContext());
         pd.setTitle("Uploading...");
 
-
         if (imageUri1 != null) {
             pd.show();
             final String randomKey1 = UUID.randomUUID().toString();
@@ -295,8 +306,8 @@ public class JobAdderFragment extends Fragment{
         HashMap<String, Object> timestamp = new HashMap<String, Object>();
         timestamp.put("timestamp", FieldValue.serverTimestamp());
         doc.update(timestamp);
-        Toast.makeText(getContext(), "Job Added to Database", Toast.LENGTH_SHORT).show();
-
+//        Toast.makeText(getContext(), "Job Added to Database", Toast.LENGTH_SHORT).show();
+        Snackbar.make(getActivity().findViewById(R.id.frameLayout), "Job Added!", Snackbar.LENGTH_SHORT).show();
 
         FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
         fragment.replace(R.id.frameLayout, new HomeFragment(), "home");

@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#4E4E4E</color>
+    <color name="dark_red">@android:color/holo_red_dark</color>
+    <color name="light_red">@android:color/holo_red_light</color>
     <color name="yellow_flash">#FFFD00</color>
 
     <!-- ETO SATEN -->

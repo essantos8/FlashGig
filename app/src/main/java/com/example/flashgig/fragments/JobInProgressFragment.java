@@ -1,10 +1,5 @@
 package com.example.flashgig.fragments;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -19,24 +14,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentDetailBinding;
+import com.example.flashgig.databinding.FragmentJobInProgressBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -50,8 +41,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+public class JobInProgressFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener{
+    private FragmentJobInProgressBinding binding;
 
-public class DetailFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener{
     private StorageReference storageRef;
     private FirebaseUser currentUser;
     private FirebaseFirestore db;
@@ -60,63 +52,36 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
     private static final String ARG_PARAM1 = "param1";
     private String mParam1;
     private String curUser;
-    private String jobId;
 
     private Task<QuerySnapshot> curJob;
     private User clientUser;
     private Job job;
 
-    private FragmentDetailBinding binding;
     private ImageView profilePicDetail, jobImage0, jobImage1, jobImage2, jobImage3;
 
     private TextView textJobTitle, textJobDate, textJobBudget, textJobLocation, textJobClientEmail, textJobClientName, textJobDescription, textJobWorkers;
 
     private RecyclerView imageRecyclerView;
 
-    public DetailFragment() {
-        // Required empty public constructor
+    public JobInProgressFragment(String jobId) {
+        db = FirebaseFirestore.getInstance();
+        curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        curJob = db.collection("jobs").whereEqualTo("jobId",jobId).get();
+        storageRef = FirebaseStorage.getInstance().getReference();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment DetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DetailFragment newInstance(String param1) {
-        DetailFragment fragment = new DetailFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = FirebaseFirestore.getInstance();
-        curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            jobId = mParam1;
-        }
-        curJob = db.collection("jobs").whereEqualTo("jobId",mParam1).get();
-        storageRef = FirebaseStorage.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
     }
 
-
-    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-
-        binding = FragmentDetailBinding.inflate(inflater, container, false);
+        binding = FragmentJobInProgressBinding.inflate(inflater, container, false);
 
         textJobTitle = binding.textJobTitle;
         textJobLocation = binding.textJobLocation;
@@ -143,9 +108,6 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                     if(!curUser.equals(job.getClient())){
                         binding.btnApplyForJob.setVisibility(View.VISIBLE);
                     }
-                    else{
-                        binding.btnDeleteJob.setVisibility(View.VISIBLE);
-                    }
                     // get client user id
                     db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
                         if(task1.getResult().getDocuments().isEmpty()){
@@ -167,24 +129,12 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
             fm.popBackStackImmediate();
         });
 
-        binding.btnDeleteJob.setOnClickListener(view -> {
-            AlertDialog jobDeletionDialog = new AlertDialog.Builder(getContext())
-                    .setTitle("Deleting \""+job.getTitle()+"\"")
-                    .setMessage("Are you sure you want to delete this job post?")
-                    .setPositiveButton("Yes", (dialogInterface, i) -> {
-                        deleteJob();
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
-            jobDeletionDialog.getButton(DialogInterface.BUTTON_POSITIVE).setBackgroundColor(getResources().getColor(R.color.light_red));
-            jobDeletionDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.white));
-        });
 
 
         binding.btnApplyForJob.setOnClickListener(view ->{
             if(job.getBidders().contains(curUser)){
-                 binding.btnApplyForJob.setBackgroundColor(65536);
-                 Toast.makeText(getActivity(),"Applied for job already!",Toast.LENGTH_SHORT).show();
+                binding.btnApplyForJob.setBackgroundColor(65536);
+                Toast.makeText(getActivity(),"Applied for job already!",Toast.LENGTH_SHORT).show();
             }
             else {
                 final Map<String, Object> addUsertoArrayMap = new HashMap<>();
@@ -199,49 +149,6 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
 
         return binding.getRoot();
     }
-
-    private void deleteJob() {
-        ProgressDialog progressDialogDeletion = new ProgressDialog(getContext());
-        progressDialogDeletion.setMessage("Deleting Job");
-        progressDialogDeletion.show();
-        // delete from db
-        ArrayList<String> jobImageUrls = new ArrayList<>(job.getJobImages());
-        db.collection("jobs").document(jobId).delete().addOnSuccessListener(unused -> {
-            Log.d("Job Deletion", "deleteJob: deleted from db");
-            // delete from storage
-            if(jobImageUrls.isEmpty()){
-                Log.d("Job Deletion", "deleteJob: no media in storage");
-                progressDialogDeletion.dismiss();
-                Snackbar.make(getActivity().findViewById(R.id.frameLayout), "Job Deleted!", Snackbar.LENGTH_SHORT).show();
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
-            }
-//        for(String imageUrl: jobImageUrls){
-            for (int i = 0; i < jobImageUrls.size(); i++) {
-                String imageUrl = jobImageUrls.get(i);
-                int finalI = i;
-                storageRef.child("media/images/addjob_pictures/" + imageUrl).delete().addOnSuccessListener(unused1 -> {
-                    Log.d("Job Deletion", "deleteJob: deleted from storage");
-                }).addOnFailureListener(e -> {
-                    Log.d("Job Deletion", "deleteJob: failed to delete from storage");
-                }).addOnCompleteListener(task -> {
-                    Log.d("Job Deletion", "deleteJob: url "+imageUrl);
-
-                    if(finalI == jobImageUrls.size()-1){
-                        progressDialogDeletion.dismiss();
-//                        Toast.makeText(getContext(), "Job Deleted!", Toast.LENGTH_SHORT).show();
-                        Snackbar.make(getActivity().findViewById(R.id.frameLayout), "Job Deleted!", Snackbar.LENGTH_SHORT).show();
-//                        getActivity().getSupportFragmentManager().popBackStackImmediate();
-                        getActivity().onBackPressed();
-                    }
-                });
-            }
-        }).addOnFailureListener(e -> {
-            Log.d("Job Deletion", "deleteJob: failed to delete from db");
-        }).addOnCompleteListener(task -> {
-            Log.d("Job Deletion", "deleteJob: docId "+jobId);
-        });
-    }
-
     private void setViews(){
         textJobTitle.setText(job.getTitle());
         textJobLocation.setText(job.getLocation());

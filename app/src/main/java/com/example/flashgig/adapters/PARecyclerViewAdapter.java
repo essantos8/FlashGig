@@ -94,7 +94,7 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
         holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()));
         holder.textViewBudget.setText(curJob.getBudget());
 
-        holder.jobCard.setOnClickListener(view -> clickListener.onItemClick(curJob.jobId));
+        holder.jobCard.setOnClickListener(view -> clickListener.onItemClick(curJob.jobId, curJob.getStatus()));
     }
 
     @Override
@@ -208,7 +208,7 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
     }
 
     public interface ItemClickListener {
-        public void onItemClick(String jobId);
+        public void onItemClick(String jobId, String status);
     }
 
 }

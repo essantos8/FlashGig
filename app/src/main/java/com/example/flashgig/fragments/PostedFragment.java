@@ -17,6 +17,7 @@ import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
@@ -34,26 +35,30 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
         curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         eventChangeListener();
     }
-
     private void eventChangeListener() {
         db.collection("jobs").whereEqualTo("client",curUser).orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
             if (error != null) {
-                Log.d("error", "Firebase error");
+                Log.d("error", error.toString());
             }
-            else{
+            else {
                 for (DocumentChange dc : value.getDocumentChanges()) {
-                    if(dc.getType() == DocumentChange.Type.ADDED){
+                    if (dc.getType() == DocumentChange.Type.ADDED) {
                         jobList.add(dc.getDocument().toObject(Job.class));
-                    }
-                    else if(dc.getType() == DocumentChange.Type.REMOVED){
+//                    Log.d("jobss", "eventChangeListener: added");
+                    } else if (dc.getType() == DocumentChange.Type.REMOVED) {
                         jobList.remove(dc.getDocument().toObject(Job.class));
-                    }
-                    else{
-                        jobList.add(dc.getDocument().toObject(Job.class));
+//                    Log.d("jobss", "eventChangeListener: removed");
+                    } else {
+                        Integer index = -1;
+                        index = jobList.indexOf(dc.getDocument().toObject(Job.class));
+                        assert !index.equals(-1);
+                        Log.d("INDEX", "eventChangeListener: " + String.valueOf(index));
                         jobList.remove(dc.getDocument().toObject(Job.class));
+                        jobList.add(index, dc.getDocument().toObject(Job.class));
+//                    Log.d("jobss", "eventChangeListener: modified");
                     }
+                    adapter.notifyDataSetChanged();
                 }
-                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -66,6 +71,8 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
 
         RecyclerView recyclerView = binding.recyclerViewPosted;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         adapter = new PARecyclerViewAdapter(this.getContext(), jobList, this);
         recyclerView.setAdapter(adapter);
@@ -75,8 +82,20 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
     }
 
     @Override
-    public void onItemClick(String JID) {
-        Fragment fragment = DetailFragment.newInstance(JID);
+    public void onItemClick(String JID, String status) {
+        Fragment fragment = null;
+        if (status.equals("pending")){
+            fragment = DetailFragment.newInstance(JID);
+        }
+        // disabled for now
+        else if(status.equals("in progress")){
+            fragment = DetailFragment.newInstance(JID);
+//            fragment = new JobInProgressFragment(JID);
+        }
+        else if(status.equals("completed")){
+            //            fragment = new JobCompletedFragment(JID);
+            fragment = DetailFragment.newInstance(JID);
+        }
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
         fragmentTransaction.addToBackStack(null);

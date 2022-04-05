@@ -23,6 +23,7 @@ import com.example.flashgig.models.Job;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
@@ -44,39 +45,45 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
+        eventChangeListener();
+
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        jobList.clear();
+    public void onResume() {
+        super.onResume();
+        if(binding.progressBarHome.getVisibility() == View.VISIBLE){
+            binding.progressBarHome.setVisibility(View.GONE);
+        }
     }
 
     private void eventChangeListener() {
-        db.collection("jobs").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
+        ListenerRegistration eventListener = db.collection("jobs").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
             if (error != null) {
-                Log.d("error", "Firebase error");
+                Log.d("error", error.toString());
             }
-            for (DocumentChange dc : value.getDocumentChanges()) {
-                if(dc.getType() == DocumentChange.Type.ADDED){
-                    jobList.add(dc.getDocument().toObject(Job.class));
-//                    Log.d("jobss", "eventChangeListener: added");
+            else {
+                for (DocumentChange dc : value.getDocumentChanges()) {
+                    if (dc.getType() == DocumentChange.Type.ADDED) {
+                        jobList.add(dc.getDocument().toObject(Job.class));
+                        //                    Log.d("jobss", "eventChangeListener: added");
+                    } else if (dc.getType() == DocumentChange.Type.REMOVED) {
+                        jobList.remove(dc.getDocument().toObject(Job.class));
+                        //                    Log.d("jobss", "eventChangeListener: removed");
+                    } else {
+                        Integer index = -1;
+                        index = jobList.indexOf(dc.getDocument().toObject(Job.class));
+                        assert !index.equals(-1);
+                        Log.d("INDEX", "eventChangeListener: " + String.valueOf(index));
+                        jobList.remove(dc.getDocument().toObject(Job.class));
+                        jobList.add(index, dc.getDocument().toObject(Job.class));
+                        //                    Log.d("jobss", "eventChangeListener: modified");
+                    }
+                    adapter.notifyDataSetChanged();
                 }
-                else if(dc.getType() == DocumentChange.Type.REMOVED){
-                    jobList.remove(dc.getDocument().toObject(Job.class));
-//                    Log.d("jobss", "eventChangeListener: removed");
+                if (binding.progressBarHome.getVisibility() == View.VISIBLE) {
+                    binding.progressBarHome.setVisibility(View.GONE);
                 }
-                else{
-                    jobList.add(dc.getDocument().toObject(Job.class));
-                    jobList.remove(dc.getDocument().toObject(Job.class));
-//                    Log.d("jobss", "eventChangeListener: modified");
-                }
-            }
-            adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            if(binding.progressBarHome.getVisibility() == View.VISIBLE){
-                binding.progressBarHome.setVisibility(View.GONE);
             }
         });
     }
@@ -102,9 +109,8 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
         recyclerView = binding.recyclerViewJobs;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setHasFixedSize(false);
-
-        eventChangeListener();
-
+        adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
+        recyclerView.setAdapter(adapter);
 
         searchView = binding.searchviewHome;
 
@@ -138,11 +144,6 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
         binding.btnDatePicker.setOnClickListener(view -> {
             datePickerDialog.show();
         });
-
-//        binding.floatingBtnAddJob.setOnClickListener(view -> {
-            // add job fragment here
-//            startActivity(new Intent(this.getContext(), JobAdderActivity.class));
-//        });
 
         // Inflate the layout for this fragment
         return binding.getRoot();
