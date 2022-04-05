@@ -11,13 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.flashgig.R;
-import com.example.flashgig.activities.JobRecyclerViewAdapter;
-import com.example.flashgig.activities.PARecyclerViewAdapter;
+import com.example.flashgig.adapters.PARecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentPostedBinding;
 import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 

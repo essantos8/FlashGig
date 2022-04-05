@@ -1,6 +1,5 @@
 package com.example.flashgig.fragments;
 
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,16 +13,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
-import com.example.flashgig.activities.HorizontalImageRecyclerViewAdapter;
+import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentDetailBinding;
-import com.example.flashgig.databinding.RecyclerViewRowBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;

@@ -1,4 +1,4 @@
-package com.example.flashgig.activities;
+package com.example.flashgig.adapters;
 
 import android.content.Context;
 import android.util.Log;

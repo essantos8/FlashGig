@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -25,6 +27,7 @@ import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -98,17 +101,39 @@ public class ProfileFragment extends Fragment {
             retrieveInfo(true);
         });
 
-        binding.btnLogout.setOnClickListener(view -> {
-            googleSignInClient.signOut();
-            FirebaseAuth.getInstance().signOut();
-            db.clearPersistence();
-            Toast.makeText(this.getContext(), "User logged out!", Toast.LENGTH_SHORT).show();
-            getActivity().finish();
-            startActivity(new Intent(getContext(), SplashActivity.class));
+//        binding.btnLogout.setOnClickListener(view -> {
+//            googleSignInClient.signOut();
+//            FirebaseAuth.getInstance().signOut();
+//            db.clearPersistence();
+//            Toast.makeText(this.getContext(), "User logged out!", Toast.LENGTH_SHORT).show();
+//            getActivity().finish();
+//            startActivity(new Intent(getContext(), SplashActivity.class));
+//        });
+        binding.btnOptions.setOnClickListener(view -> {
+            binding.drawerLayout.open();
+        });
+        binding.profileDrawer.setNavigationItemSelectedListener(item -> {
+            Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+            switch(item.getTitle().toString()){
+                case "Log Out":
+                    logOut();
+                    break;
+            }
+            return false;
         });
         // Inflate the layout for this fragment
         return binding.getRoot();
     }
+
+    private void logOut() {
+        googleSignInClient.signOut();
+        FirebaseAuth.getInstance().signOut();
+        db.clearPersistence();
+        Toast.makeText(this.getContext(), "User logged out!", Toast.LENGTH_SHORT).show();
+        getActivity().finish();
+        startActivity(new Intent(getContext(), SplashActivity.class));
+    }
+
     private void replaceFragment(Fragment newFragment, String tag){
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, newFragment, tag)

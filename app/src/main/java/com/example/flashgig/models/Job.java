@@ -97,7 +97,11 @@ public class Job {
         return bidders;
     }
 
-    public ArrayList<String> getJobImages() { return jobImages; }
+    public ArrayList<String> getJobImages() {
+        if(jobImages == null){
+            return new ArrayList<String>();
+        }
+        return jobImages; }
 
     public void setJobImages(ArrayList<String> jobImages) { this.jobImages = jobImages; }
 

@@ -2,42 +2,31 @@ package com.example.flashgig.fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.SearchableInfo;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.R;
-import com.example.flashgig.activities.JobRecyclerViewAdapter;
+import com.example.flashgig.adapters.JobRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentHomeBinding;
 import com.example.flashgig.models.Job;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 
 public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.ItemClickListener {
@@ -86,6 +75,9 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
             adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
             recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+            if(binding.progressBarHome.getVisibility() == View.VISIBLE){
+                binding.progressBarHome.setVisibility(View.GONE);
+            }
         });
     }
 
