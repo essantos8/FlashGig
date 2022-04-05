@@ -23,6 +23,7 @@ import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.FragmentProfileEditBinding;
 import com.example.flashgig.models.User;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProfileEditFragment extends Fragment {
@@ -70,6 +72,10 @@ public class ProfileEditFragment extends Fragment {
 
         binding.btnCancel.setOnClickListener(view -> getActivity().onBackPressed());
 
+        binding.btnChangePassword.setOnClickListener(view -> {
+            Toast.makeText(getContext(), String.valueOf(binding.chipGroupCategories.getCheckedChipIds().size()), Toast.LENGTH_SHORT).show();
+        });
+
         binding.btnConfirm.setOnClickListener(view -> {
             pushUserInfo();
         });
@@ -78,14 +84,20 @@ public class ProfileEditFragment extends Fragment {
 
     private void pushUserInfo() {
         HashMap<String, Object> hashMap = new HashMap<>();
-        String newName = binding.etName.getText().toString(), newAbout = binding.etAboutMe.getText().toString();
+        String newName = binding.etName.getText().toString();
+        String newAbout = binding.etAboutMe.getText().toString();
+        ArrayList<String> newSkills = getSkills();
+
         if (!newName.equals(user.getFullName()) && !newName.equals("")) {
             hashMap.put("fullName", binding.etName.getText().toString());
         }
         if (!newAbout.equals(user.getAbout()) && !newAbout.equals("")) {
             hashMap.put("about", binding.etAboutMe.getText().toString());
         }
-//        hashMap.put("skills", binding.etAboutMe.getText().toString()); // arraylist
+//        if (newSkills.equals(binding.chipGroupCategories.get))
+        if (!newSkills.equals(user.getSkills()) && !newSkills.isEmpty()){
+            hashMap.put("skills", newSkills);
+        }
         if (hashMap.size() == 0) {
             Log.d("User info update", "No changes were made");
             uploadPicture();
@@ -117,9 +129,49 @@ public class ProfileEditFragment extends Fragment {
                 binding.etAboutMe.setHint(user.getAbout());
             }
             if (user.getSkills().size() > 0) {
-//                binding.
+                setSkills();
             }
         });
+    }
+
+    private ArrayList<String> getSkills() {
+        ArrayList<String> checkedChips = new ArrayList<>();
+        if(binding.chipCarpentry.isChecked()) checkedChips.add("Carpentry");
+        if(binding.chipPlumbing.isChecked()) checkedChips.add("Plumbing");
+        if(binding.chipElectrical.isChecked()) checkedChips.add("Electrical");
+        if(binding.chipElectronics.isChecked()) checkedChips.add("Electronics");
+        if(binding.chipPersonalShopping.isChecked()) checkedChips.add("Shopping");
+        if(binding.chipVirtualAssistant.isChecked()) checkedChips.add("Assistant");
+        if(binding.chipOther.isChecked()) checkedChips.add("Other");
+        return checkedChips;
+    }
+
+    private void setSkills() {
+        for(String skill: user.getSkills()){
+            switch(skill){
+                case "Carpentry":
+                    binding.chipCarpentry.setChecked(true);
+                    break;
+                case "Plumbing":
+                    binding.chipPlumbing.setChecked(true);
+                    break;
+                case "Electrical":
+                    binding.chipElectrical.setChecked(true);
+                    break;
+                case "Electronics":
+                    binding.chipElectronics.setChecked(true);
+                    break;
+                case "Shopping":
+                    binding.chipPersonalShopping.setChecked(true);
+                    break;
+                case "Assistant":
+                    binding.chipVirtualAssistant.setChecked(true);
+                    break;
+                case "Other":
+                    binding.chipOther.setChecked(true);
+                    break;
+            }
+        }
     }
 
     private void getPicture() {
