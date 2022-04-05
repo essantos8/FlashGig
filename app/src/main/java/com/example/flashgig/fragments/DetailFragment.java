@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,8 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
+import com.example.flashgig.R;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentDetailBinding;
 import com.example.flashgig.models.Job;
@@ -39,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener{
     private StorageReference storageRef;
     private FirebaseUser currentUser;
     private FirebaseFirestore db;
@@ -215,6 +218,7 @@ public class DetailFragment extends Fragment {
             try {
                 GlideApp.with(this)
                         .load(userRef)
+                        .error(R.drawable.default_profile)
                         .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
                         .fitCenter()
                         .into(profilePicDetail);
@@ -224,6 +228,7 @@ public class DetailFragment extends Fragment {
             }
         }).addOnFailureListener(e -> {
             binding.progressBarDetail.setVisibility(View.GONE);
+            profilePicDetail.setImageResource(R.drawable.default_profile);
             Log.d("Detail Fragment", "retrieveInfo: "+e.toString());
         });
         // load job images
@@ -240,7 +245,7 @@ public class DetailFragment extends Fragment {
                 // if last image uri is fetched, set adapter
                 if(imageCounter[0] == jobImageUris.size()){
 //                    Toast.makeText(getContext(), "last image is"+String.valueOf(imageCounter[0]), Toast.LENGTH_SHORT).show();
-                    HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList);
+                    HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList, this);
                     LinearLayoutManager layoutManager
                             = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
 
@@ -250,62 +255,13 @@ public class DetailFragment extends Fragment {
             });
         }
     }
-    private void loadImagesOld(){
-        String clientId = clientUser.getUserId();
-        // load client profile pic
-        StorageReference userRef = storageRef.child("media/images/profile_pictures/" + clientId);
-        userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
-            try {
-                GlideApp.with(this)
-                        .load(userRef)
-                        .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
-                        .fitCenter()
-                        .into(profilePicDetail);
-                binding.progressBarDetail.setVisibility(View.GONE);
-            } catch (Exception e) {
-                Log.d("Detail Fragment", "loadImage: "+e.toString());
-            }
-        }).addOnFailureListener(e -> {
-            binding.progressBarDetail.setVisibility(View.GONE);
-            Log.d("Detail Fragment", "retrieveInfo: "+e.toString());
-        });
-        // load job images
-        ArrayList<String> jobImageUris = new ArrayList<>(job.getJobImages());
-        StorageReference jobImagesRef = storageRef.child("/media/images/addjob_pictures/");
-        final Integer[] imageCounter = {0};
-        for(String imageUriString: jobImageUris){
-            Log.d("detail fragg", "loadImages: "+String.valueOf(imageCounter[0]));
-            StorageReference jobImageRef = jobImagesRef.child(imageUriString);
-            jobImageRef.getMetadata().addOnSuccessListener(storageMetadata -> {
-                try {
-                    ImageView curImageView = null;
-                    switch(imageCounter[0]){
-                        case 0:
-                            curImageView = jobImage0;
-                            break;
-                        case 1:
-                            curImageView = jobImage1;
-                            break;
-                        case 2:
-                            curImageView = jobImage2;
-                            break;
-                        case 3:
-                            curImageView = jobImage3;
-                            break;
-                    }
-                    GlideApp.with(this)
-                            .load(jobImageRef)
-                            .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
-                            .fitCenter()
-                            .into(curImageView);
-                    curImageView.setVisibility(View.VISIBLE);
-                    imageCounter[0]++;
-                } catch (Exception e) {
-                    Log.d("Detail Fragment", "loadImage: "+e.toString());
-                }
-            }).addOnFailureListener(e -> {
-                Log.d("Detail Fragment", "retrieveInfo: "+e.toString());
-            });
-        }
+
+    @Override
+    public void onItemClick(Uri imageUri) {
+        ImagePopupFragment imagePopupFragment = new ImagePopupFragment(imageUri);
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        fragmentTransaction.add(R.id.frameLayout, imagePopupFragment,"imagePopup").addToBackStack(null).commit();
+        return;
     }
 }

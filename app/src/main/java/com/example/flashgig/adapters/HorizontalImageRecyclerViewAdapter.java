@@ -1,6 +1,7 @@
 package com.example.flashgig.adapters;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,13 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -25,14 +29,21 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.databinding.ImagePopupBinding;
+import com.example.flashgig.fragments.ImagePopupFragment;
+import com.example.flashgig.models.Image;
 
 import java.util.ArrayList;
 
 public class HorizontalImageRecyclerViewAdapter extends RecyclerView.Adapter<HorizontalImageRecyclerViewAdapter.MyViewHolder> {
     private Context ctx;
     private ArrayList<Uri> imageArrayList;
+    private LayoutInflater inflater;
+    private HorizontalImageRecyclerViewAdapter.ItemClickListener clickListener;
 
-    public HorizontalImageRecyclerViewAdapter(Context ctx, ArrayList<Uri> imageArrayList) {
+
+    public HorizontalImageRecyclerViewAdapter(Context ctx, ArrayList<Uri> imageArrayList, ItemClickListener clickListener) {
+        this.clickListener = clickListener;
         this.ctx = ctx;
         this.imageArrayList = imageArrayList;
     }
@@ -42,7 +53,7 @@ public class HorizontalImageRecyclerViewAdapter extends RecyclerView.Adapter<Hor
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflate layout
-        LayoutInflater inflater = LayoutInflater.from(ctx);
+        inflater = LayoutInflater.from(ctx);
         View view = inflater.inflate(R.layout.recycler_view_horizontal_image, parent, false);
         return new HorizontalImageRecyclerViewAdapter.MyViewHolder(view);
     }
@@ -60,6 +71,7 @@ public class HorizontalImageRecyclerViewAdapter extends RecyclerView.Adapter<Hor
         }
         GlideApp.with(holder.itemView)
                 .load(curImage)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .addListener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -74,32 +86,10 @@ public class HorizontalImageRecyclerViewAdapter extends RecyclerView.Adapter<Hor
                     }
                 })
                 .into(holder.imageView);
+
         holder.imageView.setOnClickListener(view -> {
-
-            Bitmap bitmap = null;
-            ImageView image = new ImageView(ctx);
-            GlideApp.with(ctx)
-                    .asBitmap()
-                    .load(curImage)
-                    .centerInside()
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            image.setImageDrawable(new BitmapDrawable(ctx.getResources(), resource));
-                        }
-                    });
-// Set the resource for the image view
-// image.setBitmap(someImageBitmapFromListView);
-// You can also set a drawable using setImageResource(Drawable drawable) on the ImageView
-            AlertDialog aDialog = new AlertDialog.Builder(ctx)
-                    .setView(image)
-                    .setPositiveButton(android.R.string.ok,null)
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .create();
-            aDialog.show();
+            clickListener.onItemClick(curImage);
         });
-
-
     }
 
     @Override
@@ -120,6 +110,10 @@ public class HorizontalImageRecyclerViewAdapter extends RecyclerView.Adapter<Hor
             imageView = itemView.findViewById(R.id.imageViewItemHorizontal);
             progressBar = itemView.findViewById(R.id.progressBarImage);
         }
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(Uri imageUri);
     }
 
 }

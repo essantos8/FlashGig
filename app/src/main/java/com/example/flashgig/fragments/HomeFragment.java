@@ -228,6 +228,7 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
     public void onItemClick(String JID) {
         Fragment fragment = DetailFragment.newInstance(JID);
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
         fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();

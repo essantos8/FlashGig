@@ -217,7 +217,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     }
 
     public interface ItemClickListener {
-        public void onItemClick(String jobId);
+        void onItemClick(String jobId);
     }
 
 }
