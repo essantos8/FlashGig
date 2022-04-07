@@ -14,12 +14,17 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:background="#00FFFFFF"
             android:onClick="goBack"
-            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/arrow_left"
+            android:tintMode="src_in"
+            app:layout_constraintBottom_toBottomOf="@+id/textView9"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/textView9"
+            app:tint="@color/dark_grey" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
@@ -37,7 +42,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/textView6"
@@ -172,6 +178,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="location here"
+                    android:textColor="@color/mid_grey"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toEndOf="@+id/textViewLocation"
                     app:layout_constraintTop_toBottomOf="@+id/barrier" />
@@ -220,6 +227,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="num workers here"
+                    android:textColor="@color/mid_grey"
                     app:layout_constraintStart_toEndOf="@+id/textView7"
                     app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -231,6 +239,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="date here"
+                    android:textColor="@color/mid_grey"
                     app:layout_constraintStart_toEndOf="@+id/textView5"
                     app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
 
@@ -242,6 +251,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="description here"
+                    android:textColor="@color/mid_grey"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toEndOf="@+id/textView8"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -280,6 +290,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="XXXX PHP"
+                    android:textColor="@color/mid_grey"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toEndOf="@+id/textView"
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -622,7 +633,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/salmapromedium"
             android:text="Job Post"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_grey"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
