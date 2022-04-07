@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:context=".fragments.DetailFragment">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:onClick="goBack"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:cardMaxElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="Client"
+                    android:textColor="@color/mid_grey"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/profilePicDetail"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textJobClientEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="client here"
+                    android:textColor="@color/mid_grey"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@+id/profilePicDetail"
+                    app:layout_constraintTop_toBottomOf="@+id/textJobClientName" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/profilePicDetail"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearance="@style/Circular"
+                    app:shapeAppearanceOverlay="@style/Circular"
+                    tools:src="@tools:sample/avatars[2]" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarDetail"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/dashboard_blue"
+                    app:layout_constraintBottom_toBottomOf="@+id/profilePicDetail"
+                    app:layout_constraintEnd_toEndOf="@+id/profilePicDetail"
+                    app:layout_constraintStart_toStartOf="@+id/profilePicDetail"
+                    app:layout_constraintTop_toTopOf="@+id/profilePicDetail" />
+
+                <TextView
+                    android:id="@+id/textJobClientName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="client name"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/profilePicDetail"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+                <androidx.appcompat.widget.AppCompatButton
+
+                    android:id="@+id/button4"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/ic_outline_profile"
+                    android:backgroundTint="@color/mid_grey"
+                    android:padding="0dp"
+                    android:paddingLeft="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/button5"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+
+                    android:id="@+id/button5"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/ic_outline_message"
+                    android:backgroundTint="@color/mid_grey"
+                    android:padding="0dp"
+                    android:paddingLeft="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:cardMaxElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView3">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#9CC7FF"
+                    android:foregroundTint="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textJobTitle" />
+
+                <TextView
+                    android:id="@+id/textJobLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="location here"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toEndOf="@+id/textViewLocation"
+                    app:layout_constraintTop_toBottomOf="@+id/barrier" />
+
+                <TextView
+                    android:id="@+id/textViewLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="Location:"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/barrier" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="chipGroupCategories"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="152dp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="Budget:  "
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                <TextView
+                    android:id="@+id/textJobWorkers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="num workers here"
+                    app:layout_constraintStart_toEndOf="@+id/textView7"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+                <TextView
+                    android:id="@+id/textJobDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="date here"
+                    app:layout_constraintStart_toEndOf="@+id/textView5"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
+
+                <TextView
+                    android:id="@+id/textJobDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="description here"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toEndOf="@+id/textView8"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="Workers: "
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="Date Posted: "
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
+
+                <TextView
+                    android:id="@+id/textJobBudget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="XXXX PHP"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toEndOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupCategories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:textAlignment="center"
+                    app:checkedChip="@id/chipOther"
+                    app:chipSpacingHorizontal="6dp"
+                    app:chipSpacingVertical="4dp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider"
+                    app:selectionRequired="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCarpentry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        android:checkable="false"
+                        android:checked="false"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:minWidth="0dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Carpentry"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:checkedIconEnabled="false"
+                        app:chipBackgroundColor="@color/dashboard_blue"
+                        app:chipEndPadding="8dp"
+                        app:chipMinHeight="16dp"
+                        app:chipMinTouchTargetSize="0dp"
+                        app:chipStartPadding="8dp"
+                        app:chipStrokeColor="#00FFFFFF"
+                        app:chipStrokeWidth="1dp"
+                        app:closeIconEndPadding="0dp"
+                        app:closeIconStartPadding="0dp"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipPlumbing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="false"
+                        android:checked="false"
+                        android:minWidth="0dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Plumbing"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:checkedIconEnabled="false"
+                        app:chipBackgroundColor="@color/dashboard_blue"
+                        app:chipEndPadding="8dp"
+                        app:chipMinHeight="16dp"
+                        app:chipMinTouchTargetSize="0dp"
+                        app:chipStartPadding="8dp"
+                        app:chipStrokeColor="#00FFFFFF"
+                        app:chipStrokeWidth="1dp"
+                        app:closeIconEndPadding="0dp"
+                        app:closeIconStartPadding="0dp"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipElectrical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="false"
+                        android:checked="false"
+                        android:minWidth="0dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Electrical"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:checkedIconEnabled="false"
+                        app:chipBackgroundColor="@color/dashboard_blue"
+                        app:chipEndPadding="8dp"
+                        app:chipMinHeight="16dp"
+                        app:chipMinTouchTargetSize="0dp"
+                        app:chipStartPadding="8dp"
+                        app:chipStrokeColor="#00FFFFFF"
+                        app:chipStrokeWidth="1dp"
+                        app:closeIconEndPadding="0dp"
+                        app:closeIconStartPadding="0dp"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipElectronics"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="false"
+                        android:checked="false"
+                        android:minWidth="0dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Electronics"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:checkedIconEnabled="false"
+                        app:chipBackgroundColor="@color/dashboard_blue"
+                        app:chipEndPadding="8dp"
+                        app:chipMinHeight="16dp"
+                        app:chipMinTouchTargetSize="0dp"
+                        app:chipStartPadding="8dp"
+                        app:chipStrokeColor="#00FFFFFF"
+                        app:chipStrokeWidth="1dp"
+                        app:closeIconEndPadding="0dp"
+                        app:closeIconStartPadding="0dp"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipPersonalShopping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="false"
+                        android:checked="false"
+                        android:minWidth="0dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Personal Shopping"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:checkedIconEnabled="false"
+                        app:chipBackgroundColor="@color/dashboard_blue"
+                        app:chipEndPadding="8dp"
+                        app:chipMinHeight="16dp"
+                        app:chipMinTouchTargetSize="0dp"
+                        app:chipStartPadding="8dp"
+                        app:chipStrokeColor="#00FFFFFF"
+                        app:chipStrokeWidth="1dp"
+                        app:closeIconEndPadding="0dp"
+                        app:closeIconStartPadding="0dp"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipVirtualAssistant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="false"
+                        android:checked="false"
+                        android:minWidth="0dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Virtual Assistant"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:checkedIconEnabled="false"
+                        app:chipBackgroundColor="@color/dashboard_blue"
+                        app:chipEndPadding="8dp"
+                        app:chipMinHeight="16dp"
+                        app:chipMinTouchTargetSize="0dp"
+                        app:chipStartPadding="8dp"
+                        app:chipStrokeColor="#00FFFFFF"
+                        app:chipStrokeWidth="1dp"
+                        app:closeIconEndPadding="0dp"
+                        app:closeIconStartPadding="0dp"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipOther"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="false"
+                        android:checked="false"
+                        android:minWidth="0dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Other"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:checkedIconEnabled="false"
+                        app:chipBackgroundColor="@color/dashboard_blue"
+                        app:chipEndPadding="8dp"
+                        app:chipMinHeight="16dp"
+                        app:chipMinTouchTargetSize="0dp"
+                        app:chipStartPadding="8dp"
+                        app:chipStrokeColor="#00FFFFFF"
+                        app:chipStrokeWidth="1dp"
+                        app:closeIconEndPadding="0dp"
+                        app:closeIconStartPadding="0dp"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:id="@+id/textJobTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:shadowColor="@color/mid_grey"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:text="Job Title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/dashboard_blue"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:text="Description: "
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <HorizontalScrollView
+                    android:id="@+id/horizontalScrollView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:padding="0dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="left"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/jobImageDetail0"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_image"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:id="@+id/jobImageDetail1"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_image"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:id="@+id/jobImageDetail2"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_image"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:id="@+id/jobImageDetail3"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_image"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/imageRecyclerView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textJobWorkers" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnApplyForJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Mark as Complete"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="@color/dashboard_blue"
+            app:cornerRadius="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/salmapromedium"
+            android:text="Job Post"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

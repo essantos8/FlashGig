@@ -12,11 +12,11 @@ public class User {
     public String about = "";
     public ArrayList<String> skills = new ArrayList<>();
 
-    public User(){
+    public User() {
     }
 
     // Constructor for new Users
-    public User(String fullName, String email, String phone, String userId){
+    public User(String fullName, String email, String phone, String userId) {
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
