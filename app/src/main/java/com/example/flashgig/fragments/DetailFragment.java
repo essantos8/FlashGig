@@ -143,8 +143,9 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                     if(!curUser.equals(job.getClient())){
                         binding.btnApplyForJob.setVisibility(View.VISIBLE);
                     }
-                    else{
+                    else {
                         binding.btnDeleteJob.setVisibility(View.VISIBLE);
+                        binding.btnSeeBidders.setVisibility(View.VISIBLE);
                     }
                     // get client user id
                     db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
@@ -195,6 +196,14 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                 binding.btnApplyForJob.setBackgroundColor(808080);
                 fm.popBackStackImmediate();
             }
+        });
+
+        binding.btnSeeBidders.setOnClickListener(view -> {
+            Fragment fragment = BiddersFragment.newInstance(mParam1);
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayout, fragment, "biddersList");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         });
 
         return binding.getRoot();

@@ -13,35 +13,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.flashgig.R;
-import com.example.flashgig.activities.BidderRecyclerViewAdapter;
-import com.example.flashgig.activities.JobRecyclerViewAdapter;
-import com.example.flashgig.activities.PARecyclerViewAdapter;
+import com.example.flashgig.adapters.BidderRecyclerViewAdapter;
+import com.example.flashgig.adapters.JobRecyclerViewAdapter;
+import com.example.flashgig.adapters.PARecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentBiddersBinding;
-import com.example.flashgig.databinding.FragmentHomeBinding;
-import com.example.flashgig.databinding.FragmentPostedBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -133,7 +119,11 @@ public class BiddersFragment extends Fragment implements BidderRecyclerViewAdapt
         //if (bidderList.size() == 0) {
         //    Toast.makeText(getActivity(),"No bidders yet!",Toast.LENGTH_SHORT).show();
         //} else
+        FragmentManager fm = getActivity().getSupportFragmentManager();
 
+        binding.backButtonBiddersList.setOnClickListener(view ->{
+            fm.popBackStackImmediate();
+        });
 
         return binding.getRoot();
     }

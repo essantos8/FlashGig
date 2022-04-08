@@ -1,21 +1,16 @@
-package com.example.flashgig.activities;
+package com.example.flashgig.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.R;
-import com.example.flashgig.fragments.BiddersFragment;
 import com.example.flashgig.models.User;
 
 import java.util.ArrayList;
