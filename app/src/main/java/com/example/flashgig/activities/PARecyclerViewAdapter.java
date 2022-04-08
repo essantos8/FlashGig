@@ -15,12 +15,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.activities.MainActivity;
 
 import com.example.flashgig.R;
+import com.example.flashgig.fragments.BiddersFragment;
+import com.example.flashgig.fragments.DetailFragment;
+import com.example.flashgig.fragments.JobAdderFragment;
 import com.example.flashgig.models.Job;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
@@ -196,6 +202,7 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
         TextView textViewTitle, textViewStatus, textViewDate, textViewBudget, textViewWorkers;
         Chip chipCarpentry, chipPlumbing, chipElectronics, chipElectrical, chipPersonalShopping, chipVirtualAssistant, chipOther;
         CardView jobCard;
+        //Button btnBidderAccess;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -213,6 +220,16 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
             chipVirtualAssistant = itemView.findViewById(R.id.chipVirtualAssistant2);
             chipOther = itemView.findViewById(R.id.chipOther2);
             jobCard = itemView.findViewById(R.id.jobCardPopup2);
+
+            /*itemView.findViewById(R.id.btnBidderAccess).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayout2, fragment, "displayBidder");
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });*/
         }
     }
 

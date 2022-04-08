@@ -42,12 +42,12 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
             if (error != null) {
                 Log.d("error", "Firebase error");
             }
-            else{
+            else {
                 for (DocumentChange dc : value.getDocumentChanges()) {
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         jobList.add(dc.getDocument().toObject(Job.class));
                     }
-                    else if(dc.getType() == DocumentChange.Type.REMOVED){
+                    else if(dc.getType() == DocumentChange.Type.REMOVED) {
                         jobList.remove(dc.getDocument().toObject(Job.class));
                     }
                     else{
@@ -78,9 +78,9 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
 
     @Override
     public void onItemClick(String JID) {
-        Fragment fragment = DetailFragment.newInstance(JID);
+        Fragment fragment = BiddersFragment.newInstance(JID);
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "biddersFragment");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

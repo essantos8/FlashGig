@@ -77,12 +77,12 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
                 else if(dc.getType() == DocumentChange.Type.REMOVED){
                     jobList.remove(newJob);
                 }
-
+/*
                 else{
                     int oldIndex = jobList.indexOf(newJob);
                     jobList.remove(newJob);
                     jobList.add(oldIndex,newJob);
-                }
+                }*/
             }
             firstRun.set(false);
             adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
