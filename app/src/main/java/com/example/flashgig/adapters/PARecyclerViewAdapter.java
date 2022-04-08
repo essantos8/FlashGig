@@ -1,17 +1,13 @@
-package com.example.flashgig.activities;
+package com.example.flashgig.adapters;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,20 +17,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.flashgig.activities.MainActivity;
-
 import com.example.flashgig.R;
 import com.example.flashgig.fragments.BiddersFragment;
 import com.example.flashgig.fragments.DetailFragment;
 import com.example.flashgig.fragments.JobAdderFragment;
 import com.example.flashgig.models.Job;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Locale;
 
 public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAdapter.MyViewHolder> implements Filterable {
     private Context ctx;
@@ -109,7 +100,7 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
         holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()));
         holder.textViewBudget.setText(curJob.getBudget());
 
-        holder.jobCard.setOnClickListener(view -> clickListener.onItemClick(curJob.jobId));
+        holder.jobCard.setOnClickListener(view -> clickListener.onItemClick(curJob.jobId, curJob.getStatus()));
     }
 
     @Override
@@ -234,7 +225,7 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
     }
 
     public interface ItemClickListener {
-        public void onItemClick(String jobId);
+        public void onItemClick(String jobId, String status);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.flashgig.activities;
+package com.example.flashgig.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

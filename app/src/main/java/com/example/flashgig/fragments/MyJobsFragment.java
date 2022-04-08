@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.flashgig.activities.VPAdapter;
+import com.example.flashgig.adapters.VPAdapter;
 import com.example.flashgig.databinding.FragmentMyJobsBinding;
 import com.google.android.material.tabs.TabLayout;
 
