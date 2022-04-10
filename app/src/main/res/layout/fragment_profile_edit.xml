@@ -326,6 +326,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="52dp"
             android:scaleType="centerCrop"
+            android:transitionName="profile_picture_edit"
             app:shapeAppearance="@style/Circular"
             app:shapeAppearanceOverlay="@style/Circular"
             app:srcCompat="@drawable/default_profile" />

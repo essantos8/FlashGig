@@ -2,6 +2,8 @@ package com.example.flashgig.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -13,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.signature.ObjectKey;
@@ -65,6 +69,7 @@ public class ProfileFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         currentUser = mAuth.getCurrentUser();
+
     }
 
 
@@ -83,6 +88,7 @@ public class ProfileFragment extends Fragment {
 
         retrieveInfo(false);
 
+        //animations + SHARED ELEMENT
         binding.btnEditProfile.setOnClickListener(view -> {
 //            startActivity(new Intent(getContext(), ProfileEditActivity.class));
             replaceFragment(new ProfileEditFragment(), "profileEdit");
@@ -134,9 +140,17 @@ public class ProfileFragment extends Fragment {
         startActivity(new Intent(getContext(), SplashActivity.class));
     }
 
+    //added transitions
     private void replaceFragment(Fragment newFragment, String tag){
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, newFragment, tag)
+        fragmentTransaction
+                .setCustomAnimations(
+                        R.anim.slide_in_right, //enter
+                        R.anim.slide_out_left, //exit
+                        R.anim.slide_in_left, //pop enter
+                        R.anim.slide_out_right //pop exit
+                )
+                .replace(R.id.frameLayout, newFragment, tag)
                 .addToBackStack(null)
                 .commit();
     }
