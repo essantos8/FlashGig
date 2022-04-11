@@ -100,8 +100,14 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
-                fragment.replace(R.id.frameLayout, new JobAdderFragment(), "jobAdder");
-                fragment.commit();
+                fragment.setCustomAnimations(
+                        R.anim.fade_in, //enter
+                        R.anim.fade_out, //exit
+                        R.anim.fade_in, //pop_enter
+                        R.anim.fade_out //pop_exit
+                )
+                        .replace(R.id.frameLayout, new JobAdderFragment(), "jobAdder")
+                        .commit();
             }
         });
 
@@ -229,9 +235,15 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
     public void onItemClick(String JID) {
         Fragment fragment = DetailFragment.newInstance(JID);
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
-        fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        fragmentTransaction
+                .setCustomAnimations(
+                        R.anim.fade_in, //enter
+                        R.anim.fade_out, //exit
+                        R.anim.fade_in, //pop_enter
+                        R.anim.fade_out //pop_exit
+                )
+                .replace(R.id.frameLayout, fragment, "jobDetail")
+                .addToBackStack(null)
+                .commit();
     }
 }

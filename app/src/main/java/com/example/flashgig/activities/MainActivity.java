@@ -103,20 +103,21 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (animDirection.equals("LtoR")) {
             fragmentTransaction
-                    .setCustomAnimations(R.anim.fade_in, //enter
+                    .setCustomAnimations(
+                            R.anim.slide_in_left, //enter
                             R.anim.slide_out_right, //exit
-                            R.anim.fade_in, //pop enter
-                            R.anim.slide_out_right //pop exit
+                            R.anim.slide_in_right, //pop enter
+                            R.anim.slide_out_left //pop exit
                     )
                     .replace(R.id.frameLayout, fragment, tag)
                     .addToBackStack(null)
                     .commit();
         } else {
             fragmentTransaction
-                    .setCustomAnimations(R.anim.fade_in, //enter
+                    .setCustomAnimations(R.anim.slide_in_right, //enter
                             R.anim.slide_out_left, //exit
-                            R.anim.fade_in, //pop enter
-                            R.anim.slide_out_left //pop exit
+                            R.anim.slide_in_left, //pop enter
+                            R.anim.slide_out_right //pop exit
                     )
                     .replace(R.id.frameLayout, fragment, tag)
                     .addToBackStack(null)
