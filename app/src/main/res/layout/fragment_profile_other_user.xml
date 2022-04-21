@@ -390,36 +390,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textEmail" />
 
-            <ImageButton
-                android:id="@+id/btnEditProfile"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@color/dashboard_blue"
-                android:contentDescription="edit"
-                android:scaleType="fitCenter"
-                android:src="@drawable/edit_button"
-                android:tintMode="src_in"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
-
-            <ImageButton
-                android:id="@+id/btnOptions"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/dashboard_blue"
-                android:contentDescription="options"
-                android:scaleType="fitCenter"
-                android:tintMode="src_in"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_hamburger"
-                app:tint="@color/white" />
-
             <RatingBar
                 android:id="@+id/rbWorker"
                 style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
@@ -505,14 +475,5 @@
             app:layout_constraintTop_toBottomOf="@+id/tvdesc" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/profileDrawer"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/profile_drawer_header"
-        app:menu="@menu/profile_drawer"></com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -23,7 +23,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.activities.MainActivity;
 import com.example.flashgig.activities.ReviewsActivity;
+import com.example.flashgig.activities.SettingsActivity;
 import com.example.flashgig.activities.SplashActivity;
 import com.example.flashgig.databinding.FragmentProfileBinding;
 import com.example.flashgig.models.User;
@@ -115,14 +117,21 @@ public class ProfileFragment extends Fragment {
 //            getActivity().finish();
 //            startActivity(new Intent(getContext(), SplashActivity.class));
 //        });
+
         binding.btnOptions.setOnClickListener(view -> {
             binding.drawerLayout.open();
         });
+
         binding.profileDrawer.setNavigationItemSelectedListener(item -> {
             Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
             switch(item.getTitle().toString()){
                 case "Log Out":
                     logOut();
+                    break;
+
+                case "Settings":
+                    startActivity(new Intent(this.getContext(), SettingsActivity.class));
+
                     break;
             }
             return false;

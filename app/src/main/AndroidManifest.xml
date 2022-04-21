@@ -26,6 +26,9 @@
             android:name=".activities.ReviewsActivity"
             android:exported="true" />
         <activity
+            android:name=".activities.SettingsActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.SplashActivity"
             android:exported="true">
             <intent-filter>

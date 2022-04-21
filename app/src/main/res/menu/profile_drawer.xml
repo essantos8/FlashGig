@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view"
     >
-    <item android:title="Settings"
-        android:icon="@drawable/options_button"/>
 
+    <item
+        android:icon="@drawable/options_button"
+        android:title="Settings" />
     <item
         android:icon="@drawable/ic_cross"
         android:title="Log Out" />
