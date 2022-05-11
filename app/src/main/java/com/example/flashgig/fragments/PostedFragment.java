@@ -17,7 +17,6 @@ import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
@@ -85,7 +84,8 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
     public void onItemClick(String JID, String status) {
         Fragment fragment = null;
         if (status.equals("pending")){
-            fragment = DetailFragment.newInstance(JID);
+            fragment = PendingFragmentClient.newInstance(JID, status);
+            //fragment = DetailFragment.newInstance(JID);
         }
         // disabled for now
         else if(status.equals("in progress")){

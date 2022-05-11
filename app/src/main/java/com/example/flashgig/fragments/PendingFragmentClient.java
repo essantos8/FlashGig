@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -19,30 +18,31 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
 import com.example.flashgig.adapters.BidderRecyclerViewAdapter;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
-import com.example.flashgig.databinding.FragmentDetailBinding;
+import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
+import com.example.flashgig.databinding.FragmentPendingClientBinding;
+import com.example.flashgig.databinding.FragmentPendingClientBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -52,32 +52,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class DetailFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener{
+public class PendingFragmentClient extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener, BidderRecyclerViewAdapter.ItemClickListener, WorkerRecyclerViewAdapter.ItemClickListener {
     private StorageReference storageRef;
     private FirebaseUser currentUser;
     private FirebaseFirestore db;
     private DocumentSnapshot document;
 
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     private String mParam1;
+    private String mParam2;
     private String curUser;
     private String jobId;
 
     private Task<QuerySnapshot> curJob;
     private User clientUser;
-
+    private User bidUser;
+    private User workUser;
     private Job job;
 
-    private FragmentDetailBinding binding;
+    private ArrayList<String> bidderListString = new ArrayList<>();    //put emails of bidders first here
+    private ArrayList<User> bidderList = new ArrayList<>();    //after converting into User, put in this list
+    private ArrayList<String> workerListString = new ArrayList<>();    //put emails of workers first here
+    private ArrayList<User> workerList = new ArrayList<>();    //after converting into User, put in this list
+
+    private FragmentPendingClientBinding binding;
     private ImageView profilePicDetail, jobImage0, jobImage1, jobImage2, jobImage3;
 
     private TextView textJobTitle, textJobDate, textJobBudget, textJobLocation, textJobClientEmail, textJobClientName, textJobDescription, textJobWorkers;
 
     private RecyclerView imageRecyclerView;
-
     private BidderRecyclerViewAdapter adapter1;
+    private WorkerRecyclerViewAdapter adapter2;
 
-    public DetailFragment() {
+    public PendingFragmentClient() {
         // Required empty public constructor
     }
 
@@ -86,13 +94,14 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @return A new instance of fragment DetailFragment.
+     * @return A new instance of fragment PendingFragmentClient.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetailFragment newInstance(String param1) {
-        DetailFragment fragment = new DetailFragment();
+    public static PendingFragmentClient newInstance(String param1, String param2) {
+        PendingFragmentClient fragment = new PendingFragmentClient();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -104,22 +113,105 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
         curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
             jobId = mParam1;
         }
         curJob = db.collection("jobs").whereEqualTo("jobId",mParam1).get();
         storageRef = FirebaseStorage.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
     }
+
+    private void eventChangeListener() {
+        for (int i = 0; i < bidderListString.size(); i++) {
+            int finalI = i;
+            db.collection("users").whereEqualTo("email", bidderListString.get(i)).get().addOnCompleteListener(task1 -> {
+                if (task1.getResult().getDocuments().isEmpty()) {
+                    Log.d("Pending Fragment Client", "onComplete: User is NOT FOUND");
+                    Toast.makeText(getContext(), "Bidder user NOT FOUND.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                bidUser = task1.getResult().getDocuments().get(0).toObject(User.class);
+                bidderList.add(bidUser);
+                //Log.d("bidderListStringSIZE", "bidderListString size: " + bidderListString.get(finalI));
+                //Log.d("bidderListSIZE", "bidderList size: " + bidderList.size());
+                //Toast.makeText(getActivity(), "bidderListString size: " + bidderListString.get(i),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "bidderList size: " + bidderList.size(),Toast.LENGTH_SHORT).show();
+                adapter1.notifyDataSetChanged();
+            });
+        }
+
+        //setting BidderRecyclerView
+        RecyclerView recyclerView = binding.bidderRecyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        adapter1 = new BidderRecyclerViewAdapter(this.getContext(), bidderList, this, mParam1);
+        recyclerView.setAdapter(adapter1);
+    }
+
+    private void eventChangeListener1() {
+        for (int j = 0; j < workerListString.size(); j++) {
+            int finalI = j;
+            db.collection("users").whereEqualTo("email", workerListString.get(j)).get().addOnCompleteListener(task1 -> {
+                if (task1.getResult().getDocuments().isEmpty()) {
+                    Log.d("Pending Fragment Client", "onComplete: User is NOT FOUND");
+                    Toast.makeText(getContext(), "Worker user NOT FOUND.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                workUser = task1.getResult().getDocuments().get(0).toObject(User.class);
+                workerList.add(workUser);
+                //Log.d("workerListStringSIZE", "workerListString size: " + workerListString.get(finalI));
+                //Log.d("workerListSIZE", "workerList size: " + workerList.size());
+                //Toast.makeText(getActivity(), "workerListString size: " + workerListString.get(i),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "workerList size: " + workerList.size(),Toast.LENGTH_SHORT).show();
+                adapter2.notifyDataSetChanged();
+            });
+        }
+
+        //setting WorkerRecyclerView
+        RecyclerView recyclerView1  = binding.workerRecyclerView;
+        recyclerView1.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        adapter2 = new WorkerRecyclerViewAdapter(this.getContext(), workerList, this, mParam1);
+        recyclerView1.setAdapter(adapter2);
+    }
+
+/*
+    private void eventChangeListener() {
+        ListenerRegistration eventListener = db.collection("jobs").document("bidders").addSnapshotListener((value, error) -> {
+            if (error != null) {
+                Log.d("error", error.toString());
+            }
+            else {
+                for (DocumentChange dc : value.getDocumentChanges()) {
+                    if (dc.getType() == DocumentChange.Type.ADDED) {
+                        bidderList.add(dc.getDocument().toObject(User.class));
+                        //                    Log.d("bidderss", "eventChangeListener: added");
+                    } else if (dc.getType() == DocumentChange.Type.REMOVED) {
+                        bidderList.remove(dc.getDocument().toObject(User.class));
+                        //                    Log.d("bidderss", "eventChangeListener: removed");
+                    } else {
+                        Integer index = -1;
+                        index = bidderList.indexOf(dc.getDocument().toObject(User.class));
+                        assert !index.equals(-1);
+                        Log.d("INDEX", "eventChangeListener: " + String.valueOf(index));
+                        bidderList.remove(dc.getDocument().toObject(User.class));
+                        bidderList.add(index, dc.getDocument().toObject(User.class));
+                        //                    Log.d("jobss", "eventChangeListener: modified");
+                    }
+                    adapter1.notifyDataSetChanged();
+                }
+            }
+        });
+    }*/
 
     @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
-        binding = FragmentDetailBinding.inflate(inflater, container, false);
+        bidderList.clear();
+        workerList.clear();
+        binding = FragmentPendingClientBinding.inflate(inflater, container, false);
 
         textJobTitle = binding.textJobTitle;
         textJobLocation = binding.textJobLocation;
@@ -143,17 +235,18 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                 if(task.isSuccessful()){
                     document = task.getResult().getDocuments().get(0);
                     job = document.toObject(Job.class);
-                    //bidderListString = job.getBidders();    //get the list of bidders' emails and put them here
-                    if(!curUser.equals(job.getClient())){
+                    bidderListString = job.getBidders();    //get the list of bidders' emails and put them here
+                    workerListString = job.getWorkers();
+                    /*if(!curUser.equals(job.getClient())){
                         binding.btnApplyForJob.setVisibility(View.VISIBLE);
                     }
                     else {
                         binding.btnDeleteJob.setVisibility(View.VISIBLE);
-                    }
+                    }*/
                     // get client user id
                     db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
                         if(task1.getResult().getDocuments().isEmpty()){
-                            Log.d("Detail Fragment", "onComplete: User not found");
+                            Log.d("Pending Fragment Client", "onComplete: User not found");
                             Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -161,6 +254,8 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                         setViews();
                         loadImages();
                     });
+                    eventChangeListener();
+                    eventChangeListener1();
                 }
             }
         });
@@ -184,11 +279,11 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
             jobDeletionDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.white));
         });
 
-
+        /*
         binding.btnApplyForJob.setOnClickListener(view ->{
             if(job.getBidders().contains(curUser)){
-                 binding.btnApplyForJob.setBackgroundColor(65536);
-                 Toast.makeText(getActivity(),"Applied for job already!",Toast.LENGTH_SHORT).show();
+                binding.btnApplyForJob.setBackgroundColor(65536);
+                Toast.makeText(getActivity(),"Applied for job already!",Toast.LENGTH_SHORT).show();
             }
             else {
                 final Map<String, Object> addUsertoArrayMap = new HashMap<>();
@@ -199,7 +294,7 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                 binding.btnApplyForJob.setBackgroundColor(808080);
                 fm.popBackStackImmediate();
             }
-        });
+        });*/
 
         return binding.getRoot();
     }
@@ -282,10 +377,10 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                     binding.chipOther.setVisibility(View.VISIBLE);
                     break;
             }
-        }
+        }/*
         if(job.getBidders().contains(curUser)){
             binding.btnApplyForJob.setBackgroundColor(808080);
-        }
+        }*/
 
     }
     private void loadImages() {
@@ -302,12 +397,12 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                         .into(profilePicDetail);
                 binding.progressBarDetail.setVisibility(View.GONE);
             } catch (Exception e) {
-                Log.d("Detail Fragment", "loadImage: "+e.toString());
+                Log.d("Pending Fragment Client", "loadImage: "+e.toString());
             }
         }).addOnFailureListener(e -> {
             binding.progressBarDetail.setVisibility(View.GONE);
             profilePicDetail.setImageResource(R.drawable.default_profile);
-            Log.d("Detail Fragment", "retrieveInfo: "+e.toString());
+            Log.d("Pending Fragment Client", "retrieveInfo: "+e.toString());
         });
         // load job images
         ArrayList<String> jobImageUris = new ArrayList<>(job.getJobImages());
@@ -315,7 +410,7 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
         StorageReference jobImagesRef = storageRef.child("/media/images/addjob_pictures/");
         final Integer[] imageCounter = {0};
         for(String imageUriString: jobImageUris){
-            Log.d("detail fragg", "loadImages: "+String.valueOf(imageCounter[0]));
+            Log.d("Pending Fragment Client", "loadImages: "+String.valueOf(imageCounter[0]));
             StorageReference jobImageRef = jobImagesRef.child(imageUriString);
             jobImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                 imageCounter[0]++;
@@ -342,4 +437,24 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
         fragmentTransaction.add(R.id.frameLayout, imagePopupFragment,"imagePopup").addToBackStack(null).commit();
         return;
     }
+
+    @Override
+    public void onItemClick(String userId, String jobId) {
+        Fragment fragment = DisplayBidder.newInstance(userId, jobId);
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "displayBidder");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    //EDIT!!! This onItemClick is supposedly for WorkerRecyclerViewAdapter :'((((
+    /*
+    @Override
+    public void onItemClick(String userId1, String jobId1) {
+        Fragment fragment = DisplayWorker.newInstance(userId1, jobId);
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }*/
 }

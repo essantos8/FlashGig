@@ -11,6 +11,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="web_client_id">204986752191-177paeqqhdg2hl6jorrh3pfv01hslm9g.apps.googleusercontent.com</string>
+    <string name="worker_name">Worker Name</string>
 
     <string-array name="numberOfWorkers">
         <item>1</item>
