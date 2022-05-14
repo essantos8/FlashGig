@@ -1,5 +1,9 @@
 package com.example.flashgig.fragments;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,13 +25,16 @@ import android.widget.Toast;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.adapters.BidderRecyclerViewAdapter;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
-import com.example.flashgig.databinding.FragmentDetailBinding;
-import com.example.flashgig.databinding.FragmentJobInProgressBinding;
+import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
+import com.example.flashgig.databinding.FragmentPendingClientBinding;
+import com.example.flashgig.databinding.FragmentPendingWorkerBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,47 +48,78 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JobInProgressFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener{
-    private FragmentJobInProgressBinding binding;
 
+public class PendingFragmentWorker extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener {
     private StorageReference storageRef;
     private FirebaseUser currentUser;
     private FirebaseFirestore db;
     private DocumentSnapshot document;
 
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     private String mParam1;
+    private String mParam2;
     private String curUser;
+    private String jobId;
 
     private Task<QuerySnapshot> curJob;
     private User clientUser;
+    private User bidUser;
+    private User workUser;
     private Job job;
 
+    private FragmentPendingWorkerBinding binding;
     private ImageView profilePicDetail, jobImage0, jobImage1, jobImage2, jobImage3;
 
     private TextView textJobTitle, textJobDate, textJobBudget, textJobLocation, textJobClientEmail, textJobClientName, textJobDescription, textJobWorkers;
 
     private RecyclerView imageRecyclerView;
 
-    public JobInProgressFragment(String jobId) {
+    public PendingFragmentWorker() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @return A new instance of fragment PendingFragmentWorker.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static PendingFragmentWorker newInstance(String param1, String param2) {
+        PendingFragmentWorker fragment = new PendingFragmentWorker();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
         curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        curJob = db.collection("jobs").whereEqualTo("jobId",jobId).get();
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+            jobId = mParam1;
+        }
+        curJob = db.collection("jobs").whereEqualTo("jobId",mParam1).get();
         storageRef = FirebaseStorage.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentJobInProgressBinding.inflate(inflater, container, false);
+        // Inflate the layout for this fragment
+
+
+        binding = FragmentPendingWorkerBinding.inflate(inflater, container, false);
 
         textJobTitle = binding.textJobTitle;
         textJobLocation = binding.textJobLocation;
@@ -99,24 +137,24 @@ public class JobInProgressFragment extends Fragment implements HorizontalImageRe
         jobImage2 = binding.jobImageDetail2;
         jobImage3 = binding.jobImageDetail3;
 
-        curJob.addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                document = task.getResult().getDocuments().get(0);
-                job = document.toObject(Job.class);
-                if(!curUser.equals(job.getClient())){
-                    binding.btnApplyForJob.setVisibility(View.VISIBLE);
+        curJob.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    document = task.getResult().getDocuments().get(0);
+                    job = document.toObject(Job.class);
+                    // get client user id
+                    db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
+                        if(task1.getResult().getDocuments().isEmpty()){
+                            Log.d("Pending Fragment Client", "onComplete: User not found");
+                            Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
+                        setViews();
+                        loadImages();
+                    });
                 }
-                // get client user id
-                db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
-                    if(task1.getResult().getDocuments().isEmpty()){
-                        Log.d("Detail Fragment", "onComplete: User not found");
-                        Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
-                    setViews();
-                    loadImages();
-                });
             }
         });
 
@@ -126,26 +164,10 @@ public class JobInProgressFragment extends Fragment implements HorizontalImageRe
             fm.popBackStackImmediate();
         });
 
-
-
-        binding.btnApplyForJob.setOnClickListener(view ->{
-            if(job.getBidders().contains(curUser)){
-                binding.btnApplyForJob.setBackgroundColor(65536);
-                Toast.makeText(getActivity(),"Applied for job already!",Toast.LENGTH_SHORT).show();
-            }
-            else {
-                final Map<String, Object> addUsertoArrayMap = new HashMap<>();
-                addUsertoArrayMap.put("bidders", FieldValue.arrayUnion(curUser));
-                // something wrong here
-                db.collection("jobs").document(document.getId()).update(addUsertoArrayMap);
-                Toast.makeText(getActivity(),"Applied for job!",Toast.LENGTH_SHORT).show();
-                binding.btnApplyForJob.setBackgroundColor(808080);
-                fm.popBackStackImmediate();
-            }
-        });
-
         return binding.getRoot();
     }
+
+
     private void setViews(){
         textJobTitle.setText(job.getTitle());
         textJobLocation.setText(job.getLocation());
@@ -183,9 +205,6 @@ public class JobInProgressFragment extends Fragment implements HorizontalImageRe
                     break;
             }
         }
-        if(job.getBidders().contains(curUser)){
-            binding.btnApplyForJob.setBackgroundColor(808080);
-        }
 
     }
     private void loadImages() {
@@ -202,12 +221,12 @@ public class JobInProgressFragment extends Fragment implements HorizontalImageRe
                         .into(profilePicDetail);
                 binding.progressBarDetail.setVisibility(View.GONE);
             } catch (Exception e) {
-                Log.d("Detail Fragment", "loadImage: "+e.toString());
+                Log.d("Pending Fragment Client", "loadImage: "+e.toString());
             }
         }).addOnFailureListener(e -> {
             binding.progressBarDetail.setVisibility(View.GONE);
             profilePicDetail.setImageResource(R.drawable.default_profile);
-            Log.d("Detail Fragment", "retrieveInfo: "+e.toString());
+            Log.d("Pending Fragment Worker", "retrieveInfo: "+e.toString());
         });
         // load job images
         ArrayList<String> jobImageUris = new ArrayList<>(job.getJobImages());
@@ -215,7 +234,7 @@ public class JobInProgressFragment extends Fragment implements HorizontalImageRe
         StorageReference jobImagesRef = storageRef.child("/media/images/addjob_pictures/");
         final Integer[] imageCounter = {0};
         for(String imageUriString: jobImageUris){
-            Log.d("detail fragg", "loadImages: "+String.valueOf(imageCounter[0]));
+            Log.d("Pending Fragment Worker", "loadImages: "+String.valueOf(imageCounter[0]));
             StorageReference jobImageRef = jobImagesRef.child(imageUriString);
             jobImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                 imageCounter[0]++;
@@ -242,4 +261,13 @@ public class JobInProgressFragment extends Fragment implements HorizontalImageRe
         fragmentTransaction.add(R.id.frameLayout, imagePopupFragment,"imagePopup").addToBackStack(null).commit();
         return;
     }
+    /*
+    @Override
+    public void onItemClick(String userId, String jobId) {
+        Fragment fragment = DisplayBidder.newInstance(userId, jobId);    //CHANGE TO DISPLAYCLIENT!!!
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "displayBidder");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }*/
 }

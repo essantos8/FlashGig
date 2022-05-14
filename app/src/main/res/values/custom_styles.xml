@@ -33,4 +33,10 @@
         <item name="cornerFamilyBottomLeft">rounded</item>
     </style>
 
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:editTextColor">@color/dark_grey</item>
+        <item name="android:tint">@color/dark_grey</item>
+        <item name="android:textColorHint">@color/light_grey</item>
+    </style>
+
 </resources>

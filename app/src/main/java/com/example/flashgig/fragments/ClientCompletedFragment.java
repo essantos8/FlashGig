@@ -3,7 +3,6 @@ package com.example.flashgig.fragments;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,98 +13,63 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
-import com.example.flashgig.databinding.FragmentDetailBinding;
-import com.example.flashgig.databinding.FragmentJobInProgressBinding;
+import com.example.flashgig.databinding.FragmentClientCompletedBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.common.net.InternetDomainName;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-public class JobInProgressFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener{
-    private FragmentJobInProgressBinding binding;
+public class ClientCompletedFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener{
+    private FragmentClientCompletedBinding binding;
 
-    private StorageReference storageRef;
-    private FirebaseUser currentUser;
     private FirebaseFirestore db;
-    private DocumentSnapshot document;
+    private FirebaseUser currentUser;
 
-    private static final String ARG_PARAM1 = "param1";
-    private String mParam1;
-    private String curUser;
 
-    private Task<QuerySnapshot> curJob;
-    private User clientUser;
+    private String jobId;
+
     private Job job;
+    private User clientUser;
+    private StorageReference storageRef;
+    private RecyclerView imageRecyclerView, feedbackRecyclerView;
 
-    private ImageView profilePicDetail, jobImage0, jobImage1, jobImage2, jobImage3;
 
-    private TextView textJobTitle, textJobDate, textJobBudget, textJobLocation, textJobClientEmail, textJobClientName, textJobDescription, textJobWorkers;
-
-    private RecyclerView imageRecyclerView;
-
-    public JobInProgressFragment(String jobId) {
-        db = FirebaseFirestore.getInstance();
-        curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        curJob = db.collection("jobs").whereEqualTo("jobId",jobId).get();
-        storageRef = FirebaseStorage.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    public ClientCompletedFragment(String JID){
+        this.jobId = JID;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = FirebaseFirestore.getInstance();
+        storageRef = FirebaseStorage.getInstance().getReference();
+//        curUser = FirebaseAuth.getInstance().getCurrentUser();
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentJobInProgressBinding.inflate(inflater, container, false);
-
-        textJobTitle = binding.textJobTitle;
-        textJobLocation = binding.textJobLocation;
-        textJobDate = binding.textJobDate;
-        textJobClientEmail = binding.textJobClientEmail;
-        textJobClientName = binding.textJobClientName;
-        textJobDescription = binding.textJobDescription;
-        textJobBudget = binding.textJobBudget;
-        textJobWorkers = binding.textJobWorkers;
-        profilePicDetail = binding.profilePicDetail;
-        imageRecyclerView = binding.imageRecyclerView;
-
-        jobImage0 = binding.jobImageDetail0;
-        jobImage1 = binding.jobImageDetail1;
-        jobImage2 = binding.jobImageDetail2;
-        jobImage3 = binding.jobImageDetail3;
-
-        curJob.addOnCompleteListener(task -> {
+        binding = FragmentClientCompletedBinding.inflate(inflater, container, false);
+        db.collection("jobs").whereEqualTo("jobId",jobId).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                document = task.getResult().getDocuments().get(0);
+                DocumentSnapshot document = task.getResult().getDocuments().get(0);
                 job = document.toObject(Job.class);
-                if(!curUser.equals(job.getClient())){
-                    binding.btnApplyForJob.setVisibility(View.VISIBLE);
-                }
+//                if(!curUser.equals(job.getClient())){
+//                    binding.btnApplyForJob.setVisibility(View.VISIBLE);
+//                }
                 // get client user id
                 db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
                     if(task1.getResult().getDocuments().isEmpty()){
@@ -114,47 +78,39 @@ public class JobInProgressFragment extends Fragment implements HorizontalImageRe
                         return;
                     }
                     clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
+                    getWorkers();
                     setViews();
                     loadImages();
                 });
             }
         });
-
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
         binding.backButton.setOnClickListener(view ->{
             fm.popBackStackImmediate();
         });
 
-
-
-        binding.btnApplyForJob.setOnClickListener(view ->{
-            if(job.getBidders().contains(curUser)){
-                binding.btnApplyForJob.setBackgroundColor(65536);
-                Toast.makeText(getActivity(),"Applied for job already!",Toast.LENGTH_SHORT).show();
-            }
-            else {
-                final Map<String, Object> addUsertoArrayMap = new HashMap<>();
-                addUsertoArrayMap.put("bidders", FieldValue.arrayUnion(curUser));
-                // something wrong here
-                db.collection("jobs").document(document.getId()).update(addUsertoArrayMap);
-                Toast.makeText(getActivity(),"Applied for job!",Toast.LENGTH_SHORT).show();
-                binding.btnApplyForJob.setBackgroundColor(808080);
-                fm.popBackStackImmediate();
-            }
-        });
-
+        // Inflate the layout for this fragment
         return binding.getRoot();
     }
-    private void setViews(){
-        textJobTitle.setText(job.getTitle());
-        textJobLocation.setText(job.getLocation());
-        textJobDate.setText(job.getDate());
-        textJobClientEmail.setText(job.getClient());
-        textJobClientName.setText(clientUser.getFullName());
-        textJobDescription.setText(job.getDescription());
-        textJobWorkers.setText(String.valueOf(job.getNumWorkers()));
-        textJobBudget.setText(job.getBudget());
+
+
+    private void getWorkers() {
+        ArrayList<String> workerList = job.getWorkers();
+
+    }
+
+    private void setViews() {
+        binding.textJobClientName.setText(clientUser.getFullName());
+        binding.textJobClientEmail.setText(clientUser.getEmail());
+        binding.textJobTitle.setText(job.getTitle());
+        binding.textJobLocation.setText(job.getLocation());
+        binding.textJobDate.setText(job.getDate());
+        binding.textJobBudget.setText(job.getBudget());
+        binding.textJobDescription.setText(job.description);
+        binding.textJobWorkers.setText(String.valueOf(job.getWorkers().size())+'/'+job.getNumWorkers());
+        imageRecyclerView = binding.imageRecyclerView;
+        feedbackRecyclerView = binding.workerRecyclerView;
 
         for (String category : job.getCategories()){
             switch (category) {
@@ -183,9 +139,7 @@ public class JobInProgressFragment extends Fragment implements HorizontalImageRe
                     break;
             }
         }
-        if(job.getBidders().contains(curUser)){
-            binding.btnApplyForJob.setBackgroundColor(808080);
-        }
+
 
     }
     private void loadImages() {
@@ -199,14 +153,14 @@ public class JobInProgressFragment extends Fragment implements HorizontalImageRe
                         .error(R.drawable.default_profile)
                         .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
                         .fitCenter()
-                        .into(profilePicDetail);
+                        .into(binding.profilePicDetail);
                 binding.progressBarDetail.setVisibility(View.GONE);
             } catch (Exception e) {
                 Log.d("Detail Fragment", "loadImage: "+e.toString());
             }
         }).addOnFailureListener(e -> {
             binding.progressBarDetail.setVisibility(View.GONE);
-            profilePicDetail.setImageResource(R.drawable.default_profile);
+            binding.profilePicDetail.setImageResource(R.drawable.default_profile);
             Log.d("Detail Fragment", "retrieveInfo: "+e.toString());
         });
         // load job images

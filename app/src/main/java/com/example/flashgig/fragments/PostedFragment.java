@@ -83,9 +83,11 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
 
     @Override
     public void onItemClick(String JID, String status) {
+        Log.d("JOBID", "onItemClick: "+JID);
         Fragment fragment = null;
         if (status.equals("pending")){
-            fragment = DetailFragment.newInstance(JID);
+            fragment = PendingFragmentClient.newInstance(JID, status);
+            //fragment = DetailFragment.newInstance(JID);
         }
         // disabled for now
         else if(status.equals("in progress")){
@@ -93,8 +95,8 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
 //            fragment = new JobInProgressFragment(JID);
         }
         else if(status.equals("completed")){
-            //            fragment = new JobCompletedFragment(JID);
-            fragment = DetailFragment.newInstance(JID);
+            fragment = new ClientCompletedFragment(JID);
+//            fragment = DetailFragment.newInstance(JID);
         }
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");

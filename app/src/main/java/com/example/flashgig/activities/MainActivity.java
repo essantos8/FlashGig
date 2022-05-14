@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.flashgig.fragments.ImagePopupFragment;
 import com.example.flashgig.fragments.JobAdderFragment;
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.ActivityMainBinding;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment curFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
-        if (curFragment instanceof DetailFragment || curFragment instanceof JobAdderFragment || curFragment instanceof ProfileEditFragment || curFragment instanceof JobAdderFragment) {
+        if (curFragment instanceof ImagePopupFragment || curFragment instanceof DetailFragment || curFragment instanceof JobAdderFragment || curFragment instanceof ProfileEditFragment || curFragment instanceof JobAdderFragment ) {
             super.onBackPressed();
             return;
         }

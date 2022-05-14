@@ -11,6 +11,7 @@
     <color name="dark_red">@android:color/holo_red_dark</color>
     <color name="light_red">@android:color/holo_red_light</color>
     <color name="yellow_flash">#FFFD00</color>
+    <color name="gold">#DFDD00</color>
 
     <!-- ETO SATEN -->
     <color name="dashboard_blue">#006DFE</color>
