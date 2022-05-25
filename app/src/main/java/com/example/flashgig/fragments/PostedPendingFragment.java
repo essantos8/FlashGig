@@ -28,8 +28,7 @@ import com.example.flashgig.R;
 import com.example.flashgig.adapters.BidderRecyclerViewAdapter;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
 import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
-import com.example.flashgig.databinding.FragmentPendingClientBinding;
-import com.example.flashgig.databinding.FragmentPendingClientBinding;
+import com.example.flashgig.databinding.FragmentPostedPendingBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,22 +36,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
-public class PendingFragmentClient extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener, BidderRecyclerViewAdapter.ItemClickListener, WorkerRecyclerViewAdapter.ItemClickListener {
+public class PostedPendingFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener, BidderRecyclerViewAdapter.ItemClickListener, WorkerRecyclerViewAdapter.ItemClickListener {
     private StorageReference storageRef;
     private FirebaseUser currentUser;
     private FirebaseFirestore db;
@@ -76,7 +69,7 @@ public class PendingFragmentClient extends Fragment implements HorizontalImageRe
     private ArrayList<String> workerListString = new ArrayList<>();    //put emails of workers first here
     private ArrayList<User> workerList = new ArrayList<>();    //after converting into User, put in this list
 
-    private FragmentPendingClientBinding binding;
+    private FragmentPostedPendingBinding binding;
     private ImageView profilePicDetail;
 
     private TextView textJobTitle, textJobDate, textJobBudget, textJobLocation, textJobClientEmail, textJobClientName, textJobDescription, textJobWorkers;
@@ -85,7 +78,7 @@ public class PendingFragmentClient extends Fragment implements HorizontalImageRe
     private BidderRecyclerViewAdapter adapter1;
     private WorkerRecyclerViewAdapter adapter2;
 
-    public PendingFragmentClient() {
+    public PostedPendingFragment() {
         // Required empty public constructor
     }
 
@@ -97,8 +90,8 @@ public class PendingFragmentClient extends Fragment implements HorizontalImageRe
      * @return A new instance of fragment PendingFragmentClient.
      */
     // TODO: Rename and change types and number of parameters
-    public static PendingFragmentClient newInstance(String param1, String param2) {
-        PendingFragmentClient fragment = new PendingFragmentClient();
+    public static PostedPendingFragment newInstance(String param1, String param2) {
+        PostedPendingFragment fragment = new PostedPendingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -211,7 +204,7 @@ public class PendingFragmentClient extends Fragment implements HorizontalImageRe
         // Inflate the layout for this fragment
         bidderList.clear();
         workerList.clear();
-        binding = FragmentPendingClientBinding.inflate(inflater, container, false);
+        binding = FragmentPostedPendingBinding.inflate(inflater, container, false);
 
         textJobTitle = binding.textJobTitle;
         textJobLocation = binding.textJobLocation;
@@ -415,7 +408,7 @@ public class PendingFragmentClient extends Fragment implements HorizontalImageRe
 //                    Toast.makeText(getContext(), "last image is"+String.valueOf(imageCounter[0]), Toast.LENGTH_SHORT).show();
                     HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList, this);
                     LinearLayoutManager layoutManager
-                            = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                            = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
                     imageRecyclerView.setLayoutManager(layoutManager);
                     imageRecyclerView.setAdapter(adapter);
@@ -434,7 +427,7 @@ public class PendingFragmentClient extends Fragment implements HorizontalImageRe
     }
 
     @Override
-    public void onItemClick(String userId, String jobId) {
+    public void onItemClickBidder(String userId, String jobId) {
         Fragment fragment = DisplayBidder.newInstance(userId, jobId);
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "displayBidder");
@@ -443,13 +436,13 @@ public class PendingFragmentClient extends Fragment implements HorizontalImageRe
     }
 
     //EDIT!!! This onItemClick is supposedly for WorkerRecyclerViewAdapter :'((((
-    /*
+
     @Override
-    public void onItemClick(String userId1, String jobId1) {
+    public void onItemClickWorker(String userId1, String jobId1) {
         Fragment fragment = DisplayWorker.newInstance(userId1, jobId);
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-    }*/
+    }
 }

@@ -15,11 +15,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:background="#00FFFFFF"
             android:onClick="goBack"
-            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/arrow_left"
+            android:tintMode="src_in"
+            app:layout_constraintBottom_toBottomOf="@+id/textView9"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/textView9"
+            app:tint="@color/dark_grey" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
@@ -28,6 +33,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:cardMaxElevation="10dp"
@@ -142,6 +148,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:visibility="visible"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:cardMaxElevation="10dp"
@@ -172,6 +179,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="location here"
+                    android:textColor="@color/mid_grey"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toEndOf="@+id/textViewLocation"
                     app:layout_constraintTop_toBottomOf="@+id/barrier" />
@@ -220,6 +228,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="num workers here"
+                    android:textColor="@color/mid_grey"
                     app:layout_constraintStart_toEndOf="@+id/textView7"
                     app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -231,6 +240,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="date here"
+                    android:textColor="@color/mid_grey"
                     app:layout_constraintStart_toEndOf="@+id/textView5"
                     app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
 
@@ -242,6 +252,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="description here"
+                    android:textColor="@color/mid_grey"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toEndOf="@+id/textView8"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -280,6 +291,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="XXXX PHP"
+                    android:textColor="@color/mid_grey"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toEndOf="@+id/textView"
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -603,106 +615,157 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewClient"
-            android:layout_width="match_parent"
+            android:id="@+id/cardView4"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="10dp"
-            android:clickable="true"
-            android:focusable="auto"
-            android:longClickable="true"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:cardMaxElevation="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardView2">
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/imageClient"
-                    android:layout_width="115dp"
-                    android:layout_height="159dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                <View
+                    android:id="@+id/divider7"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#9CC7FF"
+                    android:foregroundTint="#000000"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/default_profile" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvClient" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/bidderRecyclerView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.488"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider7"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
-                    android:id="@+id/tvClientName"
-                    android:layout_width="141dp"
-                    android:layout_height="35dp"
+                    android:id="@+id/tvClient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/salmapromedium"
                     android:shadowColor="@color/mid_grey"
                     android:shadowDx="1"
                     android:shadowDy="1"
                     android:shadowRadius="2"
-                    android:text="Client Name"
+                    android:text="Bidders"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/dashboard_blue"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.064"
-                    app:layout_constraintStart_toEndOf="@+id/imageClient"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.061" />
-
-                <View
-                    android:id="@+id/divider9"
-                    android:layout_width="287.5dp"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.857"
-                    app:layout_constraintStart_toEndOf="@+id/imageClient"
-                    app:layout_constraintTop_toBottomOf="@+id/tvClientName"
-                    app:layout_constraintVertical_bias="0.067" />
-
-                <TextView
-                    android:id="@+id/tvClientEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/salmapromedium"
-                    android:text="Email"
-                    app:layout_constraintStart_toEndOf="@+id/imageClient"
-                    app:layout_constraintTop_toBottomOf="@+id/tvClientNumber" />
-
-                <TextView
-                    android:id="@+id/tvClientNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="@font/salmapromedium"
-                    android:text="Contact No."
-                    app:layout_constraintStart_toEndOf="@+id/imageClient"
-                    app:layout_constraintTop_toBottomOf="@+id/rbClient" />
-
-                <RatingBar
-                    android:id="@+id/rbClient"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:numStars="5"
-                    app:layout_constraintStart_toEndOf="@+id/imageClient"
-                    app:layout_constraintTop_toBottomOf="@+id/divider9" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:cardMaxElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView4">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/divider8"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#9CC7FF"
+                    android:foregroundTint="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textWorkers" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/workerRecyclerView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.488"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider8"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/textWorkers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:shadowColor="@color/mid_grey"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:text="Workers"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/dashboard_blue"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnDeleteJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Delete Job"
+            android:textColor="#FFFFFF"
+            android:visibility="visible"
+            app:backgroundTint="@color/light_red"
+            app:cornerRadius="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView5"
+            app:layout_constraintVertical_bias="0.3" />
 
         <TextView
             android:id="@+id/textView9"
@@ -719,7 +782,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btnSetJobCompleteWorker"
+            android:id="@+id/btnSetJobCompleteClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -732,7 +795,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardViewClient"
+            app:layout_constraintTop_toBottomOf="@+id/btnDeleteJob"
             app:layout_constraintVertical_bias="0.3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

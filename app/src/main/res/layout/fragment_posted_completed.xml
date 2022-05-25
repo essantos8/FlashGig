@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ClientCompletedFragment" >
+    tools:context=".fragments.PostedCompletedFragment" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -665,7 +665,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/salmapromedium"
-            android:text="Comments and Feedback"
+            android:text="Ratings and Feedback"
             android:textColor="@color/mid_grey"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"

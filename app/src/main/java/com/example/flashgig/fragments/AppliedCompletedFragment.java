@@ -1,19 +1,8 @@
 package com.example.flashgig.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,34 +11,37 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
-import com.example.flashgig.adapters.BidderRecyclerViewAdapter;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
-import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
-import com.example.flashgig.databinding.FragmentPendingClientBinding;
-import com.example.flashgig.databinding.FragmentPendingWorkerBinding;
+import com.example.flashgig.databinding.FragmentAppliedPendingBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Locale;
+
+import javax.net.ssl.SSLEngineResult;
 
 
-public class PendingFragmentWorker extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener {
+public class AppliedCompletedFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener {
     private StorageReference storageRef;
     private FirebaseUser currentUser;
     private FirebaseFirestore db;
@@ -57,10 +49,9 @@ public class PendingFragmentWorker extends Fragment implements HorizontalImageRe
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
-    private String curUser;
     private String jobId;
+    private String jobStatus;
+    private String curUser;
 
     private Task<QuerySnapshot> curJob;
     private User clientUser;
@@ -68,14 +59,14 @@ public class PendingFragmentWorker extends Fragment implements HorizontalImageRe
     private User workUser;
     private Job job;
 
-    private FragmentPendingWorkerBinding binding;
-    private ImageView profilePicDetail, jobImage0, jobImage1, jobImage2, jobImage3;
+    private FragmentAppliedPendingBinding binding;
+    private ImageView profilePicDetail;
 
     private TextView textJobTitle, textJobDate, textJobBudget, textJobLocation, textJobClientEmail, textJobClientName, textJobDescription, textJobWorkers;
 
     private RecyclerView imageRecyclerView;
 
-    public PendingFragmentWorker() {
+    public AppliedCompletedFragment() {
         // Required empty public constructor
     }
 
@@ -87,8 +78,8 @@ public class PendingFragmentWorker extends Fragment implements HorizontalImageRe
      * @return A new instance of fragment PendingFragmentWorker.
      */
     // TODO: Rename and change types and number of parameters
-    public static PendingFragmentWorker newInstance(String param1, String param2) {
-        PendingFragmentWorker fragment = new PendingFragmentWorker();
+    public static AppliedCompletedFragment newInstance(String param1, String param2) {
+        AppliedCompletedFragment fragment = new AppliedCompletedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -102,11 +93,10 @@ public class PendingFragmentWorker extends Fragment implements HorizontalImageRe
         db = FirebaseFirestore.getInstance();
         curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-            jobId = mParam1;
+            jobId = getArguments().getString(ARG_PARAM1);
+            jobStatus = getArguments().getString(ARG_PARAM2);
         }
-        curJob = db.collection("jobs").whereEqualTo("jobId",mParam1).get();
+        curJob = db.collection("jobs").whereEqualTo("jobId",jobId).get();
         storageRef = FirebaseStorage.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
@@ -119,7 +109,7 @@ public class PendingFragmentWorker extends Fragment implements HorizontalImageRe
         // Inflate the layout for this fragment
 
 
-        binding = FragmentPendingWorkerBinding.inflate(inflater, container, false);
+        binding = FragmentAppliedPendingBinding.inflate(inflater, container, false);
 
         textJobTitle = binding.textJobTitle;
         textJobLocation = binding.textJobLocation;
@@ -131,11 +121,9 @@ public class PendingFragmentWorker extends Fragment implements HorizontalImageRe
         textJobWorkers = binding.textJobWorkers;
         profilePicDetail = binding.profilePicDetail;
         imageRecyclerView = binding.imageRecyclerView;
-
-        jobImage0 = binding.jobImageDetail0;
-        jobImage1 = binding.jobImageDetail1;
-        jobImage2 = binding.jobImageDetail2;
-        jobImage3 = binding.jobImageDetail3;
+        if(jobStatus.toUpperCase(Locale.ROOT).equals("COMPLETED")){
+            binding.btnSetJobCompleteWorker.setVisibility(View.GONE);
+        }
 
         curJob.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -205,6 +193,9 @@ public class PendingFragmentWorker extends Fragment implements HorizontalImageRe
                     break;
             }
         }
+
+        // Client Card
+
 
     }
     private void loadImages() {

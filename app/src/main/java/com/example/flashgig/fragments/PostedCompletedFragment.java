@@ -19,7 +19,8 @@ import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
-import com.example.flashgig.databinding.FragmentClientCompletedBinding;
+import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
+import com.example.flashgig.databinding.FragmentPostedCompletedBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.common.net.InternetDomainName;
@@ -31,8 +32,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class ClientCompletedFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener{
-    private FragmentClientCompletedBinding binding;
+public class PostedCompletedFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener, WorkerRecyclerViewAdapter.ItemClickListener{
+    private FragmentPostedCompletedBinding binding;
 
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
@@ -45,8 +46,13 @@ public class ClientCompletedFragment extends Fragment implements HorizontalImage
     private StorageReference storageRef;
     private RecyclerView imageRecyclerView, feedbackRecyclerView;
 
+    private ArrayList<String> workerListString = new ArrayList<>();
+    private ArrayList<User> workerList = new ArrayList<>();
 
-    public ClientCompletedFragment(String JID){
+    private WorkerRecyclerViewAdapter adapter;
+
+
+    public PostedCompletedFragment(String JID){
         this.jobId = JID;
     }
 
@@ -62,7 +68,7 @@ public class ClientCompletedFragment extends Fragment implements HorizontalImage
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentClientCompletedBinding.inflate(inflater, container, false);
+        binding = FragmentPostedCompletedBinding.inflate(inflater, container, false);
         db.collection("jobs").whereEqualTo("jobId",jobId).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 DocumentSnapshot document = task.getResult().getDocuments().get(0);
@@ -96,8 +102,24 @@ public class ClientCompletedFragment extends Fragment implements HorizontalImage
 
 
     private void getWorkers() {
-        ArrayList<String> workerList = job.getWorkers();
+        workerListString = job.getWorkers();
+        for (int i = 0; i < workerListString.size(); i++) {
+            int finalI = i;
+            db.collection("users").whereEqualTo("email", workerListString.get(i)).get().addOnCompleteListener(task -> {
+                if (task.getResult().getDocuments().isEmpty()) {
+                    Log.d("CompletedClientFragment", workerListString.get(finalI) + ": User is NOT FOUND");
+                    return;
+                }
+                workerList.add(task.getResult().getDocuments().get(0).toObject(User.class));
+                adapter.notifyDataSetChanged();
+            });
+        }
 
+        feedbackRecyclerView = binding.workerRecyclerView;
+        feedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        adapter = new WorkerRecyclerViewAdapter(this.getContext(), workerList, this, jobId);
+        feedbackRecyclerView.setAdapter(adapter);
     }
 
     private void setViews() {
@@ -195,5 +217,10 @@ public class ClientCompletedFragment extends Fragment implements HorizontalImage
         fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         fragmentTransaction.add(R.id.frameLayout, imagePopupFragment,"imagePopup").addToBackStack(null).commit();
         return;
+    }
+
+    @Override
+    public void onItemClickWorker(String userId1, String jobId1) {
+
     }
 }

@@ -46,7 +46,7 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         holder.textViewWNumber.setText(curWorker.getPhone());
         holder.textViewWEmail.setText(curWorker.getEmail());
 
-        holder.workerCard.setOnClickListener(view -> clickListener.onItemClick(curWorker.userId, jobId1));
+        holder.workerCard.setOnClickListener(view -> clickListener.onItemClickWorker(curWorker.userId, jobId1));
     }
 
     @Override
@@ -71,6 +71,6 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
     }
 
     public interface ItemClickListener {
-        public void onItemClick(String userId1, String jobId1);
+        public void onItemClickWorker(String userId1, String jobId1);
     }
 }

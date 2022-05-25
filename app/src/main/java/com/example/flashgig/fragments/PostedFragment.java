@@ -17,7 +17,6 @@ import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
@@ -86,7 +85,7 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
         Log.d("JOBID", "onItemClick: "+JID);
         Fragment fragment = null;
         if (status.equals("pending")){
-            fragment = PendingFragmentClient.newInstance(JID, status);
+            fragment = PostedPendingFragment.newInstance(JID, status);
             //fragment = DetailFragment.newInstance(JID);
         }
         // disabled for now
@@ -95,7 +94,7 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
 //            fragment = new JobInProgressFragment(JID);
         }
         else if(status.equals("completed")){
-            fragment = new ClientCompletedFragment(JID);
+            fragment = new PostedCompletedFragment(JID);
 //            fragment = DetailFragment.newInstance(JID);
         }
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();

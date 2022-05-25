@@ -46,7 +46,7 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
         holder.textViewBNumber.setText(curBidder.getPhone());
         holder.textViewBEmail.setText(curBidder.getEmail());
 
-        holder.bidderCard.setOnClickListener(view -> clickListener.onItemClick(curBidder.userId, jobId));
+        holder.bidderCard.setOnClickListener(view -> clickListener.onItemClickBidder(curBidder.userId, jobId));
     }
 
     @Override
@@ -86,6 +86,6 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
     }
 
     public interface ItemClickListener {
-        public void onItemClick(String userId, String jobId);
+        public void onItemClickBidder(String userId, String jobId);
     }
 }

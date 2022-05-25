@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.flashgig.R;
-import com.example.flashgig.adapters.JobRecyclerViewAdapter;
 
+import com.example.flashgig.adapters.PARecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentAppliedBinding;
 import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,10 +25,10 @@ import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 
 
-public class AppliedFragment extends Fragment implements JobRecyclerViewAdapter.ItemClickListener {
+public class AppliedFragment extends Fragment implements PARecyclerViewAdapter.ItemClickListener {
     private FirebaseFirestore db;
     private ArrayList<Job> jobList = new ArrayList<>();
-    private JobRecyclerViewAdapter adapter;
+    private PARecyclerViewAdapter adapter;
     String curUser;
 
     @Override
@@ -72,7 +72,7 @@ public class AppliedFragment extends Fragment implements JobRecyclerViewAdapter.
         RecyclerView recyclerView = binding.recyclerViewApplied;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
+        adapter = new PARecyclerViewAdapter(this.getContext(), jobList, this);
         recyclerView.setAdapter(adapter);
 
         // Inflate the layout for this fragment
@@ -80,11 +80,26 @@ public class AppliedFragment extends Fragment implements JobRecyclerViewAdapter.
     }
 
     @Override
-    public void onItemClick(String JID) {
-        Fragment fragment = DetailFragment.newInstance(JID);
+    public void onItemClick(String JID, String status) {
+//        Fragment fragment = DetailFragment.newInstance(JID);
+        Fragment fragment = null;
+        if (status.equals("pending")){
+            fragment = AppliedPendingFragment.newInstance(JID, status);
+            //fragment = DetailFragment.newInstance(JID);
+        }
+        // disabled for now
+        else if(status.equals("in progress")){
+            fragment = DetailFragment.newInstance(JID);
+//            fragment = new JobInProgressFragment(JID);
+        }
+        else if(status.equals("completed")){
+            fragment = AppliedCompletedFragment.newInstance(JID, status);
+//            fragment = DetailFragment.newInstance(JID);
+        }
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
         fragmentTransaction.addToBackStack(null);
+
         fragmentTransaction.commit();
     }
 }
