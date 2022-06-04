@@ -1,6 +1,7 @@
 package com.example.flashgig.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
     // Required info
@@ -11,6 +12,7 @@ public class User {
     // Additional info
     public String about = "";
     public ArrayList<String> skills = new ArrayList<>();
+    public HashMap<String, Integer> ratings = new HashMap<>();
 
     public User() {
     }
@@ -40,13 +42,14 @@ public class User {
     }
 
     // Constructor for existing/editing user profiles
-    public User(String fullName, String email, String phone, String userId, String about, ArrayList<String> skills) {
+    public User(String fullName, String email, String phone, String userId, String about, ArrayList<String> skills, HashMap<String, Integer> ratings) {
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.userId = userId;
         this.about = about;
         this.skills = skills;
+        this.ratings = ratings;
     }
 
     public String getFullName() {
@@ -80,4 +83,6 @@ public class User {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    public Integer getRating(String jobId) {return this.ratings.get(jobId);}
 }

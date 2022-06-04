@@ -43,8 +43,8 @@ public class DisplayBidder extends Fragment {
 
     private ArrayList<String> bidderListTemp = new ArrayList<>();    //putting all of the accepted bidders in 1 list temporarily
     private ArrayList<String> workerListTemp = new ArrayList<>();    //putting all of the workers in 1 list temporarily
-
     private FirebaseFirestore db;
+    private Map<String, Integer> jobRating = new HashMap<>();
     DocumentSnapshot document;
     //Task<QuerySnapshot> bidUser1;
     DocumentReference bidderDocRef;
@@ -143,24 +143,26 @@ public class DisplayBidder extends Fragment {
             } else {
                 bidderListTemp = job.getBidders();    //get the bidder list
                 workerListTemp = job.getWorkers();    //get the worker list
-
+                jobRating.put(job.jobId,0); //put an initial rating of 0 for a particular job
+                bidUserAcc.ratings.put(job.jobId, 0); // inputs a temporary rating of 0;
                 bidderListTemp.remove(bidUserAcc.getEmail());    //remove the bidder from the tempbidder list
                 workerListTemp.add(bidUserAcc.getEmail());    //add the bidder to the tempworker list
-
                 //UPDATING BIDDERS AND WORKERS
                 jobDocRef.update("bidders", bidderListTemp, "workers", workerListTemp).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("DisplayBidderAccept", "DocumentSnapshot successfully updated! (bidders)");
-                        Toast.makeText(getActivity(), "Bidder accepted!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("DisplayBidderAccept", "Error updating document. (bidders)", e);
-                    }
-                });
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d("DisplayBidderAccept", "DocumentSnapshot successfully updated! (bidders)");
+                                Toast.makeText(getActivity(), "Bidder accepted!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("DisplayBidderAccept", "Error updating document. (bidders)", e);
+                            }
+                        });
+                bidderDocRef.update("ratings",jobRating);
+
             }
         });
 
@@ -175,12 +177,12 @@ public class DisplayBidder extends Fragment {
 
                 //UPDATING BIDDERS AND WORKERS
                 jobDocRef.update("bidders", bidderListTemp).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("DisplayBidderAccept", "DocumentSnapshot successfully updated! (bidders)");
-                        Toast.makeText(getActivity(), "Bidder declined.", Toast.LENGTH_SHORT).show();
-                    }
-                })
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d("DisplayBidderAccept", "DocumentSnapshot successfully updated! (bidders)");
+                                Toast.makeText(getActivity(), "Bidder declined.", Toast.LENGTH_SHORT).show();
+                            }
+                        })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -190,19 +192,6 @@ public class DisplayBidder extends Fragment {
             }
         });
 
-        /*
-        binding.btnAcceptBidder.setOnClickListener(view -> {
-            if (job.getWorkers().contains(bidUserAcc.getEmail())) {    //if the job has bidder in its "workers" array
-                binding.btnAcceptBidder.setBackgroundColor(808080);    //set the button color to grey
-                Toast.makeText(getActivity(), "Bidder already accepted as worker!", Toast.LENGTH_SHORT).show();    //show that the bidder is already a worker
-            } else {
-                final Map<String, Object> addUsertoArrayMap = new HashMap<>();
-                addUsertoArrayMap.put("workers", FieldValue.arrayUnion(bidUserAcc.getEmail()));    //put bidder in "workers" array
-                db.collection("jobs").document(mParam2).update(addUsertoArrayMap);    //add to "workers" array
-                Toast.makeText(getActivity(), "Bidder accepted!", Toast.LENGTH_SHORT).show();
-                binding.btnAcceptBidder.setBackgroundColor(808080);
-            }
-        });*/
 
         return binding.getRoot();
     }

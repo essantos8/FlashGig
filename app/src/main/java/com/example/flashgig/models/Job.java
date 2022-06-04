@@ -19,7 +19,8 @@ public class Job {
     public Job() {
     }
     // Constructor for new jobs
-    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, String jobId, ArrayList<String> jobImages) {
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location,
+               String budget, String jobId, ArrayList<String> jobImages) {
         this.title = title;
         this.description = description;
         this.client = client;
@@ -35,7 +36,8 @@ public class Job {
         this.status = "pending";
     }
     //
-    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, ArrayList<String> workers, ArrayList<String> bidders, String jobId, ArrayList<String> jobImages) {
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location,
+               String budget, ArrayList<String> workers, ArrayList<String> bidders, String jobId, ArrayList<String> jobImages) {
         this.title = title;
         this.description = description;
         this.client = client;

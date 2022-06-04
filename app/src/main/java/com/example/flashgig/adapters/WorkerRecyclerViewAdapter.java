@@ -1,9 +1,12 @@
 package com.example.flashgig.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,22 +14,31 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.R;
+import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecyclerViewAdapter.MyViewHolder> {
+    private FirebaseFirestore db;
     private Context context;
     private ArrayList<User> workerList;
     private ItemClickListener clickListener;
-    private String jobId1;
-
-    public WorkerRecyclerViewAdapter(Context context, ArrayList<User> workerList, ItemClickListener clickListener, String jobId1) {
+    private Job job;
+    private String jobId;
+    private Button rateButton;
+    private RatingBar ratingBar;
+    public User curWorker;
+    public WorkerRecyclerViewAdapter(Context context, ArrayList<User> workerList, ItemClickListener clickListener, String jobId) {
         this.context = context;
         this.workerList = workerList;
         this.clickListener = clickListener;
-        this.jobId1 = jobId1;
+        this.jobId = jobId;
     }
+
+
 
     @NonNull
     @Override
@@ -34,19 +46,23 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         // inflate layout
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.worker_recycler_view_row, parent, false);
+
+
+
         return new WorkerRecyclerViewAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WorkerRecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull WorkerRecyclerViewAdapter.MyViewHolder holder, int position, float ratingBar) {
         User curWorker = workerList.get(position);
-
         //holder.imageWorker.setImageResource(curWorker.get);
+        holder.ratingBar.setRating(curWorker.getRating(jobId));
         holder.textViewWName.setText(curWorker.getFullName());
         holder.textViewWNumber.setText(curWorker.getPhone());
         holder.textViewWEmail.setText(curWorker.getEmail());
-
-        holder.workerCard.setOnClickListener(view -> clickListener.onItemClickWorker(curWorker.userId, jobId1));
+        holder.workerCard.setOnClickListener(view -> clickListener.onItemClickWorker(curWorker.userId, jobId));
+        holder.rateButton.setOnClickListener(view -> clickListener.RateBtnOnClick(curWorker.userId, jobId, ratingBar));
+//        holder.rateButton.setOnClickListener(view -> clickListener.onIt);
     }
 
     @Override
@@ -58,7 +74,8 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         //ImageView imageWorker;
         TextView textViewWName, textViewWNumber, textViewWEmail;
         CardView workerCard;
-
+        RatingBar ratingBar;
+        Button rateButton;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -67,10 +84,14 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
             textViewWNumber = itemView.findViewById(R.id.textWorkerNumber);
             textViewWEmail = itemView.findViewById(R.id.textWorkerEmail);
             workerCard = itemView.findViewById(R.id.workerCardPopup);
+            ratingBar = itemView.findViewById(R.id.rbWorker);
+            rateButton = itemView.findViewById(R.id.rateBtn);
         }
     }
 
     public interface ItemClickListener {
         public void onItemClickWorker(String userId1, String jobId1);
+        public void RateBtnOnClick(String jobId, String userId, float rating);
     }
+
 }

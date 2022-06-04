@@ -445,4 +445,9 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+    @Override
+    public void RateBtnOnClick(String jobId, String userId, float rating) {
+
+    }
 }

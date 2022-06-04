@@ -1,5 +1,6 @@
 package com.example.flashgig.fragments;
 
+import android.media.Rating;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.signature.ObjectKey;
@@ -31,21 +33,19 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PostedCompletedFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener, WorkerRecyclerViewAdapter.ItemClickListener{
     private FragmentPostedCompletedBinding binding;
 
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
-
-
     private String jobId;
-
+    private RatingBar ratingBar;
     private Job job;
     private User clientUser;
     private StorageReference storageRef;
     private RecyclerView imageRecyclerView, feedbackRecyclerView;
-
     private ArrayList<String> workerListString = new ArrayList<>();
     private ArrayList<User> workerList = new ArrayList<>();
 
@@ -61,6 +61,7 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
+
 //        curUser = FirebaseAuth.getInstance().getCurrentUser();
 
     }
@@ -102,7 +103,7 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
 
 
     private void getWorkers() {
-        workerListString = job.getWorkers();
+        workerListString = (ArrayList<String>) job.getWorkers();
         for (int i = 0; i < workerListString.size(); i++) {
             int finalI = i;
             db.collection("users").whereEqualTo("email", workerListString.get(i)).get().addOnCompleteListener(task -> {
@@ -221,6 +222,9 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
 
     @Override
     public void onItemClickWorker(String userId1, String jobId1) {
+    }
 
+    public void RateBtnOnClick(String userId, String jobId, float rating){
+        Log.d("DONE", "onButtonRateClick: " + userId +"..."+ jobId +"..."+ rating);
     }
 }

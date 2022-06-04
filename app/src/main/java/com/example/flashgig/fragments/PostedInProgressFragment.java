@@ -1,66 +1,230 @@
 package com.example.flashgig.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.bumptech.glide.signature.ObjectKey;
+import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
+import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
+import com.example.flashgig.databinding.FragmentPostedInProgressBinding;
+import com.example.flashgig.models.Job;
+import com.example.flashgig.models.User;
+import com.google.common.net.InternetDomainName;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PostedInProgress#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PostedInProgress extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class PostedInProgressFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener, WorkerRecyclerViewAdapter.ItemClickListener{
+    private FragmentPostedInProgressBinding binding;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FirebaseFirestore db;
+    private FirebaseUser currentUser;
 
-    public PostedInProgress() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PostedInProgress.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PostedInProgress newInstance(String param1, String param2) {
-        PostedInProgress fragment = new PostedInProgress();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    private String jobId;
+
+    private Job job;
+    private User clientUser;
+    private StorageReference storageRef;
+    private RecyclerView imageRecyclerView, feedbackRecyclerView;
+
+    private ArrayList<String> workerListString = new ArrayList<>();
+    private ArrayList<User> workerList = new ArrayList<>();
+
+    private WorkerRecyclerViewAdapter adapter;
+
+
+    public PostedInProgressFragment(String JID){
+        this.jobId = JID;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        db = FirebaseFirestore.getInstance();
+        storageRef = FirebaseStorage.getInstance().getReference();
+//        curUser = FirebaseAuth.getInstance().getCurrentUser();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentPostedInProgressBinding.inflate(inflater, container, false);
+        db.collection("jobs").whereEqualTo("jobId",jobId).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                job = document.toObject(Job.class);
+//                if(!curUser.equals(job.getClient())){
+//                    binding.btnApplyForJob.setVisibility(View.VISIBLE);
+//                }
+                // get client user id
+                db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
+                    if(task1.getResult().getDocuments().isEmpty()){
+                        Log.d("Detail Fragment", "onComplete: User not found");
+                        Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
+                    getWorkers();
+                    setViews();
+                    loadImages();
+                });
+            }
+        });
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+
+        binding.backButton.setOnClickListener(view ->{
+            fm.popBackStackImmediate();
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_posted_in_progress, container, false);
+        return binding.getRoot();
+    }
+
+
+    private void getWorkers() {
+        workerListString = (ArrayList<String>) job.getWorkers();
+        for (int i = 0; i < workerListString.size(); i++) {
+            int finalI = i;
+            db.collection("users").whereEqualTo("email", workerListString.get(i)).get().addOnCompleteListener(task -> {
+                if (task.getResult().getDocuments().isEmpty()) {
+                    Log.d("CompletedClientFragment", workerListString.get(finalI) + ": User is NOT FOUND");
+                    return;
+                }
+                workerList.add(task.getResult().getDocuments().get(0).toObject(User.class));
+                adapter.notifyDataSetChanged();
+            });
+        }
+
+        feedbackRecyclerView = binding.workerRecyclerView;
+        feedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        adapter = new WorkerRecyclerViewAdapter(this.getContext(), workerList, this, jobId);
+        feedbackRecyclerView.setAdapter(adapter);
+    }
+
+    private void setViews() {
+        binding.textJobClientName.setText(clientUser.getFullName());
+        binding.textJobClientEmail.setText(clientUser.getEmail());
+        binding.textJobTitle.setText(job.getTitle());
+        binding.textJobLocation.setText(job.getLocation());
+        binding.textJobDate.setText(job.getDate());
+        binding.textJobBudget.setText(job.getBudget());
+        binding.textJobDescription.setText(job.description);
+        binding.textJobWorkers.setText(String.valueOf(job.getWorkers().size())+'/'+job.getNumWorkers());
+        imageRecyclerView = binding.imageRecyclerView;
+        feedbackRecyclerView = binding.workerRecyclerView;
+
+        for (String category : job.getCategories()){
+            switch (category) {
+                case "Carpentry":
+                    binding.chipCarpentry.setVisibility(View.VISIBLE);
+                    break;
+                case "Plumbing":
+                    binding.chipPlumbing.setVisibility(View.VISIBLE);
+                    break;
+                case "Electrical":
+                    binding.chipElectrical.setVisibility(View.VISIBLE);
+                    break;
+                case "Electronics":
+                    binding.chipElectronics.setVisibility(View.VISIBLE);
+                    break;
+                case "Personal Shopping":
+                case "Shopping":
+                    binding.chipPersonalShopping.setVisibility(View.VISIBLE);
+                    break;
+                case "Virtual Assistant":
+                case "Assistant":
+                    binding.chipVirtualAssistant.setVisibility(View.VISIBLE);
+                    break;
+                case "Other":
+                    binding.chipOther.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+
+
+    }
+    private void loadImages() {
+        String clientId = clientUser.getUserId();
+        // load client profile pic
+        StorageReference userRef = storageRef.child("media/images/profile_pictures/" + clientId);
+        userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
+            try {
+                GlideApp.with(this)
+                        .load(userRef)
+                        .error(R.drawable.default_profile)
+                        .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
+                        .fitCenter()
+                        .into(binding.profilePicDetail);
+                binding.progressBarDetail.setVisibility(View.GONE);
+            } catch (Exception e) {
+                Log.d("Detail Fragment", "loadImage: "+e.toString());
+            }
+        }).addOnFailureListener(e -> {
+            binding.progressBarDetail.setVisibility(View.GONE);
+            binding.profilePicDetail.setImageResource(R.drawable.default_profile);
+            Log.d("Detail Fragment", "retrieveInfo: "+e.toString());
+        });
+        // load job images
+        ArrayList<String> jobImageUris = new ArrayList<>(job.getJobImages());
+        ArrayList<Uri> jobImageArrayList = new ArrayList<>();
+        StorageReference jobImagesRef = storageRef.child("/media/images/addjob_pictures/");
+        final Integer[] imageCounter = {0};
+        for(String imageUriString: jobImageUris){
+            Log.d("detail fragg", "loadImages: "+String.valueOf(imageCounter[0]));
+            StorageReference jobImageRef = jobImagesRef.child(imageUriString);
+            jobImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                imageCounter[0]++;
+                jobImageArrayList.add(uri);
+                // if last image uri is fetched, set adapter
+                if(imageCounter[0] == jobImageUris.size()){
+//                    Toast.makeText(getContext(), "last image is"+String.valueOf(imageCounter[0]), Toast.LENGTH_SHORT).show();
+                    HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList, this);
+                    LinearLayoutManager layoutManager
+                            = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+
+                    imageRecyclerView.setLayoutManager(layoutManager);
+                    imageRecyclerView.setAdapter(adapter);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onItemClick(Uri imageUri) {
+        ImagePopupFragment imagePopupFragment = new ImagePopupFragment(imageUri);
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        fragmentTransaction.add(R.id.frameLayout, imagePopupFragment,"imagePopup").addToBackStack(null).commit();
+        return;
+    }
+
+    @Override
+    public void onItemClickWorker(String userId1, String jobId1) {
+    }
+
+    @Override
+    public void RateBtnOnClick(String jobId, String userId, float rating) {
+
     }
 }
