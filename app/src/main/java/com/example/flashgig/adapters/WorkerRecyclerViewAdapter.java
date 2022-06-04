@@ -29,7 +29,6 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
     private Job job;
     private String jobId;
     private Button rateButton;
-    private RatingBar ratingBar;
     public User curWorker;
     public WorkerRecyclerViewAdapter(Context context, ArrayList<User> workerList, ItemClickListener clickListener, String jobId) {
         this.context = context;
@@ -53,15 +52,26 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WorkerRecyclerViewAdapter.MyViewHolder holder, int position, float ratingBar) {
+    public void onBindViewHolder(@NonNull WorkerRecyclerViewAdapter.MyViewHolder holder, int position) {
         User curWorker = workerList.get(position);
         //holder.imageWorker.setImageResource(curWorker.get);
-        holder.ratingBar.setRating(curWorker.getRating(jobId));
+        Log.d("Rating", "list of rated jobs: "+curWorker.ratings.keySet());
+        Log.d("Rating", "job ID"+jobId);
+
+        if(curWorker.getRating(jobId) != null){
+            int rating = curWorker.getRating(jobId);
+            Log.d("Rating", "Existing Rating!: "+rating);
+            holder.ratingBar.setRating(rating);
+        }
+        else{
+            Log.d("rating", "No rating yet! Setting to zero: ");
+        }
+
         holder.textViewWName.setText(curWorker.getFullName());
         holder.textViewWNumber.setText(curWorker.getPhone());
         holder.textViewWEmail.setText(curWorker.getEmail());
         holder.workerCard.setOnClickListener(view -> clickListener.onItemClickWorker(curWorker.userId, jobId));
-        holder.rateButton.setOnClickListener(view -> clickListener.RateBtnOnClick(curWorker.userId, jobId, ratingBar));
+        holder.rateButton.setOnClickListener(view -> clickListener.RateBtnOnClick(curWorker.userId, jobId, holder.ratingBar.getRating()));
 //        holder.rateButton.setOnClickListener(view -> clickListener.onIt);
     }
 
