@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.R;
+import com.example.flashgig.models.Comment;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.firebase.firestore.DocumentReference;
@@ -58,7 +60,9 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         Log.d("Rating", "list of rated jobs: "+curWorker.ratings.keySet());
         Log.d("Rating", "job ID"+jobId);
 
-        if(curWorker.getRating(jobId) != null){
+        if(curWorker.ratings.keySet().contains(jobId)){
+            holder.editComment.setVisibility(View.INVISIBLE);
+            holder.textComment.setVisibility(View.VISIBLE);
             int rating = curWorker.getRating(jobId);
             Log.d("Rating", "Existing Rating!: "+rating);
             holder.ratingBar.setRating(rating);
@@ -82,7 +86,8 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         //ImageView imageWorker;
-        TextView textViewWName, textViewWNumber, textViewWEmail;
+        TextView textViewWName, textViewWNumber, textViewWEmail, textComment;
+        EditText editComment;
         CardView workerCard;
         RatingBar ratingBar;
         Button rateButton;
@@ -93,6 +98,8 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
             textViewWName = itemView.findViewById(R.id.textWorkerName);
             textViewWNumber = itemView.findViewById(R.id.textWorkerNumber);
             textViewWEmail = itemView.findViewById(R.id.textWorkerEmail);
+            textComment = itemView.findViewById(R.id.comText);
+            editComment = itemView.findViewById(R.id.editComText);
             workerCard = itemView.findViewById(R.id.workerCardPopup);
             ratingBar = itemView.findViewById(R.id.rbWorker);
             rateButton = itemView.findViewById(R.id.rateBtn);

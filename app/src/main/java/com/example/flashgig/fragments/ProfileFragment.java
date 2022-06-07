@@ -177,11 +177,11 @@ public class ProfileFragment extends Fragment {
             user = task.getResult().toObject(User.class);
 
             if (user != null && task.isSuccessful()) {
-
                 textName.setText(user.getFullName());
                 textEmail.setText(user.getEmail());
                 textPhone.setText(user.getPhone());
-
+                Log.d("PROF", "retrieveInfo: " + user.getAverageRating());
+                binding.rbWorker.setRating(user.getAverageRating());
                 binding.tvdesc.setText(user.getAbout());
                 if (user.getSkills().size() > 0) {
                     for(String skill: user.getSkills()){

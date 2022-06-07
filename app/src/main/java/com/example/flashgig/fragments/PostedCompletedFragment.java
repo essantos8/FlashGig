@@ -224,7 +224,8 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
     public void onItemClickWorker(String userId1, String jobId1) {
     }
 
-    public void RateBtnOnClick(String userId, String jobId, float rating){
-        Log.d("DONE", "onButtonRateClick: " + userId +"..."+ jobId +"..."+ rating);
+    public void RateBtnOnClick(String userId, String jobId, float rating, String comment){
+        userRef = db.collection("users").document(userId).update("ratings"+"."+jobId,rating);
+        Log.d("Hello!", "RateBtnOnClick: Updated!");
     }
 }

@@ -1,5 +1,7 @@
 package com.example.flashgig.models;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -85,4 +87,15 @@ public class User {
     }
 
     public Integer getRating(String jobId) {return this.ratings.get(jobId);}
+
+    public float getAverageRating() {
+        float sum = 0;
+        for (int i: this.ratings.values()){
+            Log.d("VALS", ": "+i);
+            sum += i;
+        }
+        float avg = sum / this.ratings.values().size();
+        Log.d("AVG", "getAverageRating: " + sum + "size: " + this.ratings.values().size() + "avg" + avg);
+        return avg;
+    }
 }
