@@ -447,7 +447,7 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
     }
 
     @Override
-    public void RateBtnOnClick(String jobId, String userId, float rating) {
+    public void RateBtnOnClick(String jobId, String userId, float rating, String s) {
 
     }
 }

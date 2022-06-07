@@ -1,23 +1,20 @@
 package com.example.flashgig.models;
 
 public class Comment {
-    public String rator, ratee, jobId, comment;
+    public String rator, comment;
     public Float rating;
     public Comment() {
 
     }
-    public Comment(String rator, String ratee, String jobId, String comment, Float rating){
+    public Comment(String rator,float rating, String comment){
         this.rator = rator;
-        this.ratee = ratee;
-        this.jobId = jobId;
         this.comment = comment;
         this.rating = rating;
     }
 
+
     public String getRator(){return rator;}
-    public String getRatee(){return ratee;}
-    public String getJobId(){return jobId;}
-    public String getComment() {return comment;}
+    public String getText() {return comment;}
     public Float getRating(){return rating;}
 }
 

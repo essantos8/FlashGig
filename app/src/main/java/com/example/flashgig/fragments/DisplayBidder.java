@@ -143,8 +143,8 @@ public class DisplayBidder extends Fragment {
             } else {
                 bidderListTemp = job.getBidders();    //get the bidder list
                 workerListTemp = job.getWorkers();    //get the worker list
-                jobRating.put(job.jobId,0); //put an initial rating of 0 for a particular job
-                bidUserAcc.ratings.put(job.jobId, 0); // inputs a temporary rating of 0;
+//                jobRating.put(job.jobId,0); //put an initial rating of 0 for a particular job
+//                bidUserAcc.ratings.put(job.jobId, 0); // inputs a temporary rating of 0;
                 bidderListTemp.remove(bidUserAcc.getEmail());    //remove the bidder from the tempbidder list
                 workerListTemp.add(bidUserAcc.getEmail());    //add the bidder to the tempworker list
                 //UPDATING BIDDERS AND WORKERS
@@ -161,7 +161,7 @@ public class DisplayBidder extends Fragment {
                                 Log.d("DisplayBidderAccept", "Error updating document. (bidders)", e);
                             }
                         });
-                bidderDocRef.update("ratings",jobRating);
+//                bidderDocRef.update("ratings",jobRating);
 
             }
         });

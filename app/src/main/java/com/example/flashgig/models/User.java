@@ -1,7 +1,5 @@
 package com.example.flashgig.models;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,7 +12,7 @@ public class User {
     // Additional info
     public String about = "";
     public ArrayList<String> skills = new ArrayList<>();
-    public HashMap<String, Integer> ratings = new HashMap<>();
+    public HashMap<String, Comment> ratings = new HashMap<>();
 
     public User() {
     }
@@ -44,7 +42,7 @@ public class User {
     }
 
     // Constructor for existing/editing user profiles
-    public User(String fullName, String email, String phone, String userId, String about, ArrayList<String> skills, HashMap<String, Integer> ratings) {
+    public User(String fullName, String email, String phone, String userId, String about, ArrayList<String> skills, HashMap<String, Comment> ratings) {
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
@@ -86,16 +84,17 @@ public class User {
         this.userId = userId;
     }
 
-    public Integer getRating(String jobId) {return this.ratings.get(jobId);}
+    public Comment getComment(String jobId) {return this.ratings.get(jobId);}
+//    public Float getRating(String jobId) {return this.ratings.get(jobId).getRating();}
 
-    public float getAverageRating() {
-        float sum = 0;
-        for (int i: this.ratings.values()){
-            Log.d("VALS", ": "+i);
-            sum += i;
-        }
-        float avg = sum / this.ratings.values().size();
-        Log.d("AVG", "getAverageRating: " + sum + "size: " + this.ratings.values().size() + "avg" + avg);
-        return avg;
-    }
+//    public float getAverageRating() {
+//        float sum = 0;
+//        for (int i: this.ratings.values()){
+//            Log.d("VALS", ": "+i);
+//            sum += i;
+//        }
+//        float avg = sum / this.ratings.values().size();
+//        Log.d("AVG", "getAverageRating: " + sum + "size: " + this.ratings.values().size() + "avg" + avg);
+//        return avg;
+//    }
 }

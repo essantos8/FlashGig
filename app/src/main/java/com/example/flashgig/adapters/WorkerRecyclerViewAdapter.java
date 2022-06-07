@@ -15,10 +15,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.R;
-import com.example.flashgig.models.Comment;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -63,8 +61,9 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         if(curWorker.ratings.keySet().contains(jobId)){
             holder.editComment.setVisibility(View.INVISIBLE);
             holder.textComment.setVisibility(View.VISIBLE);
-            int rating = curWorker.getRating(jobId);
-            Log.d("Rating", "Existing Rating!: "+rating);
+            holder.textComment.setText(curWorker.getComment(jobId).getText());
+            float rating = curWorker.getComment(jobId).getRating();
+//            Log.d("Rating", "Existing Rating!: "+rating);
             holder.ratingBar.setRating(rating);
         }
         else{
@@ -75,7 +74,7 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         holder.textViewWNumber.setText(curWorker.getPhone());
         holder.textViewWEmail.setText(curWorker.getEmail());
         holder.workerCard.setOnClickListener(view -> clickListener.onItemClickWorker(curWorker.userId, jobId));
-        holder.rateButton.setOnClickListener(view -> clickListener.RateBtnOnClick(curWorker.userId, jobId, holder.ratingBar.getRating()));
+        holder.rateButton.setOnClickListener(view -> clickListener.RateBtnOnClick(curWorker.userId, jobId, holder.ratingBar.getRating(),holder.editComment.getText().toString()));
 //        holder.rateButton.setOnClickListener(view -> clickListener.onIt);
     }
 
@@ -108,7 +107,7 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
 
     public interface ItemClickListener {
         public void onItemClickWorker(String userId1, String jobId1);
-        public void RateBtnOnClick(String jobId, String userId, float rating);
+        public void RateBtnOnClick(String jobId, String userId, float rating, String s);
     }
 
 }

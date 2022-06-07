@@ -23,6 +23,7 @@ import com.example.flashgig.R;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
 import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentPostedCompletedBinding;
+import com.example.flashgig.models.Comment;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.common.net.InternetDomainName;
@@ -225,7 +226,9 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
     }
 
     public void RateBtnOnClick(String userId, String jobId, float rating, String comment){
-        userRef = db.collection("users").document(userId).update("ratings"+"."+jobId,rating);
+        Comment comme = new Comment(job.getClient(),rating,comment);
+        Log.d("BTN!", "RateBtnOnClick: "+userId+jobId+rating+comment);
+        db.collection("users").document(userId).update("ratings"+"."+jobId,comme);
         Log.d("Hello!", "RateBtnOnClick: Updated!");
     }
 }

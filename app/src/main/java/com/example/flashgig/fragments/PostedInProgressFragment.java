@@ -23,7 +23,6 @@ import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentPostedInProgressBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
-import com.google.common.net.InternetDomainName;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -224,7 +223,7 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
     }
 
     @Override
-    public void RateBtnOnClick(String jobId, String userId, float rating) {
+    public void RateBtnOnClick(String jobId, String userId, float rating, String s) {
 
     }
 }
