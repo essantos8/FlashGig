@@ -3,6 +3,37 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/drawable/background_chat_input.xml" value="0.2355" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/drawable/background_content_bottom.xml" value="0.2355" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/drawable/background_content_top.xml" value="0.2355" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/drawable/background_image.xml" value="0.2355" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/drawable/background_received_message.xml" value="0.2355" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/drawable/background_sent_message.xml" value="0.2355" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/drawable/ic_back.xml" value="0.2355" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/drawable/ic_info.xml" value="0.2355" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/drawable/ic_person_search.xml" value="0.2355" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/drawable/ic_send.xml" value="0.2355" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_chat.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_inbox_chat.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_login.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_user.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/bar_layout.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_chat_users.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_chats.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_detail.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_image_popup.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_job_adder.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_job_in_progress.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_messages.xml" value="0.36615384615384616" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_my_jobs.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_posted.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_profile.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/item_container_sent_message.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/item_container_user.xml" value="0.36615384615384616" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/item_containter_received_message.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/pa_recycler_view_row.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/recycler_view_row.xml" value="0.371875" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/user_item.xml" value="0.371875" />
         <entry key="..\:/Users/Emil Renz Santos/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/bg_white_rounded.xml" value="0.2265" />
         <entry key="..\:/Users/Emil Renz Santos/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/gradient.xml" value="0.2265" />
         <entry key="..\:/Users/Emil Renz Santos/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/ic_add_black.xml" value="0.2265" />
