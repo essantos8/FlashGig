@@ -85,7 +85,7 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
         Log.d("JOBID", "onItemClick: "+JID);
         Fragment fragment = null;
         if (status.equals("pending")){
-            fragment = PostedPendingFragment.newInstance(JID, status);
+            fragment = new PostedPendingFragment(JID, status);
         }
         else if(status.equals("in progress")){
             fragment = new PostedInProgressFragment(JID);

@@ -73,7 +73,7 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         holder.textViewWName.setText(curWorker.getFullName());
         holder.textViewWNumber.setText(curWorker.getPhone());
         holder.textViewWEmail.setText(curWorker.getEmail());
-        holder.workerCard.setOnClickListener(view -> clickListener.onItemClickWorker(curWorker.userId, jobId));
+//        holder.workerCard.setOnClickListener(view -> clickListener.onItemClickWorker(curWorker.userId, jobId));
         holder.rateButton.setOnClickListener(view -> clickListener.RateBtnOnClick(curWorker.userId, jobId, holder.ratingBar.getRating(),holder.editComment.getText().toString()));
 //        holder.rateButton.setOnClickListener(view -> clickListener.onIt);
     }
@@ -106,7 +106,6 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
     }
 
     public interface ItemClickListener {
-        public void onItemClickWorker(String userId1, String jobId1);
         public void RateBtnOnClick(String jobId, String userId, float rating, String s);
     }
 

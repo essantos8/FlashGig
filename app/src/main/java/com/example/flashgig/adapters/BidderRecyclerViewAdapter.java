@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -19,13 +20,14 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
     private Context context;
     private ArrayList<User> bidderList;
     private ItemClickListener clickListener;
-    private String jobId;
+    private String jobId, type;
 
-    public BidderRecyclerViewAdapter(Context context, ArrayList<User> bidderList, ItemClickListener clickListener, String jobId) {
+    public BidderRecyclerViewAdapter(Context context, ArrayList<User> bidderList, ItemClickListener clickListener, String jobId, String type) {
         this.context = context;
         this.bidderList = bidderList;
         this.clickListener = clickListener;
         this.jobId = jobId;
+        this.type = type;
     }
 
     @NonNull
@@ -45,8 +47,12 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
         holder.textViewBName.setText(curBidder.getFullName());
         holder.textViewBNumber.setText(curBidder.getPhone());
         holder.textViewBEmail.setText(curBidder.getEmail());
-
-        holder.bidderCard.setOnClickListener(view -> clickListener.onItemClickBidder(curBidder.userId, jobId));
+        if(type.equals("bidder")){
+            holder.bidderCard.setOnClickListener(view -> clickListener.onItemClickBidder(curBidder.userId, jobId));
+        }
+        else{
+            holder.bidderCard.setOnClickListener(view -> clickListener.onItemClickWorker(curBidder.userId, jobId));
+        }
     }
 
     @Override
@@ -55,11 +61,10 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        //ImageView imageBidder;
+
         TextView textViewBName, textViewBNumber, textViewBEmail;
         CardView bidderCard;
-        //Button buttonAcceptBidder;
-        //Button buttonDeclineBidder;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,23 +74,11 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
             textViewBNumber = itemView.findViewById(R.id.textBidderNumber);
             textViewBEmail = itemView.findViewById(R.id.textBidderEmail);
             bidderCard = itemView.findViewById(R.id.bidderCardPopup);
-            /*
-            itemView.findViewById(R.id.btnAcceptBidder).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
-            itemView.findViewById(R.id.btnDeclineBidder).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });*/
         }
     }
 
     public interface ItemClickListener {
         public void onItemClickBidder(String userId, String jobId);
+        public void onItemClickWorker(String userId, String jobId);
     }
 }

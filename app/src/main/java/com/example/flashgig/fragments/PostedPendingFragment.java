@@ -51,12 +51,9 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
     private FirebaseFirestore db;
     private DocumentSnapshot document;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
     private String curUser;
     private String jobId;
+    private String status;
 
     private Task<QuerySnapshot> curJob;
     private User clientUser;
@@ -76,27 +73,11 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
 
     private RecyclerView imageRecyclerView;
     private BidderRecyclerViewAdapter adapter1;
-    private WorkerRecyclerViewAdapter adapter2;
+    private BidderRecyclerViewAdapter adapter2;
 
-    public PostedPendingFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment PendingFragmentClient.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PostedPendingFragment newInstance(String param1, String param2) {
-        PostedPendingFragment fragment = new PostedPendingFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public PostedPendingFragment(String jobId, String status) {
+        this.jobId = jobId;
+        this.status = status;
     }
 
     @Override
@@ -104,12 +85,7 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
         curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-            jobId = mParam1;
-        }
-        curJob = db.collection("jobs").whereEqualTo("jobId",mParam1).get();
+        curJob = db.collection("jobs").whereEqualTo("jobId",jobId).get();
         storageRef = FirebaseStorage.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
@@ -125,10 +101,6 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
                 }
                 bidUser = task1.getResult().getDocuments().get(0).toObject(User.class);
                 bidderList.add(bidUser);
-                //Log.d("bidderListStringSIZE", "bidderListString size: " + bidderListString.get(finalI));
-                //Log.d("bidderListSIZE", "bidderList size: " + bidderList.size());
-                //Toast.makeText(getActivity(), "bidderListString size: " + bidderListString.get(i),Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getActivity(), "bidderList size: " + bidderList.size(),Toast.LENGTH_SHORT).show();
                 adapter1.notifyDataSetChanged();
             });
         }
@@ -137,7 +109,7 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
         RecyclerView recyclerView = binding.bidderRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        adapter1 = new BidderRecyclerViewAdapter(this.getContext(), bidderList, this, mParam1);
+        adapter1 = new BidderRecyclerViewAdapter(this.getContext(), bidderList, this, jobId, "bidder");
         recyclerView.setAdapter(adapter1);
     }
 
@@ -152,10 +124,6 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
                 }
                 workUser = task1.getResult().getDocuments().get(0).toObject(User.class);
                 workerList.add(workUser);
-                //Log.d("workerListStringSIZE", "workerListString size: " + workerListString.get(finalI));
-                //Log.d("workerListSIZE", "workerList size: " + workerList.size());
-                //Toast.makeText(getActivity(), "workerListString size: " + workerListString.get(i),Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getActivity(), "workerList size: " + workerList.size(),Toast.LENGTH_SHORT).show();
                 adapter2.notifyDataSetChanged();
             });
         }
@@ -164,38 +132,9 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
         RecyclerView recyclerView1  = binding.workerRecyclerView;
         recyclerView1.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        adapter2 = new WorkerRecyclerViewAdapter(this.getContext(), workerList, this, mParam1);
+        adapter2 = new BidderRecyclerViewAdapter(this.getContext(), workerList, this, jobId, "worker");
         recyclerView1.setAdapter(adapter2);
     }
-
-/*
-    private void eventChangeListener() {
-        ListenerRegistration eventListener = db.collection("jobs").document("bidders").addSnapshotListener((value, error) -> {
-            if (error != null) {
-                Log.d("error", error.toString());
-            }
-            else {
-                for (DocumentChange dc : value.getDocumentChanges()) {
-                    if (dc.getType() == DocumentChange.Type.ADDED) {
-                        bidderList.add(dc.getDocument().toObject(User.class));
-                        //                    Log.d("bidderss", "eventChangeListener: added");
-                    } else if (dc.getType() == DocumentChange.Type.REMOVED) {
-                        bidderList.remove(dc.getDocument().toObject(User.class));
-                        //                    Log.d("bidderss", "eventChangeListener: removed");
-                    } else {
-                        Integer index = -1;
-                        index = bidderList.indexOf(dc.getDocument().toObject(User.class));
-                        assert !index.equals(-1);
-                        Log.d("INDEX", "eventChangeListener: " + String.valueOf(index));
-                        bidderList.remove(dc.getDocument().toObject(User.class));
-                        bidderList.add(index, dc.getDocument().toObject(User.class));
-                        //                    Log.d("jobss", "eventChangeListener: modified");
-                    }
-                    adapter1.notifyDataSetChanged();
-                }
-            }
-        });
-    }*/
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -435,7 +374,6 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
         fragmentTransaction.commit();
     }
 
-    //EDIT!!! This onItemClick is supposedly for WorkerRecyclerViewAdapter :'((((
 
     @Override
     public void onItemClickWorker(String userId1, String jobId1) {

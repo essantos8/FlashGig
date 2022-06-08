@@ -68,6 +68,8 @@
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/splash_intro.xml" value="0.14351851851851852" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/splash_logo.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/switch_item.xml" value="0.17604166666666668" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/worker_feedback_recycler_view_row.xml" value="0.4" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/worker_recycler_view_row.xml" value="0.15364583333333334" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/menu/jobs_navbar.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/menu/nav_bar.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/menu/profile_drawer.xml" value="0.25416666666666665" />
@@ -127,7 +129,7 @@
         <entry key="..\:/Users/brent/Desktop/Beta/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_posted_completed.xml" value="0.22418478260869565" />
         <entry key="..\:/Users/brent/Desktop/Beta/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_posted_in_progress.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/brent/Desktop/Beta/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_posted_pending.xml" value="0.22418478260869565" />
-        <entry key="..\:/Users/brent/Desktop/Beta/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Users/brent/Desktop/Beta/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_profile.xml" value="0.22418478260869565" />
         <entry key="..\:/Users/brent/Desktop/Beta/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_profile_edit.xml" value="0.22418478260869565" />
         <entry key="..\:/Users/brent/Desktop/Beta/FIREBASE_TEST_JAVA/app/src/main/res/layout/image_popup.xml" value="0.22418478260869565" />
         <entry key="..\:/Users/brent/Desktop/Beta/FIREBASE_TEST_JAVA/app/src/main/res/layout/pa_recycler_view_row.xml" value="0.22418478260869565" />

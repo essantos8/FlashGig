@@ -221,9 +221,9 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
         return;
     }
 
-    @Override
-    public void onItemClickWorker(String userId1, String jobId1) {
-    }
+//    @Override
+//    public void onItemClickWorker(String userId1, String jobId1) {
+//    }
 
     public void RateBtnOnClick(String userId, String jobId, float rating, String comment){
         Comment comme = new Comment(job.getClient(),rating,comment);

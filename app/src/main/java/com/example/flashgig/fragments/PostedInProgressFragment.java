@@ -218,9 +218,9 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
         return;
     }
 
-    @Override
-    public void onItemClickWorker(String userId1, String jobId1) {
-    }
+//    @Override
+//    public void onItemClickWorker(String userId1, String jobId1) {
+//    }
 
     @Override
     public void RateBtnOnClick(String jobId, String userId, float rating, String s) {
