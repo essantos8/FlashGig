@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.databinding.ItemContainerUserBinding;
+import com.example.flashgig.listeners.UserListener;
 import com.example.flashgig.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -27,9 +28,12 @@ import java.util.List;
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder>{
 
     private final List<User> users;
+    private final UserListener userListener;
 
-    public UsersAdapter(List<User>users){
+    public UsersAdapter(List<User>users, UserListener userListener){
+
         this.users = users;
+        this.userListener = userListener;
     }
 
     @NonNull
@@ -66,6 +70,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
         void setUserInfo(User user){
             binding.textName.setText(user.fullName);
             binding.textEmail.setText(user.email);
+            //binding.imageProfile.setImageBitmap(getUserImage(user.image));
+            binding.getRoot().setOnClickListener(v -> userListener.onUserClicked(user));
         }
 
     }

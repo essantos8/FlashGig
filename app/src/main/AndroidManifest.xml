@@ -11,7 +11,7 @@
         android:theme="@style/Theme.FlashGig.Blue">
         <activity
             android:name=".activities.InboxChat"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.UsersActivity"
             android:exported="false" />
