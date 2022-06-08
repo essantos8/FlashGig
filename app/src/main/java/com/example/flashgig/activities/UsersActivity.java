@@ -38,7 +38,7 @@ public class UsersActivity extends AppCompatActivity{
     private void getUsers(){
         loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        database.collection(Constants.KEY_COLLECTION_USERS)
+        database.collection("users")
                 .get()
                 .addOnCompleteListener(task ->{
                     loading(false);
