@@ -29,4 +29,10 @@ public class InboxChat extends AppCompatActivity {
         binding.fabNewChat.setOnClickListener(v->
                 startActivity(new Intent(getApplicationContext(), UsersActivity.class)));
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
+//        super.onBackPressed();
+    }
 }

@@ -2,7 +2,9 @@ package com.example.flashgig.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,9 +24,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersActivity extends AppCompatActivity{
+public class UsersActivity extends AppCompatActivity implements UserListener{
     private ActivityUserBinding binding;
     private com.example.flashgig.utilities.PreferenceManager preferenceManager;
+    private FirebaseUser curUser;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class UsersActivity extends AppCompatActivity{
         binding = ActivityUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
+        curUser = FirebaseAuth.getInstance().getCurrentUser();
         getUsers();
     }
 
@@ -42,7 +47,7 @@ public class UsersActivity extends AppCompatActivity{
                 .get()
                 .addOnCompleteListener(task ->{
                     loading(false);
-                    String currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
+                    String currentUserId = curUser.getUid();//preferenceManager.getString();
                     if(task.isSuccessful() && task.getResult() != null){
                         List<User> users = new ArrayList<>();
                         for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
@@ -80,5 +85,13 @@ public class UsersActivity extends AppCompatActivity{
         } else{
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onUserClicked(User user) {
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER_ID, user);
+        startActivity(intent);
+        finish();
     }
 }

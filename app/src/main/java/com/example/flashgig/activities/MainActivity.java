@@ -1,5 +1,6 @@
 package com.example.flashgig.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -54,9 +55,11 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.messages:
                     if (!curFragmentTag.equals("messages")) {
                         if (!curFragmentTag.equals("home")) {
-                            replaceFragment(new MessagesFragment(), "messages", "LtoR");
+                            startActivity(new Intent(this, InboxChat.class));
+//                            replaceFragment(new MessagesFragment(), "messages", "LtoR");
                         } else {
-                            replaceFragment(new MessagesFragment(), "messages", "RtoL");
+                            startActivity(new Intent(this, InboxChat.class));
+//                            replaceFragment(new MessagesFragment(), "messages", "RtoL");
                         }
                     }
                     break;

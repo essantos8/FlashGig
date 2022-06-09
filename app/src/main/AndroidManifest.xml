@@ -14,7 +14,7 @@
             android:exported="true" />
         <activity
             android:name=".activities.UsersActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.ChatActivity"
             android:exported="true" />
