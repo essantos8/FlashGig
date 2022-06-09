@@ -121,7 +121,7 @@ public class AppliedPendingFragment extends Fragment implements HorizontalImageR
                     // get client user id
                     db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
                         if(task1.getResult().getDocuments().isEmpty()){
-                            Log.d("Pending Fragment Client", "onComplete: User not found");
+                            Log.d("Pending Fragment Worker", "onComplete: User not found");
                             Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
                             return;
                         }

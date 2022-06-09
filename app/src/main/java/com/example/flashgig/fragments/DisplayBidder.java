@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,6 +90,33 @@ public class DisplayBidder extends Fragment {
         jobDocRef = db.collection("jobs").document(mParam2);
     }
 
+    private void statusCheck(DocumentReference jobDocRef) {
+        jobDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            Job job1;
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                job1 = documentSnapshot.toObject(Job.class);
+                if (job1.getStatus().equals("pending")) {
+                    if (job1.getWorkers().size() >= job1.getNumWorkers()) {
+                        jobDocRef.update("status", "in progress").addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d("DisplayBidderAccept", "DocumentSnapshot successfully updated! (bidders)");
+                                Toast.makeText(getActivity(), "Status changed!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("DisplayBidderAccept", "Error updating document. (status)", e);
+                                    }
+                                });
+                    }
+                }
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -164,6 +192,12 @@ public class DisplayBidder extends Fragment {
 //                bidderDocRef.update("ratings",jobRating);
 
             }
+            statusCheck(jobDocRef);
+            Fragment fragment = new PostedFragment();
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         });
 
         binding.btnDeclineBidder.setOnClickListener(view -> {
@@ -189,6 +223,11 @@ public class DisplayBidder extends Fragment {
                                 Log.d("DisplayBidderAccept", "Error updating document. (bidders)", e);
                             }
                         });
+                Fragment fragment = new PostedFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 

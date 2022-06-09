@@ -37,12 +37,15 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class PostedPendingFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener, BidderRecyclerViewAdapter.ItemClickListener, WorkerRecyclerViewAdapter.ItemClickListener {
@@ -163,7 +166,7 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
                     document = task.getResult().getDocuments().get(0);
                     job = document.toObject(Job.class);
                     bidderListString = job.getBidders();    //get the list of bidders' emails and put them here
-                    workerListString = job.getWorkers();
+                    workerListString = job.getWorkers();    //get the list of workers' emails and put them here
                     /*if(!curUser.equals(job.getClient())){
                         binding.btnApplyForJob.setVisibility(View.VISIBLE);
                     }
@@ -172,7 +175,7 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
                     }*/
                     // get client user id
                     db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
-                        if(task1.getResult().getDocuments().isEmpty()){
+                        if (task1.getResult().getDocuments().isEmpty()) {
                             Log.d("Pending Fragment Client", "onComplete: User not found");
                             Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
                             return;
