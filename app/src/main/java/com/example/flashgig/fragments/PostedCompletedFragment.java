@@ -62,9 +62,6 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
-
-//        curUser = FirebaseAuth.getInstance().getCurrentUser();
-
     }
 
     @Override
@@ -75,10 +72,6 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
             if(task.isSuccessful()){
                 DocumentSnapshot document = task.getResult().getDocuments().get(0);
                 job = document.toObject(Job.class);
-//                if(!curUser.equals(job.getClient())){
-//                    binding.btnApplyForJob.setVisibility(View.VISIBLE);
-//                }
-                // get client user id
                 db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
                     if(task1.getResult().getDocuments().isEmpty()){
                         Log.d("Detail Fragment", "onComplete: User not found");

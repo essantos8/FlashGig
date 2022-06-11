@@ -1,6 +1,5 @@
 package com.example.flashgig.fragments;
 
-import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.adapters.ClientRecyclerViewAdapter;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
-import com.example.flashgig.databinding.FragmentAppliedPendingBinding;
+import com.example.flashgig.databinding.FragmentAppliedCompletedBinding;
+import com.example.flashgig.models.Comment;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,12 +36,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Locale;
-
-import javax.net.ssl.SSLEngineResult;
 
 
-public class AppliedCompletedFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener {
+public class AppliedCompletedFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener, ClientRecyclerViewAdapter.ItemClickListener {
     private StorageReference storageRef;
     private FirebaseUser currentUser;
     private FirebaseFirestore db;
@@ -58,13 +55,16 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
     private User bidUser;
     private User workUser;
     private Job job;
+    private  ArrayList<String> clientListString = new ArrayList<String>();
+    private ArrayList<User> clientList = new ArrayList<>();
+    private ClientRecyclerViewAdapter adapter;
 
-    private FragmentAppliedPendingBinding binding;
+    private @NonNull FragmentAppliedCompletedBinding binding;
     private ImageView profilePicDetail;
 
     private TextView textJobTitle, textJobDate, textJobBudget, textJobLocation, textJobClientEmail, textJobClientName, textJobDescription, textJobWorkers;
 
-    private RecyclerView imageRecyclerView;
+    private RecyclerView imageRecyclerView, feedbackRecyclerView;
 
     public AppliedCompletedFragment() {
         // Required empty public constructor
@@ -101,70 +101,130 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-
-    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-
-        binding = FragmentAppliedPendingBinding.inflate(inflater, container, false);
-
-        textJobTitle = binding.textJobTitle;
-        textJobLocation = binding.textJobLocation;
-        textJobDate = binding.textJobDate;
-        textJobClientEmail = binding.textJobClientEmail;
-        textJobClientName = binding.textJobClientName;
-        textJobDescription = binding.textJobDescription;
-        textJobBudget = binding.textJobBudget;
-        textJobWorkers = binding.textJobWorkers;
-        profilePicDetail = binding.profilePicDetail;
-        imageRecyclerView = binding.imageRecyclerView;
-        if(jobStatus.toUpperCase(Locale.ROOT).equals("COMPLETED")){
-            binding.btnSetJobCompleteWorker.setVisibility(View.GONE);
-        }
-
-        curJob.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    document = task.getResult().getDocuments().get(0);
-                    job = document.toObject(Job.class);
-                    // get client user id
-                    db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
-                        if(task1.getResult().getDocuments().isEmpty()){
-                            Log.d("Pending Fragment Client", "onComplete: User not found");
-                            Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
-                        setViews();
-                        loadImages();
-                    });
-                }
+        binding = FragmentAppliedCompletedBinding.inflate(inflater, container, false);
+        db.collection("jobs").whereEqualTo("jobId",jobId).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                job = document.toObject(Job.class);
+//                if(!curUser.equals(job.getClient())){
+//                    binding.btnApplyForJob.setVisibility(View.VISIBLE);
+//                }
+                // get client user id
+                db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
+                    if(task1.getResult().getDocuments().isEmpty()){
+                        Log.d("Detail Fragment", "onComplete: User not found");
+                        Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
+                    getClientObj();
+                    setViews();
+                    loadImages();
+                });
             }
         });
-
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
         binding.backButton.setOnClickListener(view ->{
             fm.popBackStackImmediate();
         });
 
+        // Inflate the layout for this fragment
         return binding.getRoot();
     }
 
+    private void getClientObj() {
+        db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task -> {
+            if (task.getResult().getDocuments().isEmpty()) {
+                Log.d("CompletedClientFragment", job.getClient() + ": User is NOT FOUND");
+                return;
+            }
+            clientList.add(task.getResult().getDocuments().get(0).toObject(User.class));
+            adapter.notifyDataSetChanged();
+            });
+
+        feedbackRecyclerView = binding.workerRecyclerView;
+        feedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        adapter = new ClientRecyclerViewAdapter(this.getContext(), clientList, this, jobId);
+        feedbackRecyclerView.setAdapter(adapter);
+    }
+//    @SuppressLint("ResourceAsColor")
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//
+//
+//        binding = FragmentAppliedPendingBinding.inflate(inflater, container, false);
+//
+//        textJobTitle = binding.textJobTitle;
+//        textJobLocation = binding.textJobLocation;
+//        textJobDate = binding.textJobDate;
+//        textJobClientEmail = binding.textJobClientEmail;
+//        textJobClientName = binding.textJobClientName;
+//        textJobDescription = binding.textJobDescription;
+//        textJobBudget = binding.textJobBudget;
+//        textJobWorkers = binding.textJobWorkers;
+//        profilePicDetail = binding.profilePicDetail;
+//        imageRecyclerView = binding.imageRecyclerView;
+//        if(jobStatus.toUpperCase(Locale.ROOT).equals("COMPLETED")){
+//            binding.btnSetJobCompleteWorker.setVisibility(View.GONE);
+//        }
+//
+//        curJob.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if(task.isSuccessful()){
+//                    document = task.getResult().getDocuments().get(0);
+//                    job = document.toObject(Job.class);
+//                    // get client user id
+//                    db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
+//                        if(task1.getResult().getDocuments().isEmpty()){
+//                            Log.d("Pending Fragment Client", "onComplete: User not found");
+//                            Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                        clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
+//                        setViews();
+//                        loadImages();
+//                    });
+//                }
+//            }
+//        });
+//
+//        FragmentManager fm = getActivity().getSupportFragmentManager();
+//
+//        binding.backButton.setOnClickListener(view ->{
+//            fm.popBackStackImmediate();
+//        });
+//
+//        return binding.getRoot();
+//    }
+
 
     private void setViews(){
-        textJobTitle.setText(job.getTitle());
-        textJobLocation.setText(job.getLocation());
-        textJobDate.setText(job.getDate());
-        textJobClientEmail.setText(job.getClient());
-        textJobClientName.setText(clientUser.getFullName());
-        textJobDescription.setText(job.getDescription());
-        textJobWorkers.setText(String.valueOf(job.getNumWorkers()));
-        textJobBudget.setText(job.getBudget());
+//        textJobTitle.setText(job.getTitle());
+//        textJobLocation.setText(job.getLocation());
+//        textJobDate.setText(job.getDate());
+//        textJobClientEmail.setText(job.getClient());
+//        textJobClientName.setText(clientUser.getFullName());
+//        textJobDescription.setText(job.getDescription());
+//        textJobWorkers.setText(String.valueOf(job.getNumWorkers()));
+//        textJobBudget.setText(job.getBudget());
+        binding.textJobClientName.setText(clientUser.getFullName());
+        binding.textJobClientEmail.setText(clientUser.getEmail());
+        binding.textJobTitle.setText(job.getTitle());
+        binding.textJobLocation.setText(job.getLocation());
+        binding.textJobDate.setText(job.getDate());
+        binding.textJobBudget.setText(job.getBudget());
+        binding.textJobDescription.setText(job.description);
+        binding.textJobWorkers.setText(String.valueOf(job.getWorkers().size())+'/'+job.getNumWorkers());
+        imageRecyclerView = binding.imageRecyclerView;
+        feedbackRecyclerView = binding.workerRecyclerView;
 
         for (String category : job.getCategories()){
             switch (category) {
@@ -251,6 +311,12 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
         fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         fragmentTransaction.add(R.id.frameLayout, imagePopupFragment,"imagePopup").addToBackStack(null).commit();
         return;
+    }
+
+    @Override
+    public void RateBtnOnClick(String userId,String jobId, float rating, String comment) {
+        Comment comme = new Comment(job.getClient(),rating,comment);
+        db.collection("users").document(userId).update("ratings"+"."+jobId,comme);
     }
     /*
     @Override
