@@ -86,6 +86,8 @@ public class User {
 
     public Comment getComment(String jobId) {return this.ratings.get(jobId);}
 
+    public HashMap<String, Comment> getRatings() {return this.ratings;}
+
     public float getAverageRating() {
         float sum = 0;
         for (Comment i: this.ratings.values()){

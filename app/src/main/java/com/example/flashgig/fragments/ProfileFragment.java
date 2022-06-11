@@ -2,11 +2,8 @@ package com.example.flashgig.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,33 +11,36 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
 import com.example.flashgig.activities.ReviewsActivity;
 import com.example.flashgig.activities.SplashActivity;
+import com.example.flashgig.adapters.CommentsRecyclerViewAdapter;
+import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentProfileBinding;
+import com.example.flashgig.models.Comment;
 import com.example.flashgig.models.User;
-import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class ProfileFragment extends Fragment {
+
+public class ProfileFragment extends Fragment{
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
@@ -48,12 +48,15 @@ public class ProfileFragment extends Fragment {
     private FirebaseUser currentUser;
 
     private FragmentProfileBinding binding;
-    private TextView textName, textEmail, textPhone, textDescription;
+    private TextView textName, textEmail, textPhone;
     private ImageView profilePicture;
-
+    private RecyclerView commentRecyclerView;
     private ProgressBar progressBar;
     private User user;
     private GoogleSignInClient googleSignInClient;
+    private CommentsRecyclerViewAdapter adapter;
+    ArrayList<Comment> comments = new ArrayList<Comment>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,14 +81,12 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
-
         progressBar = binding.progressBar;
-
         textName = binding.textName;
         textEmail = binding.textEmail;
         textPhone = binding.textPhone;
         profilePicture = binding.ProfilePic;
-
+        getComments();
         retrieveInfo(false);
 
         //animations + SHARED ELEMENT
@@ -99,9 +100,9 @@ public class ProfileFragment extends Fragment {
             replaceFragment(new JobAdderFragment(), "jobAdder");
         });
 
-        binding.btnReviews.setOnClickListener(view -> {
-            startActivity(new Intent(getContext(), ReviewsActivity.class));
-        });
+//        binding.btnReviews.setOnClickListener(view -> {
+//            startActivity(new Intent(getContext(), ReviewsActivity.class));
+//        });
 
         binding.btnProfileUpdate.setOnClickListener(view -> {
             retrieveInfo(true);
@@ -130,6 +131,20 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         return binding.getRoot();
     }
+
+    private void getComments() {
+        db.collection("users").document(currentUser.getUid()).get().addOnCompleteListener(task -> {
+            User curUser = task.getResult().toObject(User.class);
+            Log.d("PG", "getComments: "+ curUser.getRatings().toString());
+            for(String key : curUser.getRatings().keySet()){
+                comments.add(curUser.getComment(key));
+            }
+        });
+        commentRecyclerView = binding.comRecycler;
+        commentRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        adapter = new CommentsRecyclerViewAdapter(this.getContext(), comments);
+        commentRecyclerView.setAdapter(adapter);
+    };
 
     private void logOut() {
         googleSignInClient.signOut();

@@ -59,7 +59,7 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
     private ArrayList<User> clientList = new ArrayList<>();
     private ClientRecyclerViewAdapter adapter;
 
-    private @NonNull FragmentAppliedCompletedBinding binding;
+    private FragmentAppliedCompletedBinding binding;
     private ImageView profilePicDetail;
 
     private TextView textJobTitle, textJobDate, textJobBudget, textJobLocation, textJobClientEmail, textJobClientName, textJobDescription, textJobWorkers;
@@ -144,7 +144,7 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
             }
             clientList.add(task.getResult().getDocuments().get(0).toObject(User.class));
             adapter.notifyDataSetChanged();
-            });
+        });
 
         feedbackRecyclerView = binding.workerRecyclerView;
         feedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));

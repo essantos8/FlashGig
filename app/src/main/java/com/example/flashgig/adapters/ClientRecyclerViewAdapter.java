@@ -60,7 +60,9 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
 
         if(curWorker.ratings.keySet().contains(jobId)){
             holder.editComment.setVisibility(View.INVISIBLE);
+            holder.rateButton.setVisibility(View.INVISIBLE);
             holder.textComment.setVisibility(View.VISIBLE);
+            holder.ratingBar.setIsIndicator(true);
             holder.textComment.setText(curWorker.getComment(jobId).getText());
             float rating = curWorker.getComment(jobId).getRating();
 //            Log.d("Rating", "Existing Rating!: "+rating);
