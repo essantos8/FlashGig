@@ -29,7 +29,6 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:background="@drawable/background_image"
         android:scaleType="centerCrop"
-        android:padding="@dimen/_6sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:riv_oval="true"/>

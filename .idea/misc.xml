@@ -4,6 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_chat.xml" value="0.36615384615384616" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_inbox_chat.xml" value="0.36615384615384616" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_applied.xml" value="0.19166666666666668" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_detail.xml" value="0.19166666666666668" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/image_popup.xml" value="0.19166666666666668" />
+        <entry key="..\:/Documents/GitHub/FIREBASE_TEST_JAVA/app/src/main/res/layout/recycler_view_horizontal_image.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/Emil Renz Santos/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/gradient.xml" value="0.2265" />
         <entry key="..\:/Users/Emil Renz Santos/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/ic_add_black.xml" value="0.2265" />
         <entry key="..\:/Users/Emil Renz Santos/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_job_adder.xml" value="0.4" />
