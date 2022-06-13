@@ -26,16 +26,13 @@ import java.util.List;
 
 public class UsersActivity extends AppCompatActivity implements UserListener{
     private ActivityUserBinding binding;
-    private com.example.flashgig.utilities.PreferenceManager preferenceManager;
     private FirebaseUser curUser;
-    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        preferenceManager = new PreferenceManager(getApplicationContext());
         curUser = FirebaseAuth.getInstance().getCurrentUser();
         getUsers();
     }
@@ -43,7 +40,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener{
     private void getUsers(){
         loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        database.collection("users")
+        database.collection(Constants.KEY_COLLECTION_USERS)
                 .get()
                 .addOnCompleteListener(task ->{
                     loading(false);
@@ -60,7 +57,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener{
                             users.add(user);
                         }
                         if(users.size() > 0) {
-                            UsersAdapter usersAdapter = new UsersAdapter(users, (UserListener) this);
+                            UsersAdapter usersAdapter = new UsersAdapter(users, this);
                             binding.usersRecyclerView.setAdapter(usersAdapter);
                             binding.usersRecyclerView.setVisibility(View.VISIBLE);
                         } else {
@@ -90,7 +87,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener{
     @Override
     public void onUserClicked(User user) {
         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-        intent.putExtra(Constants.KEY_USER_ID, user);
+        intent.putExtra(Constants.KEY_USER, user);
         startActivity(intent);
         finish();
     }
