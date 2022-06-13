@@ -44,6 +44,7 @@
         android:layout_height="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
         android:padding="@dimen/_4sdp"
         android:src="@drawable/ic_info"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +89,7 @@
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@id/viewBackground"
-        app:layout_constraintEnd_toEndOf="@id/viewSupporter"/>
+        app:layout_constraintTop_toBottomOf="@id/viewSupporter"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
