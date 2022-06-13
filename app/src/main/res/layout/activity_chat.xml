@@ -72,6 +72,7 @@
         android:id="@+id/viewSupporter"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:background="@color/dashboard_blue"
         android:layout_marginTop="@dimen/_12sdp"
         app:layout_constraintTop_toBottomOf="@id/imageBack"/>
 
@@ -83,12 +84,14 @@
         android:orientation="vertical"
         android:overScrollMode="never"
         android:padding="@dimen/_20sdp"
+        app:stackFromEnd="true"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@id/viewBackground"
         app:layout_constraintEnd_toEndOf="@id/viewSupporter"/>
 
     <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
         app:layout_constraintBottom_toBottomOf="@id/viewBackground"
