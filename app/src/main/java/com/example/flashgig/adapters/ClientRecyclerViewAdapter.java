@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecyclerViewAdapter.MyViewHolder> {
+public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecyclerViewAdapter.MyViewHolder> {
     private FirebaseFirestore db;
     private Context context;
     private ArrayList<User> workerList;
@@ -30,7 +30,7 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
     private String jobId;
     private Button rateButton;
     public User curWorker;
-    public WorkerRecyclerViewAdapter(Context context, ArrayList<User> workerList, ItemClickListener clickListener, String jobId) {
+    public ClientRecyclerViewAdapter(Context context, ArrayList<User> workerList, ItemClickListener clickListener, String jobId) {
         this.context = context;
         this.workerList = workerList;
         this.clickListener = clickListener;
@@ -41,18 +41,18 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
 
     @NonNull
     @Override
-    public WorkerRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ClientRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflate layout
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.worker_recycler_view_row, parent, false);
 
 
 
-        return new WorkerRecyclerViewAdapter.MyViewHolder(view);
+        return new ClientRecyclerViewAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WorkerRecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ClientRecyclerViewAdapter.MyViewHolder holder, int position) {
         User curWorker = workerList.get(position);
         //holder.imageWorker.setImageResource(curWorker.get);
         Log.d("Rating", "list of rated jobs: "+curWorker.ratings.keySet());

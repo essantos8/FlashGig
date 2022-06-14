@@ -85,16 +85,15 @@ public class User {
     }
 
     public Comment getComment(String jobId) {return this.ratings.get(jobId);}
-//    public Float getRating(String jobId) {return this.ratings.get(jobId).getRating();}
 
-//    public float getAverageRating() {
-//        float sum = 0;
-//        for (int i: this.ratings.values()){
-//            Log.d("VALS", ": "+i);
-//            sum += i;
-//        }
-//        float avg = sum / this.ratings.values().size();
-//        Log.d("AVG", "getAverageRating: " + sum + "size: " + this.ratings.values().size() + "avg" + avg);
-//        return avg;
-//    }
+    public HashMap<String, Comment> getRatings() {return this.ratings;}
+
+    public float getAverageRating() {
+        float sum = 0;
+        for (Comment i: this.ratings.values()){
+            sum += i.getRating();
+        }
+        float avg = sum / this.ratings.values().size();
+        return avg;
+    }
 }

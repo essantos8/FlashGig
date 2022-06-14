@@ -2,12 +2,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.PostedCompletedFragment" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         tools:context=".fragments.DetailFragment">
 
         <ImageButton
@@ -15,11 +16,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:background="#00FFFFFF"
             android:onClick="goBack"
-            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/arrow_left"
+            android:tintMode="src_in"
+            app:layout_constraintBottom_toBottomOf="@+id/textView9"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/textView9"
+            app:tint="@color/dark_grey" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
@@ -147,7 +153,6 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:cardMaxElevation="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView3">
@@ -601,118 +606,43 @@
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_max="200dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textJobWorkers"
-                    app:layout_constraintVertical_bias="0.074" />
+                    app:layout_constraintTop_toBottomOf="@+id/textJobWorkers" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewClient"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btnJobComplete"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="4dp"
-            android:clickable="true"
-            android:focusable="auto"
-            android:longClickable="true"
-            android:visibility="gone"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:text="Job Complete"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="@color/dashboard_blue"
+            app:cornerRadius="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardView2">
+            app:layout_constraintTop_toBottomOf="@+id/workerRecyclerView" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/imageClient"
-                    android:layout_width="115dp"
-                    android:layout_height="159dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/default_profile" />
-
-                <TextView
-                    android:id="@+id/tvClientName"
-                    android:layout_width="141dp"
-                    android:layout_height="35dp"
-                    android:fontFamily="@font/salmapromedium"
-                    android:shadowColor="@color/mid_grey"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="2"
-                    android:text="Client Name"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/dashboard_blue"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.064"
-                    app:layout_constraintStart_toEndOf="@+id/imageClient"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.061" />
-
-                <View
-                    android:id="@+id/divider9"
-                    android:layout_width="287.5dp"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.857"
-                    app:layout_constraintStart_toEndOf="@+id/imageClient"
-                    app:layout_constraintTop_toBottomOf="@+id/tvClientName"
-                    app:layout_constraintVertical_bias="0.067" />
-
-                <TextView
-                    android:id="@+id/tvClientEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/salmapromedium"
-                    android:text="Email"
-                    android:textColor="@color/mid_grey"
-                    app:layout_constraintStart_toEndOf="@+id/imageClient"
-                    app:layout_constraintTop_toBottomOf="@+id/tvClientNumber" />
-
-                <TextView
-                    android:id="@+id/tvClientNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="@font/salmapromedium"
-                    android:text="Contact No."
-                    android:textColor="@color/mid_grey"
-                    app:layout_constraintStart_toEndOf="@+id/imageClient"
-                    app:layout_constraintTop_toBottomOf="@+id/rbClient" />
-
-                <RatingBar
-                    android:id="@+id/rbClient"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:numStars="5"
-                    app:layout_constraintStart_toEndOf="@+id/imageClient"
-                    app:layout_constraintTop_toBottomOf="@+id/divider9" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/btnDeleteJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Delete Job"
+            android:textColor="#FFFFFF"
+            android:visibility="gone"
+            app:backgroundTint="@color/light_red"
+            app:cornerRadius="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
         <TextView
             android:id="@+id/textView9"
@@ -721,12 +651,36 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/salmapromedium"
             android:text="Job Post"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_grey"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewComments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/salmapromedium"
+            android:text="Ratings and Feedback"
+            android:textColor="@color/mid_grey"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/workerRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewComments" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
