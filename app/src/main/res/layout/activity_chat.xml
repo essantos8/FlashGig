@@ -12,7 +12,7 @@
         android:id="@+id/viewBackground"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/background_content_top"
         app:layout_constraintBottom_toTopOf="@id/layoutSend"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,12 +44,12 @@
         android:layout_height="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_marginRight="@dimen/_16sdp"
-        android:padding="@dimen/_4sdp"
+        android:padding="2sp"
         android:src="@drawable/ic_info"
+        android:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:tint="@color/dashboard_blue"/>
+        app:srcCompat="@drawable/ic_info" />
 
     <TextView
         android:id="@+id/textName"
@@ -84,12 +84,14 @@
         android:clipToPadding="false"
         android:orientation="vertical"
         android:overScrollMode="never"
-        android:padding="@dimen/_20sdp"
-        app:stackFromEnd="true"
+        android:padding="@dimen/_10sdp"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@id/viewBackground"
-        app:layout_constraintTop_toBottomOf="@id/viewSupporter"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewSupporter"
+        app:stackFromEnd="true" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -103,10 +105,9 @@
 
     <FrameLayout
         android:id="@+id/layoutSend"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_marginRight="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_12sdp"
         android:background="@drawable/background_chat_input"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -118,6 +119,8 @@
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginLeft="@dimen/_4sdp"
             android:padding="@dimen/_8sdp"
+            android:scaleX="1.4"
+            android:scaleY="1.4"
             android:src="@drawable/ic_send"
             app:tint="@color/white" />
 
@@ -126,11 +129,9 @@
     <EditText
         android:id="@+id/inputMessage"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginLeft="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_marginRight="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_12sdp"
         android:background="@drawable/background_chat_input"
         android:hint="Type a message"

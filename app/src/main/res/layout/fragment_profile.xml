@@ -519,6 +519,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:backgroundTint="@color/white"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/profile_drawer_header"
         app:menu="@menu/profile_drawer"></com.google.android.material.navigation.NavigationView>

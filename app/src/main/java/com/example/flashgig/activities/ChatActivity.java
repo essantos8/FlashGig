@@ -55,6 +55,7 @@ public class ChatActivity extends AppCompatActivity {
     private void init() {
         chatMessages = new ArrayList<>();
         chatAdapter = new ChatAdapter(
+                this,
                 chatMessages,
                 curUser.getUid()
         );

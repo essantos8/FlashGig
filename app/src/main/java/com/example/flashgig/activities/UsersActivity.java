@@ -32,6 +32,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityUserBinding.inflate(getLayoutInflater());
+        binding.imageBack.setOnClickListener(v -> onBackPressed());
         setContentView(binding.getRoot());
         curUser = FirebaseAuth.getInstance().getCurrentUser();
         getUsers();
@@ -58,7 +59,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener{
                             users.add(user);
                         }
                         if(users.size() > 0) {
-                            UsersAdapter usersAdapter = new UsersAdapter(users, this);
+                            UsersAdapter usersAdapter = new UsersAdapter(this, users, this);
                             binding.usersRecyclerView.setAdapter(usersAdapter);
                             binding.usersRecyclerView.setVisibility(View.VISIBLE);
                         } else {

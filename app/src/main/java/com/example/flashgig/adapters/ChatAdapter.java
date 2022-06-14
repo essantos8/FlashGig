@@ -1,14 +1,23 @@
 package com.example.flashgig.adapters;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.signature.ObjectKey;
+import com.example.flashgig.GlideApp;
 import com.example.flashgig.databinding.ItemContainerSentMessageBinding;
 import com.example.flashgig.databinding.ItemContainterReceivedMessageBinding;
 import com.example.flashgig.models.ChatMessage;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -19,8 +28,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private static final int VIEW_TYPE_SENT = 1;
     private static final int VIEW_TYPE_RECEIVED = 2;
+    private Context ctx;
 
-    public ChatAdapter(List<ChatMessage> chatMessages, String senderId) {
+    public ChatAdapter(Context ctx, List<ChatMessage> chatMessages, String senderId) {
+        this.ctx = ctx;
         this.chatMessages = chatMessages;
         this.senderId = senderId;
     }
@@ -49,7 +60,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position){
-        // receiver profile image not added here
         if (getItemViewType(position) == VIEW_TYPE_SENT){
             ((SentMessageViewHolder) holder).setData(chatMessages.get(position));
         } else {
@@ -88,6 +98,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     static class ReceivedMessageViewHolder extends RecyclerView.ViewHolder{
+        private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
         private final ItemContainterReceivedMessageBinding binding;
 
@@ -100,7 +111,20 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             binding.textMessage.setText(chatMessage.message);
             binding.textDateTime.setText(chatMessage.dateTime);
             //binding.imageProfile.setImageBitmap(receiverProfileImage);
-
+            String otherUserId = chatMessage.getSenderId();
+            if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(otherUserId)){
+                otherUserId = chatMessage.getReceiverId();
+            }
+            StorageReference profilePicRef = storageRef.child("media/images/profile_pictures/" + otherUserId);
+            profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
+                GlideApp.with(binding.getRoot().getContext())
+                        .load(profilePicRef)
+                        .fitCenter()
+                        .into(binding.imageProfile);
+            }).addOnFailureListener(e -> {
+                Log.d("CommentsRecyclerView", "onBindViewHolder: "+e.toString());
+//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
+            });
         }
     }
 }

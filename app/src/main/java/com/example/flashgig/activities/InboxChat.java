@@ -67,7 +67,7 @@ public class InboxChat extends AppCompatActivity implements ConversationListener
 
     private void init(){
         conversations = new ArrayList<>();
-        conversationsAdapter = new RecentConversationsAdapter(conversations, this);
+        conversationsAdapter = new RecentConversationsAdapter(this, conversations, this);
         binding.conversationsRecyclerView.setAdapter(conversationsAdapter);
         database = FirebaseFirestore.getInstance();
     }
