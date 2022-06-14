@@ -40,6 +40,7 @@
         android:layout_marginTop="@dimen/_4sdp"
         android:textColor="@color/mid_grey"
         android:textSize="@dimen/_8ssp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/textMessage"
-        app:layout_constraintTop_toBottomOf="@id/textMessage"/>
+        app:layout_constraintTop_toBottomOf="@id/textMessage" />
 </androidx.constraintlayout.widget.ConstraintLayout>
