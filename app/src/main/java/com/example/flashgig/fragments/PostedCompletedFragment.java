@@ -220,7 +220,7 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
 //    }
 
     public void RateBtnOnClick(String userId, String jobId, float rating, String comment){
-        Comment comme = new Comment(job.getClient(),rating,comment);
+        Comment comme = new Comment(job.getClient(),rating,comment,clientUser.getUserId());
         Log.d("BTN!", "RateBtnOnClick: "+userId+jobId+rating+comment);
         db.collection("users").document(userId).update("ratings"+"."+jobId,comme);
         Log.d("Hello!", "RateBtnOnClick: Updated!");

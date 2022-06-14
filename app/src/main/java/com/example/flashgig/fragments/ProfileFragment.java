@@ -79,7 +79,7 @@ public class ProfileFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        comments.clear();
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         progressBar = binding.progressBar;
         textName = binding.textName;

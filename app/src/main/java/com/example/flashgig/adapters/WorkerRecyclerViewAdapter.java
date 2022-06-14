@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -14,10 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.signature.ObjectKey;
+import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -30,6 +35,8 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
     private String jobId;
     private Button rateButton;
     public User curWorker;
+    private StorageReference storageRef;
+
     public WorkerRecyclerViewAdapter(Context context, ArrayList<User> workerList, ItemClickListener clickListener, String jobId) {
         this.context = context;
         this.workerList = workerList;
@@ -54,6 +61,8 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
     @Override
     public void onBindViewHolder(@NonNull WorkerRecyclerViewAdapter.MyViewHolder holder, int position) {
         User curWorker = workerList.get(position);
+        storageRef = FirebaseStorage.getInstance().getReference();
+
         //holder.imageWorker.setImageResource(curWorker.get);
         Log.d("Rating", "list of rated jobs: "+curWorker.ratings.keySet());
         Log.d("Rating", "job ID"+jobId);
@@ -78,6 +87,18 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
 //        holder.workerCard.setOnClickListener(view -> clickListener.onItemClickWorker(curWorker.userId, jobId));
         holder.rateButton.setOnClickListener(view -> clickListener.RateBtnOnClick(curWorker.userId, jobId, holder.ratingBar.getRating(),holder.editComment.getText().toString()));
 //        holder.rateButton.setOnClickListener(view -> clickListener.onIt);
+
+        StorageReference profilePicRef = storageRef.child("media/images/profile_pictures/" + curWorker.getUserId());
+        profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
+            GlideApp.with(context)
+                    .load(profilePicRef)
+                    .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
+                    .fitCenter()
+                    .into(holder.imageWorker);
+        }).addOnFailureListener(e -> {
+            Log.d("Profile", "retrieveInfo: "+e.toString());
+//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -92,10 +113,12 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         CardView workerCard;
         RatingBar ratingBar;
         Button rateButton;
+        ImageView imageWorker;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            //imageWorker = itemView.findViewById(R.id.imageWorker);
+            imageWorker = itemView.findViewById(R.id.imageWorker);
             textViewWName = itemView.findViewById(R.id.textWorkerName);
             textViewWNumber = itemView.findViewById(R.id.textWorkerNumber);
             textViewWEmail = itemView.findViewById(R.id.textWorkerEmail);
