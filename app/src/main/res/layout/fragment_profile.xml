@@ -522,6 +522,7 @@
         android:backgroundTint="@color/white"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/profile_drawer_header"
+        app:itemTextColor="@color/black"
         app:menu="@menu/profile_drawer"></com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

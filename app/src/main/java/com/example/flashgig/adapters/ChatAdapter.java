@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.databinding.ItemContainerSentMessageBinding;
@@ -119,6 +120,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
                 GlideApp.with(binding.getRoot().getContext())
                         .load(profilePicRef)
+//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .fitCenter()
                         .into(binding.imageProfile);
             }).addOnFailureListener(e -> {
