@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.adapters.BidderRecyclerViewAdapter;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
 import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentPostedInProgressBinding;
@@ -30,8 +31,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class PostedInProgressFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener, WorkerRecyclerViewAdapter.ItemClickListener{
+public class PostedInProgressFragment extends Fragment implements HorizontalImageRecyclerViewAdapter.ItemClickListener, BidderRecyclerViewAdapter.ItemClickListener{
     private FragmentPostedInProgressBinding binding;
 
     private FirebaseFirestore db;
@@ -48,7 +50,7 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
     private ArrayList<String> workerListString = new ArrayList<>();
     private ArrayList<User> workerList = new ArrayList<>();
 
-    private WorkerRecyclerViewAdapter adapter;
+    private BidderRecyclerViewAdapter adapter;
 
 
     public PostedInProgressFragment(String JID){
@@ -67,6 +69,7 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        workerList.clear();
         binding = FragmentPostedInProgressBinding.inflate(inflater, container, false);
         db.collection("jobs").whereEqualTo("jobId",jobId).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
@@ -117,7 +120,7 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
         feedbackRecyclerView = binding.workerRecyclerView;
         feedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        adapter = new WorkerRecyclerViewAdapter(this.getContext(), workerList, this, jobId);
+        adapter = new BidderRecyclerViewAdapter(this.getContext(), workerList, this, jobId, "worker");
         feedbackRecyclerView.setAdapter(adapter);
     }
 
@@ -160,9 +163,44 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
                     break;
             }
         }
+        ArrayList tracker = job.getUserCompleteTracker();
+
+        if(tracker.contains(clientUser.getEmail())){
+            binding.btnJobComplete.setBackgroundColor(65536);
+        }
+        binding.btnJobComplete.setOnClickListener(view -> {
+            if (tracker.contains(clientUser.getEmail())) {
+                Toast.makeText(getContext(), "You marked this job as complete already!", Toast.LENGTH_SHORT).show();
+            } else {
+                tracker.add(clientUser.getEmail());
+                db.collection("jobs").document(jobId).update("userCompleteTracker", tracker);
+                Toast.makeText(getContext(), "Marked the job as Complete!", Toast.LENGTH_SHORT).show();
+                binding.btnJobComplete.setBackgroundColor(65536);
+                checkCompleteStatus();
+            }
+        });
+
+
+//            if(tracker.isEmpty()) {
+//                db.collection("jobs").document(jobId).update("userCompleteTracker", tracker);
+//            }
+//            else{
+//                tracker.add(currentUser.getEmail());
+//                db.collection("jobs").document(jobId).update("userCompleteTracker", tracker);
+//            }
+
 
 
     }
+
+    private void checkCompleteStatus(){
+        if(job.getUserCompleteTracker().size() >= job.getWorkers().size() + 1){
+            db.collection("jobs").document(jobId).update("status","completed");
+            Toast.makeText(getActivity(), "Job status changed to "+"Completed"+"!", Toast.LENGTH_SHORT).show();
+            getActivity().onBackPressed();
+        }
+    }
+
     private void loadImages() {
         String clientId = clientUser.getUserId();
         // load client profile pic
@@ -200,7 +238,7 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
 //                    Toast.makeText(getContext(), "last image is"+String.valueOf(imageCounter[0]), Toast.LENGTH_SHORT).show();
                     HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList, this);
                     LinearLayoutManager layoutManager
-                            = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                            = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
                     imageRecyclerView.setLayoutManager(layoutManager);
                     imageRecyclerView.setAdapter(adapter);
@@ -218,12 +256,20 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
         return;
     }
 
-//    @Override
-//    public void onItemClickWorker(String userId1, String jobId1) {
-//    }
+
 
     @Override
-    public void RateBtnOnClick(String jobId, String userId, float rating, String s) {
+    public void onItemClickBidder(String userId, String jobId) {
+
+    }
+
+    @Override
+    public void onItemClickWorker(String userId, String jobId) {
+        Fragment fragment = DisplayWorker.newInstance(userId, jobId);
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
     }
 }

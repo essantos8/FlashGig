@@ -90,16 +90,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment curFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
-        if (curFragment instanceof ImagePopupFragment || curFragment instanceof DetailFragment  || curFragment instanceof ProfileEditFragment ||
-                curFragment instanceof PostedInProgressFragment|| curFragment instanceof PostedPendingFragment|| curFragment instanceof PostedCompletedFragment ||
-                curFragment instanceof AppliedPendingFragment|| curFragment instanceof AppliedCompletedFragment ||
-                curFragment instanceof DisplayBidder || curFragment instanceof DisplayWorker) {
+//        if (curFragment instanceof ImagePopupFragment || curFragment instanceof DetailFragment  || curFragment instanceof ProfileEditFragment ||
+//                curFragment instanceof PostedInProgressFragment|| curFragment instanceof PostedPendingFragment|| curFragment instanceof PostedCompletedFragment ||
+//                curFragment instanceof AppliedPendingFragment|| curFragment instanceof AppliedCompletedFragment ||
+//                curFragment instanceof DisplayBidder || curFragment instanceof DisplayWorker) {
+        if(!(curFragment instanceof HomeFragment)){ //|| curFragment instanceof MyJobsFragment || curFragment instanceof ProfileFragment)){
             super.onBackPressed();
             return;
         }
 
         SearchView searchBar = findViewById(R.id.searchviewHome);
-        if (searchBar != null) {
+        if(searchBar != null) {
             if (!searchBar.isIconified()) {
                 searchBar.setIconified(true);
                 searchBar.onActionViewCollapsed();

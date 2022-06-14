@@ -134,11 +134,12 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
             android:isIndicator="false"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/light_grey"
             android:scaleX="0.85"
             android:scaleY="0.85"
-            android:transformPivotX="0dp"
-            android:numStars="5"
             android:stepSize="1"
+            android:transformPivotX="0dp"
             app:layout_constraintStart_toEndOf="@+id/imageWorker"
             app:layout_constraintTop_toBottomOf="@+id/divider6" />
 

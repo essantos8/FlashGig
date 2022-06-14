@@ -103,7 +103,11 @@ public class DisplayBidder extends Fragment {
                             public void onSuccess(Void unused) {
                                 Log.d("DisplayBidderAccept", "DocumentSnapshot successfully updated! (bidders)");
                                 Toast.makeText(getActivity(), "Status changed!", Toast.LENGTH_SHORT).show();
+                                job1.setBidders(new ArrayList<>());
+                                jobDocRef.update("bidders", new ArrayList<>());
+                                Log.d("InProgressTransition", "Cleared Bidder list");
                             }
+
                         })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override

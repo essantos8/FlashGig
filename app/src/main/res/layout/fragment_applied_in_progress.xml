@@ -147,7 +147,6 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:cardMaxElevation="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView3">
@@ -617,6 +616,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="4dp"
+            android:layout_marginBottom="10dp"
             android:clickable="true"
             android:focusable="auto"
             android:longClickable="true"
@@ -624,6 +624,7 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnSetJobCompleteWorker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardView2">
@@ -727,6 +728,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnSetJobCompleteWorker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="JOB COMPLETE"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="@color/dashboard_blue"
+            app:cornerRadius="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

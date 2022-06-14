@@ -121,28 +121,23 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
         textJobWorkers = binding.textJobWorkers;
         profilePicDetail = binding.profilePicDetail;
         imageRecyclerView = binding.imageRecyclerView;
-        if(jobStatus.toUpperCase(Locale.ROOT).equals("COMPLETED")){
-            binding.btnSetJobCompleteWorker.setVisibility(View.GONE);
-        }
 
-        curJob.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    document = task.getResult().getDocuments().get(0);
-                    job = document.toObject(Job.class);
-                    // get client user id
-                    db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
-                        if(task1.getResult().getDocuments().isEmpty()){
-                            Log.d("Pending Fragment Client", "onComplete: User not found");
-                            Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
-                        setViews();
-                        loadImages();
-                    });
-                }
+
+        curJob.addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                document = task.getResult().getDocuments().get(0);
+                job = document.toObject(Job.class);
+                // get client user id
+                db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
+                    if(task1.getResult().getDocuments().isEmpty()){
+                        Log.d("Pending Fragment Client", "onComplete: User not found");
+                        Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
+                    setViews();
+                    loadImages();
+                });
             }
         });
 
@@ -235,7 +230,7 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
 //                    Toast.makeText(getContext(), "last image is"+String.valueOf(imageCounter[0]), Toast.LENGTH_SHORT).show();
                     HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList, this);
                     LinearLayoutManager layoutManager
-                            = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                            = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
                     imageRecyclerView.setLayoutManager(layoutManager);
                     imageRecyclerView.setAdapter(adapter);

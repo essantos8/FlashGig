@@ -34,6 +34,7 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
         curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         eventChangeListener();
     }
+
     private void eventChangeListener() {
         db.collection("jobs").whereEqualTo("client",curUser).orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
             if (error != null) {
@@ -41,6 +42,8 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
             }
             else {
                 for (DocumentChange dc : value.getDocumentChanges()) {
+                    Log.d("Changed", "changed: "+dc.getDocument().toObject(Job.class).getJobId());
+
                     if (dc.getType() == DocumentChange.Type.ADDED) {
                         jobList.add(dc.getDocument().toObject(Job.class));
 //                    Log.d("jobss", "eventChangeListener: added");

@@ -781,22 +781,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnSetJobCompleteClient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="SET JOB AS COMPLETE"
-            android:textColor="#FFFFFF"
-            app:backgroundTint="@color/dashboard_blue"
-            app:cornerRadius="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.512"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnDeleteJob"
-            app:layout_constraintVertical_bias="0.3" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

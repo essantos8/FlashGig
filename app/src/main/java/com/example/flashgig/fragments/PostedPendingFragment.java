@@ -379,8 +379,8 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
 
 
     @Override
-    public void onItemClickWorker(String userId1, String jobId1) {
-        Fragment fragment = DisplayWorker.newInstance(userId1, jobId);
+    public void onItemClickWorker(String userId, String jobId) {
+        Fragment fragment = DisplayWorker.newInstance(userId, jobId);
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
         fragmentTransaction.addToBackStack(null);

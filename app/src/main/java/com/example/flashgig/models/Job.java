@@ -13,7 +13,11 @@ public class Job {
 
     public ArrayList<String> categories;
     public ArrayList<String> workers;
+
+
+
     public ArrayList<String> bidders;
+    public ArrayList<String> userCompleteTracker;
     public ArrayList<String> jobImages;
 
     public Job() {
@@ -32,6 +36,7 @@ public class Job {
         this.jobImages = jobImages;
         this.bidders = new ArrayList<>();
         this.workers = new ArrayList<>();
+        this.userCompleteTracker = new ArrayList<>();
         this.jobId = jobId;
         this.status = "pending";
     }
@@ -86,7 +91,16 @@ public class Job {
         }
         return description;
     }
+    public ArrayList<String> getUserCompleteTracker() {
+        if(this.userCompleteTracker == null){
+            return new ArrayList<>();
+        }
+        return userCompleteTracker;
+    }
 
+    public void setUserCompleteTracker(ArrayList<String> userCompleteTracker) {
+        this.userCompleteTracker = userCompleteTracker;
+    }
     public String getJobId() {
         return jobId;
     }

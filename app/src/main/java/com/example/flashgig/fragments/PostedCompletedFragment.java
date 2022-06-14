@@ -70,6 +70,7 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        workerList.clear();
         binding = FragmentPostedCompletedBinding.inflate(inflater, container, false);
         db.collection("jobs").whereEqualTo("jobId",jobId).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
