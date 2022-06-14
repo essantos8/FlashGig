@@ -1,9 +1,10 @@
 package com.example.flashgig.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class User {
+public class User implements Serializable {
     // Required info
     public String fullName;
     public String email;
