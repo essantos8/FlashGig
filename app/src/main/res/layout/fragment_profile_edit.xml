@@ -73,8 +73,8 @@
                 android:ems="10"
                 android:fontFamily="@font/salmapromedium"
                 android:gravity="start|top"
-                android:hint=" about me"
-                android:inputType="textMultiLine"
+                android:hint=" About me"
+                android:inputType="textMultiLine|textCapSentences"
                 android:textColor="@color/dark_grey"
                 android:textColorHint="@color/mid_grey"
                 android:textSize="16sp" />

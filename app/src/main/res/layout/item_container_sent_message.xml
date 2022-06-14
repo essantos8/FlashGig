@@ -9,17 +9,21 @@
         android:id="@+id/textMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/background_sent_message"
+        android:elevation="2dp"
         android:paddingStart="@dimen/_12sdp"
         android:paddingTop="@dimen/_8sdp"
         android:paddingEnd="@dimen/_12sdp"
         android:paddingBottom="@dimen/_8sdp"
         android:textColor="@color/white"
         android:textSize="@dimen/_13ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="wrap"
-        app:layout_constraintWidth_percent="0.8" />
+        app:layout_constraintWidth_max="wrap" />
 
     <TextView
         android:id="@+id/textDateTime"

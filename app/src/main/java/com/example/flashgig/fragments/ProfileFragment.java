@@ -86,8 +86,8 @@ public class ProfileFragment extends Fragment{
         textEmail = binding.textEmail;
         textPhone = binding.textPhone;
         profilePicture = binding.ProfilePic;
+        retrieveInfo();
         getComments();
-        retrieveInfo(false);
 
         //animations + SHARED ELEMENT
         binding.btnEditProfile.setOnClickListener(view -> {
@@ -105,7 +105,7 @@ public class ProfileFragment extends Fragment{
 //        });
 
         binding.btnProfileUpdate.setOnClickListener(view -> {
-            retrieveInfo(true);
+            retrieveInfo();
         });
 
 //        binding.btnLogout.setOnClickListener(view -> {
@@ -170,19 +170,15 @@ public class ProfileFragment extends Fragment{
                 .commit();
     }
 
-    private void retrieveInfo(Boolean refresh) {
+    private void retrieveInfo() {
         StorageReference userRef = storageRef.child("media/images/profile_pictures/" + currentUser.getUid());
         userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
 //            Snackbar.make(binding.getRoot(), "File exists!", Snackbar.LENGTH_SHORT).show();
-            if (refresh) {
-                //
-            } else {
-                GlideApp.with(this)
-                        .load(userRef)
-                        .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
-                        .fitCenter()
-                        .into(profilePicture);
-            }
+            GlideApp.with(this)
+                    .load(userRef)
+                    .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
+                    .fitCenter()
+                    .into(profilePicture);
             progressBar.setVisibility(View.GONE);
         }).addOnFailureListener(e -> {
             Log.d("Profile", "retrieveInfo: "+e.toString());

@@ -115,7 +115,6 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
         binding = FragmentDetailBinding.inflate(inflater, container, false);
 
         textJobTitle = binding.textJobTitle;
@@ -135,10 +134,10 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                 if(task.isSuccessful()){
                     document = task.getResult().getDocuments().get(0);
                     job = document.toObject(Job.class);
-                    if(!curUser.equals(job.getClient())){
+                    if(!curUser.equals(job.getClient()) && job.getStatus().equalsIgnoreCase("pending")){
                         binding.btnApplyForJob.setVisibility(View.VISIBLE);
                     }
-                    else{
+                    else if (curUser.equals(job.getClient())){
                         binding.btnDeleteJob.setVisibility(View.VISIBLE);
                     }
                     // get client user id
@@ -184,7 +183,6 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
             else {
                 final Map<String, Object> addUsertoArrayMap = new HashMap<>();
                 addUsertoArrayMap.put("bidders", FieldValue.arrayUnion(curUser));
-                // something wrong here
                 db.collection("jobs").document(document.getId()).update(addUsertoArrayMap);
                 Toast.makeText(getActivity(),"Applied for job!",Toast.LENGTH_SHORT).show();
                 binding.btnApplyForJob.setBackgroundColor(808080);
@@ -210,7 +208,6 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                 Snackbar.make(getActivity().findViewById(R.id.frameLayout), "Job Deleted!", Snackbar.LENGTH_SHORT).show();
                 getActivity().getSupportFragmentManager().popBackStackImmediate();
             }
-//        for(String imageUrl: jobImageUrls){
             for (int i = 0; i < jobImageUrls.size(); i++) {
                 String imageUrl = jobImageUrls.get(i);
                 int finalI = i;
@@ -225,7 +222,6 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                         progressDialogDeletion.dismiss();
 //                        Toast.makeText(getContext(), "Job Deleted!", Toast.LENGTH_SHORT).show();
                         Snackbar.make(getActivity().findViewById(R.id.frameLayout), "Job Deleted!", Snackbar.LENGTH_SHORT).show();
-//                        getActivity().getSupportFragmentManager().popBackStackImmediate();
                         getActivity().onBackPressed();
                     }
                 });
