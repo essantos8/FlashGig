@@ -1,8 +1,10 @@
 package com.example.flashgig.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class User {
+public class User implements Serializable {
     // Required info
     public String fullName;
     public String email;
@@ -11,6 +13,7 @@ public class User {
     // Additional info
     public String about = "";
     public ArrayList<String> skills = new ArrayList<>();
+    public HashMap<String, Comment> ratings = new HashMap<>();
 
     public User() {
     }
@@ -40,13 +43,14 @@ public class User {
     }
 
     // Constructor for existing/editing user profiles
-    public User(String fullName, String email, String phone, String userId, String about, ArrayList<String> skills) {
+    public User(String fullName, String email, String phone, String userId, String about, ArrayList<String> skills, HashMap<String, Comment> ratings) {
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.userId = userId;
         this.about = about;
         this.skills = skills;
+        this.ratings = ratings;
     }
 
     public String getFullName() {
@@ -79,5 +83,18 @@ public class User {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Comment getComment(String jobId) {return this.ratings.get(jobId);}
+
+    public HashMap<String, Comment> getRatings() {return this.ratings;}
+
+    public float getAverageRating() {
+        float sum = 0;
+        for (Comment i: this.ratings.values()){
+            sum += i.getRating();
+        }
+        float avg = sum / this.ratings.values().size();
+        return avg;
     }
 }

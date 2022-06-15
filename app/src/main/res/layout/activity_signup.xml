@@ -78,7 +78,8 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="name"
+        android:hint="Name"
+        android:textColorHint="@color/mid_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textSignUp">
@@ -88,6 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:inputType="textPersonName|textCapWords"
             android:singleLine="true"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -97,6 +99,7 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textColorHint="@color/mid_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilnamesignup">
@@ -106,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:hint="email"
+            android:hint="Email"
             android:inputType="textEmailAddress"
             android:singleLine="true"
             android:textColor="@color/black" />
@@ -117,6 +120,7 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textColorHint="@color/mid_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +131,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:hint="password"
+            android:hint="Password"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textColor="@color/black" />
@@ -138,18 +142,45 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textColorHint="@color/mid_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilpasswordsignup">
+        app:layout_constraintTop_toBottomOf="@+id/tilpasswordagainsignup"
+        app:prefixText="+63"
+        app:prefixTextColor="@color/dark_grey">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tietnumbersignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:hint="number"
+            android:hint="Number"
             android:inputType="phone"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilpasswordagainsignup"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColorHint="@color/mid_grey"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilpasswordsignup">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tietpasswordagainsignup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="Re-enter password"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>

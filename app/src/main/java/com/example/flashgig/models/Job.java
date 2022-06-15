@@ -1,19 +1,30 @@
 package com.example.flashgig.models;
 
+import androidx.annotation.Nullable;
+
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class Job {
 
-    public String title, description, client, date, jobId, location, budget;
+    public String title, description, client, date, jobId, location, budget, status;
 
     public Integer numWorkers;
 
-    public ArrayList<String> categories, workers, bidders;
+    public ArrayList<String> categories;
+    public ArrayList<String> workers;
+
+
+
+    public ArrayList<String> bidders;
+    public ArrayList<String> userCompleteTracker;
+    public ArrayList<String> jobImages;
 
     public Job() {
     }
     // Constructor for new jobs
-    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, String jobId) {
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location,
+               String budget, String jobId, ArrayList<String> jobImages) {
         this.title = title;
         this.description = description;
         this.client = client;
@@ -22,12 +33,16 @@ public class Job {
         this.numWorkers = numWorkers;
         this.location = location;
         this.budget = budget;
+        this.jobImages = jobImages;
         this.bidders = new ArrayList<>();
         this.workers = new ArrayList<>();
+        this.userCompleteTracker = new ArrayList<>();
         this.jobId = jobId;
+        this.status = "pending";
     }
     //
-    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, ArrayList<String> workers, ArrayList<String> bidders, String jobId) {
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location,
+               String budget, ArrayList<String> workers, ArrayList<String> bidders, String jobId, ArrayList<String> jobImages) {
         this.title = title;
         this.description = description;
         this.client = client;
@@ -38,7 +53,9 @@ public class Job {
         this.budget = budget;
         this.bidders = bidders;
         this.workers = workers;
+        this.jobImages = jobImages;
         this.jobId = jobId;
+        this.status = "pending";
     }
 
     public void setTitle(String title) {
@@ -61,6 +78,9 @@ public class Job {
         this.bidders = bidders;
     }
 
+    public void setStatus(String status) {this.status = status;}
+    public String getStatus() {return status;}
+
     public String getTitle() {
         return title;
     }
@@ -71,7 +91,16 @@ public class Job {
         }
         return description;
     }
+    public ArrayList<String> getUserCompleteTracker() {
+        if(this.userCompleteTracker == null){
+            return new ArrayList<>();
+        }
+        return userCompleteTracker;
+    }
 
+    public void setUserCompleteTracker(ArrayList<String> userCompleteTracker) {
+        this.userCompleteTracker = userCompleteTracker;
+    }
     public String getJobId() {
         return jobId;
     }
@@ -83,6 +112,14 @@ public class Job {
     public ArrayList<String> getBidders() {
         return bidders;
     }
+
+    public ArrayList<String> getJobImages() {
+        if(jobImages == null){
+            return new ArrayList<String>();
+        }
+        return jobImages; }
+
+    public void setJobImages(ArrayList<String> jobImages) { this.jobImages = jobImages; }
 
     public String getClient() {
         return client;
@@ -130,5 +167,13 @@ public class Job {
 
     public void setBudget(String budget) {
         this.budget = budget;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj != null && obj.getClass() == Job.class){
+            return ((Job) obj).getJobId().equals(this.getJobId());
+        }
+        return false;
     }
 }

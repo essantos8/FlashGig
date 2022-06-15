@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:cardMaxElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/salmapromedium"
+                android:text="Worker"
+                android:textColor="@color/mid_grey"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/profilePicDetail"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textJobClientEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/salmapromedium"
+                android:text="client email here"
+                android:textColor="@color/mid_grey"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/profilePicDetail"
+                app:layout_constraintTop_toBottomOf="@+id/textJobWorkerName" />
+
+            <TextView
+                android:id="@+id/textJobWorkerRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/salmapromedium"
+                android:text="rating here"
+                android:textColor="@color/mid_grey"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/profilePicDetail"
+                app:layout_constraintTop_toBottomOf="@+id/textJobClientEmail" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profilePicDetail"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@id/barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/Circular"
+                app:shapeAppearanceOverlay="@style/Circular"
+                tools:src="@tools:sample/avatars[2]" />
+
+            <ProgressBar
+                android:id="@+id/progressBarDetail"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/dashboard_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/profilePicDetail"
+                app:layout_constraintEnd_toEndOf="@+id/profilePicDetail"
+                app:layout_constraintStart_toStartOf="@+id/profilePicDetail"
+                app:layout_constraintTop_toTopOf="@+id/profilePicDetail" />
+
+            <TextView
+                android:id="@+id/textJobWorkerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/salmapromedium"
+                android:text="client name"
+                android:textColor="@color/dark_grey"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/profilePicDetail"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <androidx.appcompat.widget.AppCompatButton
+
+                android:id="@+id/button3"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/ic_outline_profile"
+                android:backgroundTint="@color/mid_grey"
+                android:padding="0dp"
+                android:paddingLeft="0dp"
+                app:layout_constraintBottom_toTopOf="@id/barrier"
+                app:layout_constraintEnd_toStartOf="@+id/button2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+
+                android:id="@+id/button2"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ic_outline_message"
+                android:backgroundTint="@color/mid_grey"
+                android:padding="0dp"
+                android:paddingLeft="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/barrier"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                tools:layout_editor_absoluteX="178dp"
+                tools:layout_editor_absoluteY="79dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="profilePicDetail, textJobWorkerRating" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="Their Feedback"
+                android:textColor="@color/dark_grey"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Your Feedback"
+                android:textColor="@color/dark_grey"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewClientFeedback" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewClientFeedback"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:cardBackgroundColor="@color/light_grey"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView18">
+
+                <TextView
+                    android:id="@+id/textClientFeedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    android:text="lorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotas"
+                    android:textColor="@color/dark_grey" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewWorkerFeedback"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="@color/light_grey"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView24">
+
+                <TextView
+                    android:id="@+id/textViewWorkerFeedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    android:text="lorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotas"
+                    android:textColor="@color/dark_grey" />
+            </androidx.cardview.widget.CardView>
+
+            <RatingBar
+                android:id="@+id/ratingBarWorker"
+                style="@android:style/Widget.Material.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:indeterminate="false"
+                android:numStars="5"
+                android:progressTint="#DFDD00"
+                android:rating="3.5"
+                android:secondaryProgressTint="@color/yellow_flash"
+                app:layout_constraintBottom_toTopOf="@+id/cardViewClientFeedback"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier" />
+
+            <RatingBar
+                android:id="@+id/ratingBarClient"
+                style="@android:style/Widget.Material.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:indeterminate="false"
+                android:numStars="5"
+                android:progressTint="@color/dashboard_blue"
+                android:rating="3.5"
+                android:secondaryProgressTint="@color/dashboard_blue"
+                app:layout_constraintBottom_toTopOf="@+id/cardViewWorkerFeedback"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewClientFeedback" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

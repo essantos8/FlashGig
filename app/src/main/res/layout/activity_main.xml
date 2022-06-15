@@ -13,6 +13,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/light_grey"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,13 +23,16 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/light_grey"
         app:elevation="32dp"
-        app:itemTextColor="@color/dashboard_blue"
+        app:itemBackground="@color/light_grey"
+        app:itemIconTint="@color/mid_grey"
+        app:itemTextColor="@color/dark_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/nav_bar">
+        app:menu="@menu/main_navbar">
 
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>

@@ -118,14 +118,14 @@
             android:id="@+id/textView_jobCateg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="Job Category"
             android:textColor="#444444"
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.112"
+            app:layout_constraintHorizontal_bias="0.115"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_jobDesc" />
+            app:layout_constraintTop_toBottomOf="@+id/jobImage1" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup_jobCateg"
@@ -384,6 +384,59 @@
             app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toEndOf="@+id/textView_startDate"
             app:layout_constraintTop_toBottomOf="@+id/editText_maxAmt" />
+
+        <ImageView
+            android:id="@+id/jobImage1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:srcCompat="@drawable/ic_baseline_add_box_24"
+            tools:ignore="MissingConstraints"
+            tools:srcCompat="@drawable/ic_baseline_add_box_24" />
+
+        <ImageView
+            android:id="@+id/jobImage2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toEndOf="@+id/jobImage1"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:srcCompat="@drawable/ic_baseline_add_box_24"
+            tools:ignore="MissingConstraints"
+            tools:srcCompat="@drawable/ic_baseline_add_box_24" />
+
+        <ImageView
+            android:id="@+id/jobImage3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/jobImage2"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:srcCompat="@drawable/ic_baseline_add_box_24"
+            tools:ignore="MissingConstraints"
+            tools:srcCompat="@drawable/ic_baseline_add_box_24" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/salmapromedium"
+            android:text="Images"
+            android:textColor="#444444"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.093"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_jobDesc" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
