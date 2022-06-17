@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.flashgig.adapters.UsersAdapter;
-import com.example.flashgig.databinding.ActivityUserBinding;
+import com.example.flashgig.databinding.ActivityUsersListBinding;
 import com.example.flashgig.listeners.UserListener;
 import com.example.flashgig.models.User;
 import com.example.flashgig.utilities.Constants;
@@ -25,17 +27,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsersActivity extends AppCompatActivity implements UserListener{
-    private ActivityUserBinding binding;
+    private ActivityUsersListBinding binding;
     private FirebaseUser curUser;
+    private UsersAdapter usersAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityUserBinding.inflate(getLayoutInflater());
+        binding = ActivityUsersListBinding.inflate(getLayoutInflater());
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         setContentView(binding.getRoot());
         curUser = FirebaseAuth.getInstance().getCurrentUser();
         getUsers();
+        binding.userSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                usersAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
     }
 
     private void getUsers(){
@@ -47,7 +62,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener{
                     loading(false);
                     String currentUserId = curUser.getUid();//preferenceManager.getString();
                     if(task.isSuccessful() && task.getResult() != null){
-                        List<User> users = new ArrayList<>();
+                        ArrayList<User> users = new ArrayList<>();
                         for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                             if(currentUserId.equals(queryDocumentSnapshot.getId())){
                                 continue;
@@ -59,7 +74,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener{
                             users.add(user);
                         }
                         if(users.size() > 0) {
-                            UsersAdapter usersAdapter = new UsersAdapter(this, users, this);
+                            usersAdapter = new UsersAdapter(this, users, this);
                             binding.usersRecyclerView.setAdapter(usersAdapter);
                             binding.usersRecyclerView.setVisibility(View.VISIBLE);
                         } else {

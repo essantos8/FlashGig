@@ -1,11 +1,14 @@
 package com.example.flashgig.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,11 +17,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.signature.ObjectKey;
+import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.activities.ChatActivity;
+import com.example.flashgig.adapters.BidderRecyclerViewAdapter;
+import com.example.flashgig.adapters.CommentsRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentDetailBinding;
 import com.example.flashgig.databinding.FragmentDisplayBidderBinding;
+import com.example.flashgig.models.Comment;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
+import com.example.flashgig.utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +39,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Document;
 
@@ -46,6 +58,10 @@ public class DisplayBidder extends Fragment {
     private ArrayList<String> workerListTemp = new ArrayList<>();    //putting all of the workers in 1 list temporarily
     private FirebaseFirestore db;
     private Map<String, Integer> jobRating = new HashMap<>();
+    private FragmentDisplayBidderBinding binding;
+    private ArrayList<Comment> comments = new ArrayList<>();
+    private CommentsRecyclerViewAdapter adapter;
+
     DocumentSnapshot document;
     //Task<QuerySnapshot> bidUser1;
     DocumentReference bidderDocRef;
@@ -125,7 +141,7 @@ public class DisplayBidder extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FragmentDisplayBidderBinding binding = FragmentDisplayBidderBinding.inflate(inflater, container, false);
+        binding = FragmentDisplayBidderBinding.inflate(inflater, container, false);
 
         textBidderName = binding.textBidderName;
         textBidderNumber = binding.textBidderNumber;
@@ -137,9 +153,7 @@ public class DisplayBidder extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 bidUserAcc = documentSnapshot.toObject(User.class);
                 //Log.d("BiddersFragment", "onComplete: User's name is: " + bidUserAcc.getFullName());
-                textBidderName.setText(bidUserAcc.getFullName());
-                textBidderNumber.setText(bidUserAcc.getPhone());
-                textBidderEmail.setText(bidUserAcc.getEmail());
+                retrieveInfo(bidUserAcc);
             }
         });
 
@@ -151,21 +165,16 @@ public class DisplayBidder extends Fragment {
             }
         });
 
-        /*
-        //For getting the job.getWorkers()
-        db.collection("jobs").whereEqualTo("jobId", mParam2).get().addOnCompleteListener(task1 -> {
-            if (task1.getResult().getDocuments().isEmpty()) {
-                Log.d("DisplayBidder", "onComplete: Job is NOT FOUND");
-                Toast.makeText(getContext(), "Job NOT FOUND.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            job = task1.getResult().getDocuments().get(0).toObject(Job.class);
-        });*/
-
         //BACK BUTTON
         binding.backButton.setOnClickListener(view ->{
             fm = getActivity().getSupportFragmentManager();
             fm.popBackStackImmediate();
+        });
+
+        binding.btnChatBidderProfile.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            intent.putExtra(Constants.KEY_USER, bidUserAcc);
+            getContext().startActivity(intent);
         });
 
         binding.btnAcceptBidder.setOnClickListener(view -> {
@@ -235,7 +244,74 @@ public class DisplayBidder extends Fragment {
             }
         });
 
-
         return binding.getRoot();
+    }
+
+    private void retrieveInfo(User user){
+        textBidderName.setText(user.getFullName());
+        textBidderNumber.setText(user.getPhone());
+        textBidderEmail.setText(user.getEmail());
+        binding.rbBidder.setRating(user.getAverageRating());
+        getComments(user);
+        setSkills();
+        StorageReference userRef = FirebaseStorage.getInstance().getReference().child("media/images/profile_pictures/" + user.getUserId());
+        userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
+//            Snackbar.make(binding.getRoot(), "File exists!", Snackbar.LENGTH_SHORT).show();
+            GlideApp.with(this)
+                    .load(userRef)
+                    .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
+                    .fitCenter()
+                    .into(binding.imageBidder);
+        }).addOnFailureListener(e -> {
+            Log.d("Profile", "retrieveInfo: "+e.toString());
+//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
+        });
+    }
+    private void getComments(User user) {
+        db.collection("users").document(user.getUserId()).get().addOnCompleteListener(task -> {
+            User curUser = task.getResult().toObject(User.class);
+            Log.d("fDB", "getComments: "+ curUser.getRatings().keySet());
+            for(String key : curUser.getRatings().keySet()){
+                comments.add(curUser.getComment(key));
+            }
+            adapter.notifyDataSetChanged();
+        });
+        RecyclerView recyclerView = binding.bidderFeedbackRecyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        adapter = new CommentsRecyclerViewAdapter(this.getContext(), comments);
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void setSkills(){
+        if (bidUserAcc.getSkills().size() > 0) {
+            for(String skill: bidUserAcc.getSkills()){
+                switch(skill){
+                    case "Carpentry":
+                        binding.chipCarpentry.setVisibility(View.VISIBLE);
+                        break;
+                    case "Plumbing":
+                        binding.chipPlumbing.setVisibility(View.VISIBLE);
+                        break;
+                    case "Electrical":
+                        binding.chipElectrical.setVisibility(View.VISIBLE);
+                        break;
+                    case "Electronics":
+                        binding.chipElectronics.setVisibility(View.VISIBLE);
+                        break;
+                    case "Shopping":
+                        binding.chipPersonalShopping.setVisibility(View.VISIBLE);
+                        break;
+                    case "Assistant":
+                        binding.chipVirtualAssistant.setVisibility(View.VISIBLE);
+                        break;
+                    case "Other":
+                        binding.chipOther.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        }
+        else {
+            binding.chipOther.setVisibility(View.VISIBLE);
+        }
     }
 }

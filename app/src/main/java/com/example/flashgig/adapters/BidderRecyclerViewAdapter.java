@@ -1,22 +1,31 @@
 package com.example.flashgig.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.activities.ChatActivity;
+import com.example.flashgig.fragments.DisplayWorker;
 import com.example.flashgig.models.User;
+import com.example.flashgig.utilities.Constants;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -55,6 +64,18 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
         holder.textViewBName.setText(curBidder.getFullName());
         holder.textViewBNumber.setText(curBidder.getPhone());
         holder.textViewBEmail.setText(curBidder.getEmail());
+        holder.chatButton.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra(Constants.KEY_USER, curBidder);
+            context.startActivity(intent);
+        });
+        holder.bidderCard.setOnClickListener(view -> {
+            Fragment fragment = DisplayWorker.newInstance(curBidder.getUserId(), jobId);
+            FragmentTransaction fragmentTransaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
         if(type.equals("bidder")){
             holder.bidderCard.setOnClickListener(view -> clickListener.onItemClickBidder(curBidder.userId, jobId));
         }
@@ -66,7 +87,6 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
 //            Snackbar.make(binding.getRoot(), "File exists!", Snackbar.LENGTH_SHORT).show();
                 GlideApp.with(context)
                         .load(profilePicRef)
-                        .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
                         .fitCenter()
                         .into(holder.imageBidder);
         }).addOnFailureListener(e -> {
@@ -85,6 +105,7 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
         TextView textViewBName, textViewBNumber, textViewBEmail;
         CardView bidderCard;
         ImageView imageBidder;
+        Button chatButton;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -95,6 +116,7 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
             textViewBNumber = itemView.findViewById(R.id.textBidderNumber);
             textViewBEmail = itemView.findViewById(R.id.textBidderEmail);
             bidderCard = itemView.findViewById(R.id.bidderCardPopup);
+            chatButton = itemView.findViewById(R.id.btnChatBidderRow);
         }
     }
 

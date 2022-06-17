@@ -30,6 +30,20 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp">
 
+            <androidx.appcompat.widget.AppCompatButton
+
+                android:id="@+id/btnChatBidderRow"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_outline_message"
+                android:backgroundTint="@color/mid_grey"
+                android:padding="0dp"
+                android:paddingLeft="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageBidder"
                 android:layout_width="100dp"
@@ -59,6 +73,9 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/dashboard_blue"
                 android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toStartOf="@+id/btnChatBidderRow"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/imageBidder"
                 app:layout_constraintTop_toTopOf="@+id/imageBidder" />
 

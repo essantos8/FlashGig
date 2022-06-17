@@ -1,25 +1,36 @@
 package com.example.flashgig.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.activities.ChatActivity;
 import com.example.flashgig.databinding.ClientFeedbackRecyclerViewRowBinding;
+import com.example.flashgig.fragments.DisplayWorker;
 import com.example.flashgig.models.Comment;
+import com.example.flashgig.models.User;
+import com.example.flashgig.utilities.Constants;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -51,12 +62,14 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRe
         holder.name.setText(curComment.getRator());
         holder.comment.setText(curComment.getText());
         holder.rating.setRating(curComment.getRating());
+        holder.userCardView.setOnClickListener(view -> {
+            getUserProfile(curComment.ratorId);
+        });
         // get rator id
         StorageReference profilePicRef = storageRef.child("media/images/profile_pictures/" + curComment.getRatorId());
         profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
             GlideApp.with(ctx)
                     .load(profilePicRef)
-                    .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
                     .fitCenter()
                     .into(holder.profilePic);
             holder.progressBar.setVisibility(View.GONE);
@@ -65,6 +78,23 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRe
 //            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
         });
 
+    }
+
+    private void getUserProfile(String userId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userId).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                User user =task.getResult().toObject(User.class);
+                Fragment fragment = DisplayWorker.newInstance(user.getUserId(), "");
+                FragmentTransaction fragmentTransaction = ((AppCompatActivity) ctx).getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+            else{
+                Log.d("RCVA", "getUserProfile: ");
+            }
+        });
     }
 
     @Override
@@ -77,6 +107,7 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRe
         TextView name, email, comment;
         RatingBar rating;
         ImageView profilePic;
+        CardView userCardView;
         ProgressBar progressBar;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +117,7 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRe
             email = itemView.findViewById(R.id.textJobClientEmail);
             rating = itemView.findViewById(R.id.ratingBarClient);
             progressBar = itemView.findViewById(R.id.progressBarDetail);
+            userCardView = itemView.findViewById(R.id.userCardFeedbackRow);
         }
     }
 }

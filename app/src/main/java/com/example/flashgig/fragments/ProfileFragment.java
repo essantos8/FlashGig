@@ -89,41 +89,18 @@ public class ProfileFragment extends Fragment{
         retrieveInfo();
         getComments();
 
-        //animations + SHARED ELEMENT
-        binding.btnEditProfile.setOnClickListener(view -> {
-//            startActivity(new Intent(getContext(), ProfileEditActivity.class));
-            replaceFragment(new ProfileEditFragment(), "profileEdit");
-        });
 
-        binding.btnProfileAddJob.setOnClickListener(view -> {
-//            startActivity(new Intent(getContext(), JobAdderActivity.class));
-            replaceFragment(new JobAdderFragment(), "jobAdder");
-        });
-
-//        binding.btnReviews.setOnClickListener(view -> {
-//            startActivity(new Intent(getContext(), ReviewsActivity.class));
-//        });
-
-        binding.btnProfileUpdate.setOnClickListener(view -> {
-            retrieveInfo();
-        });
-
-//        binding.btnLogout.setOnClickListener(view -> {
-//            googleSignInClient.signOut();
-//            FirebaseAuth.getInstance().signOut();
-//            db.clearPersistence();
-//            Toast.makeText(this.getContext(), "User logged out!", Toast.LENGTH_SHORT).show();
-//            getActivity().finish();
-//            startActivity(new Intent(getContext(), SplashActivity.class));
-//        });
         binding.btnOptions.setOnClickListener(view -> {
             binding.drawerLayout.open();
         });
         binding.profileDrawer.setNavigationItemSelectedListener(item -> {
-            Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
             switch(item.getTitle().toString()){
                 case "Log Out":
                     logOut();
+                    break;
+                case "Edit Profile":
+                    replaceFragment(new ProfileEditFragment(), "profileEdit");
                     break;
             }
             return false;
@@ -139,6 +116,7 @@ public class ProfileFragment extends Fragment{
             for(String key : curUser.getRatings().keySet()){
                 comments.add(curUser.getComment(key));
             }
+            adapter.notifyDataSetChanged();
         });
         commentRecyclerView = binding.comRecycler;
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -220,6 +198,9 @@ public class ProfileFragment extends Fragment{
                                 break;
                         }
                     }
+                }
+                else {
+                    binding.chipOther.setVisibility(View.VISIBLE);
                 }
             }
             else{

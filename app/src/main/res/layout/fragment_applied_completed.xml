@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:background="@color/white"
+            android:background="#00FFFFFF"
             android:onClick="goBack"
             android:scaleX="0.5"
             android:scaleY="0.5"
@@ -118,15 +118,16 @@
                     android:layout_marginEnd="12dp"
                     android:background="@drawable/ic_outline_profile"
                     android:backgroundTint="@color/mid_grey"
+                    android:clickable="false"
                     android:padding="0dp"
                     android:paddingLeft="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button2"
+                    app:layout_constraintEnd_toStartOf="@+id/btnChat"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatButton
 
-                    android:id="@+id/button2"
+                    android:id="@+id/btnChat"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginEnd="16dp"
@@ -265,7 +266,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
-                    android:text="Workers: "
+                    android:text="Accepted Workers: "
                     android:textColor="#000000"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -614,21 +615,6 @@
         </androidx.cardview.widget.CardView>
 
         <Button
-            android:id="@+id/btnJobComplete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp"
-            android:text="Job Complete"
-            android:textColor="#FFFFFF"
-            app:backgroundTint="@color/dashboard_blue"
-            app:cornerRadius="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/workerRecyclerView" />
-
-        <Button
             android:id="@+id/btnDeleteJob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -658,29 +644,70 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textViewComments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/salmapromedium"
-            android:text="Ratings and Feedback"
-            android:textColor="@color/mid_grey"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/workerRecyclerView"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/feedbackCardApplied"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:elevation="8dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewComments" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewComments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/salmapromedium"
+                    android:shadowColor="@color/mid_grey"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:text="Ratings and Feedback"
+                    android:textColor="@color/dashboard_blue"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider10"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#9CC7FF"
+                    android:foregroundTint="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewComments" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/workerRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider10" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

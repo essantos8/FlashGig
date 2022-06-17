@@ -64,19 +64,23 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
             }
             else {
                 for (DocumentChange dc : value.getDocumentChanges()) {
+                    Job job = dc.getDocument().toObject(Job.class);
+                    if(job.getStatus().equalsIgnoreCase("completed")){
+                        continue;
+                    }
                     if (dc.getType() == DocumentChange.Type.ADDED) {
-                        jobList.add(dc.getDocument().toObject(Job.class));
+                        jobList.add(job);
                         //                    Log.d("jobss", "eventChangeListener: added");
                     } else if (dc.getType() == DocumentChange.Type.REMOVED) {
-                        jobList.remove(dc.getDocument().toObject(Job.class));
+                        jobList.remove(job);
                         //                    Log.d("jobss", "eventChangeListener: removed");
                     } else {
                         Integer index = -1;
-                        index = jobList.indexOf(dc.getDocument().toObject(Job.class));
+                        index = jobList.indexOf(job);
                         assert !index.equals(-1);
                         Log.d("INDEX", "eventChangeListener: " + String.valueOf(index));
-                        jobList.remove(dc.getDocument().toObject(Job.class));
-                        jobList.add(index, dc.getDocument().toObject(Job.class));
+                        jobList.remove(job);
+                        jobList.add(index, job);
                         //                    Log.d("jobss", "eventChangeListener: modified");
                     }
                     adapter.notifyDataSetChanged();

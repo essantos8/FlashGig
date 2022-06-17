@@ -1,6 +1,7 @@
 package com.example.flashgig.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +22,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.activities.ChatActivity;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentAppliedInProgressBinding;
 import com.example.flashgig.databinding.FragmentAppliedPendingBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
+import com.example.flashgig.utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -141,14 +144,27 @@ public class AppliedInProgressFragment extends Fragment implements HorizontalIma
 
 
     private void setViews(){
+        String temp = String.valueOf(job.getWorkers().size()) + '/' + job.getNumWorkers();
         textJobTitle.setText(job.getTitle());
         textJobLocation.setText(job.getLocation());
         textJobDate.setText(job.getDate());
         textJobClientEmail.setText(job.getClient());
         textJobClientName.setText(clientUser.getFullName());
         textJobDescription.setText(job.getDescription());
-        textJobWorkers.setText(String.valueOf(job.getNumWorkers()));
+        textJobWorkers.setText(temp);
         textJobBudget.setText(job.getBudget());
+        binding.cardView3.setOnClickListener(view -> {
+            Fragment fragment = DisplayWorker.newInstance(clientUser.getUserId(), jobId);
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+        binding.btnChat.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            intent.putExtra(Constants.KEY_USER, clientUser);
+            startActivity(intent);
+        });
 
         for (String category : job.getCategories()){
             switch (category) {

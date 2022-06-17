@@ -1,6 +1,8 @@
 package com.example.flashgig.models;
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment implements Serializable {
     public String rator, comment, ratorId;
     public Float rating;
     public Comment() {

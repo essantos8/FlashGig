@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView3"
+        android:id="@+id/userCardFeedbackRow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -32,24 +32,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Your Feedback:"
+                android:text="Feedback:"
                 android:textColor="@color/dark_grey"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/profilePicClientFeedback"
                 app:layout_constraintTop_toBottomOf="@+id/profilePicClientFeedback" />
-
-            <TextView
-                android:id="@+id/textJobClientRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:fontFamily="@font/salmapromedium"
-                android:text="rating here"
-                android:textColor="@color/mid_grey"
-                android:textSize="12sp"
-                android:visibility="gone"
-                app:layout_constraintStart_toEndOf="@+id/profilePicClientFeedback"
-                tools:layout_editor_absoluteY="68dp" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profilePicClientFeedback"
@@ -91,34 +78,6 @@
                 app:layout_constraintStart_toEndOf="@+id/profilePicClientFeedback"
                 app:layout_constraintTop_toTopOf="@+id/profilePicClientFeedback" />
 
-            <androidx.appcompat.widget.AppCompatButton
-
-                android:id="@+id/button3"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/ic_outline_profile"
-                android:backgroundTint="@color/mid_grey"
-                android:padding="0dp"
-                android:paddingLeft="0dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textJobClientName"
-                app:layout_constraintEnd_toStartOf="@+id/button2"
-                app:layout_constraintTop_toTopOf="@+id/textJobClientName" />
-
-            <androidx.appcompat.widget.AppCompatButton
-
-                android:id="@+id/button2"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/ic_outline_message"
-                android:backgroundTint="@color/mid_grey"
-                android:padding="0dp"
-                android:paddingLeft="0dp"
-                app:layout_constraintBottom_toBottomOf="@+id/button3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/button3" />
-
             <TextView
                 android:id="@+id/textClientFeedback"
                 android:layout_width="0dp"
@@ -142,6 +101,7 @@
                 android:layout_marginTop="8dp"
                 android:indeterminate="false"
                 android:numStars="5"
+                android:progressBackgroundTint="@color/mid_grey"
                 android:progressTint="#DFDD00"
                 android:rating="3.5"
                 android:secondaryProgressTint="@color/yellow_flash"

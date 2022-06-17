@@ -41,7 +41,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     public JobRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflate layout
         LayoutInflater inflater = LayoutInflater.from(ctx);
-        View view = inflater.inflate(R.layout.recycler_view_row, parent, false);
+        View view = inflater.inflate(R.layout.job_recycler_view_row, parent, false);
         return new MyViewHolder(view);
     }
 

@@ -202,7 +202,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/salmapromedium"
-                android:text="Workers: "
+                android:text="Accepted Workers: "
                 android:textColor="#000000"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"

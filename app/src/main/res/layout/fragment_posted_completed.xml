@@ -132,15 +132,16 @@
                     android:layout_marginEnd="12dp"
                     android:background="@drawable/ic_outline_profile"
                     android:backgroundTint="@color/mid_grey"
+                    android:clickable="true"
                     android:padding="0dp"
                     android:paddingLeft="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button2"
+                    app:layout_constraintEnd_toStartOf="@+id/btnChat"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatButton
 
-                    android:id="@+id/button2"
+                    android:id="@+id/btnChat"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginEnd="16dp"
@@ -279,7 +280,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
-                    android:text="Workers: "
+                    android:text="Accepted Workers: "
                     android:textColor="#000000"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -525,7 +526,7 @@
                     android:id="@+id/textJobTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/salmapromedium"
                     android:shadowColor="@color/mid_grey"
@@ -642,15 +643,18 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/feedbackCardPosted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:cardMaxElevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView2">

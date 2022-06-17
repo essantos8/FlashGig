@@ -1,5 +1,6 @@
 package com.example.flashgig.fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,12 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.activities.ChatActivity;
 import com.example.flashgig.adapters.ClientRecyclerViewAdapter;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentAppliedCompletedBinding;
 import com.example.flashgig.models.Comment;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
+import com.example.flashgig.utilities.Constants;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -109,9 +112,6 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
             if(task.isSuccessful()){
                 DocumentSnapshot document = task.getResult().getDocuments().get(0);
                 job = document.toObject(Job.class);
-//                if(!curUser.equals(job.getClient())){
-//                    binding.btnApplyForJob.setVisibility(View.VISIBLE);
-//                }
                 // get client user id
                 db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
                     if(task1.getResult().getDocuments().isEmpty()){
@@ -152,69 +152,10 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
         adapter = new ClientRecyclerViewAdapter(this.getContext(), clientList, this, jobId);
         feedbackRecyclerView.setAdapter(adapter);
     }
-//    @SuppressLint("ResourceAsColor")
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//
-//
-//        binding = FragmentAppliedPendingBinding.inflate(inflater, container, false);
-//
-//        textJobTitle = binding.textJobTitle;
-//        textJobLocation = binding.textJobLocation;
-//        textJobDate = binding.textJobDate;
-//        textJobClientEmail = binding.textJobClientEmail;
-//        textJobClientName = binding.textJobClientName;
-//        textJobDescription = binding.textJobDescription;
-//        textJobBudget = binding.textJobBudget;
-//        textJobWorkers = binding.textJobWorkers;
-//        profilePicDetail = binding.profilePicDetail;
-//        imageRecyclerView = binding.imageRecyclerView;
-//        if(jobStatus.toUpperCase(Locale.ROOT).equals("COMPLETED")){
-//            binding.btnSetJobCompleteWorker.setVisibility(View.GONE);
-//        }
-//
-//        curJob.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if(task.isSuccessful()){
-//                    document = task.getResult().getDocuments().get(0);
-//                    job = document.toObject(Job.class);
-//                    // get client user id
-//                    db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
-//                        if(task1.getResult().getDocuments().isEmpty()){
-//                            Log.d("Pending Fragment Client", "onComplete: User not found");
-//                            Toast.makeText(getContext(), "Client user not found!", Toast.LENGTH_SHORT).show();
-//                            return;
-//                        }
-//                        clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
-//                        setViews();
-//                        loadImages();
-//                    });
-//                }
-//            }
-//        });
-//
-//        FragmentManager fm = getActivity().getSupportFragmentManager();
-//
-//        binding.backButton.setOnClickListener(view ->{
-//            fm.popBackStackImmediate();
-//        });
-//
-//        return binding.getRoot();
-//    }
 
 
     private void setViews(){
-//        textJobTitle.setText(job.getTitle());
-//        textJobLocation.setText(job.getLocation());
-//        textJobDate.setText(job.getDate());
-//        textJobClientEmail.setText(job.getClient());
-//        textJobClientName.setText(clientUser.getFullName());
-//        textJobDescription.setText(job.getDescription());
-//        textJobWorkers.setText(String.valueOf(job.getNumWorkers()));
-//        textJobBudget.setText(job.getBudget());
+        String temp = String.valueOf(job.getWorkers().size()) + '/' + job.getNumWorkers();
         binding.textJobClientName.setText(clientUser.getFullName());
         binding.textJobClientEmail.setText(clientUser.getEmail());
         binding.textJobTitle.setText(job.getTitle());
@@ -222,9 +163,21 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
         binding.textJobDate.setText(job.getDate());
         binding.textJobBudget.setText(job.getBudget());
         binding.textJobDescription.setText(job.description);
-        binding.textJobWorkers.setText(String.valueOf(job.getWorkers().size())+'/'+job.getNumWorkers());
+        binding.textJobWorkers.setText(temp);
         imageRecyclerView = binding.imageRecyclerView;
         feedbackRecyclerView = binding.workerRecyclerView;
+        binding.cardView3.setOnClickListener(view -> {
+            Fragment fragment = DisplayWorker.newInstance(clientUser.getUserId(), jobId);
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+        binding.btnChat.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            intent.putExtra(Constants.KEY_USER, clientUser);
+            startActivity(intent);
+        });
 
         for (String category : job.getCategories()){
             switch (category) {
@@ -295,7 +248,7 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
 //                    Toast.makeText(getContext(), "last image is"+String.valueOf(imageCounter[0]), Toast.LENGTH_SHORT).show();
                     HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList, this);
                     LinearLayoutManager layoutManager
-                            = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                            = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
                     imageRecyclerView.setLayoutManager(layoutManager);
                     imageRecyclerView.setAdapter(adapter);
@@ -315,16 +268,7 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
 
     @Override
     public void RateBtnOnClick(String userId,String jobId, float rating, String comment) {
-        Comment comme = new Comment(job.getClient(),rating,comment,currentUser.getUid());
+        Comment comme = new Comment(currentUser.getEmail(),rating,comment,currentUser.getUid());
         db.collection("users").document(userId).update("ratings"+"."+jobId,comme);
     }
-    /*
-    @Override
-    public void onItemClick(String userId, String jobId) {
-        Fragment fragment = DisplayBidder.newInstance(userId, jobId);    //CHANGE TO DISPLAYCLIENT!!!
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment, "displayBidder");
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }*/
 }

@@ -1,5 +1,6 @@
 package com.example.flashgig.fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,12 +19,14 @@ import android.widget.Toast;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.activities.ChatActivity;
 import com.example.flashgig.adapters.BidderRecyclerViewAdapter;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
 import com.example.flashgig.adapters.WorkerRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentPostedInProgressBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
+import com.example.flashgig.utilities.Constants;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -125,6 +128,7 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
     }
 
     private void setViews() {
+        String temp = String.valueOf(job.getWorkers().size()) + '/' + job.getNumWorkers();
         binding.textJobClientName.setText(clientUser.getFullName());
         binding.textJobClientEmail.setText(clientUser.getEmail());
         binding.textJobTitle.setText(job.getTitle());
@@ -132,10 +136,22 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
         binding.textJobDate.setText(job.getDate());
         binding.textJobBudget.setText(job.getBudget());
         binding.textJobDescription.setText(job.description);
-        binding.textJobWorkers.setText(String.valueOf(job.getWorkers().size())+'/'+job.getNumWorkers());
+        binding.textJobWorkers.setText(temp);
         imageRecyclerView = binding.imageRecyclerView;
         feedbackRecyclerView = binding.workerRecyclerView;
 
+        binding.cardView3.setOnClickListener(view -> {
+            Fragment fragment = DisplayWorker.newInstance(clientUser.getUserId(), jobId);
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+        binding.btnChat.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            intent.putExtra(Constants.KEY_USER, clientUser);
+            startActivity(intent);
+        });
         for (String category : job.getCategories()){
             switch (category) {
                 case "Carpentry":
@@ -270,6 +286,5 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
         fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     }
 }

@@ -2,6 +2,8 @@ package com.example.flashgig.models;
 
 import androidx.annotation.Nullable;
 
+import com.google.firebase.Timestamp;
+
 import java.sql.Array;
 import java.util.ArrayList;
 
@@ -11,9 +13,10 @@ public class Job {
 
     public Integer numWorkers;
 
+    public Timestamp timestamp;
+
     public ArrayList<String> categories;
     public ArrayList<String> workers;
-
 
 
     public ArrayList<String> bidders;
@@ -96,6 +99,14 @@ public class Job {
             return new ArrayList<>();
         }
         return userCompleteTracker;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public void setUserCompleteTracker(ArrayList<String> userCompleteTracker) {

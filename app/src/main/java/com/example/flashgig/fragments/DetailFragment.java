@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,10 +30,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.activities.ChatActivity;
 import com.example.flashgig.adapters.HorizontalImageRecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentDetailBinding;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
+import com.example.flashgig.utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -127,6 +130,7 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
         textJobWorkers = binding.textJobWorkers;
         profilePicDetail = binding.profilePicDetail;
         imageRecyclerView = binding.imageRecyclerView;
+
 
         curJob.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -243,6 +247,18 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
         textJobDescription.setText(job.getDescription());
         textJobWorkers.setText(temp);
         textJobBudget.setText(job.getBudget());
+        binding.cardView3.setOnClickListener(view -> {
+                Fragment fragment = DisplayWorker.newInstance(clientUser.getUserId(), jobId);
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+        });
+        binding.btnChat.setOnClickListener(view -> {
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                intent.putExtra(Constants.KEY_USER, clientUser);
+                startActivity(intent);
+        });
 
         for (String category : job.getCategories()){
             switch (category) {

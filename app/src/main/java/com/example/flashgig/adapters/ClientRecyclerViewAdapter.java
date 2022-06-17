@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -60,7 +61,7 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
 
         if(curWorker.ratings.keySet().contains(jobId)){
             holder.editComment.setVisibility(View.INVISIBLE);
-            holder.rateButton.setVisibility(View.INVISIBLE);
+            holder.rateButton.setVisibility(View.GONE);
             holder.textComment.setVisibility(View.VISIBLE);
             holder.ratingBar.setIsIndicator(true);
             holder.textComment.setText(curWorker.getComment(jobId).getText());
@@ -75,8 +76,14 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
         holder.textViewWName.setText(curWorker.getFullName());
         holder.textViewWNumber.setText(curWorker.getPhone());
         holder.textViewWEmail.setText(curWorker.getEmail());
-//        holder.workerCard.setOnClickListener(view -> clickListener.onItemClickWorker(curWorker.userId, jobId));
-        holder.rateButton.setOnClickListener(view -> clickListener.RateBtnOnClick(curWorker.userId, jobId, holder.ratingBar.getRating(),holder.editComment.getText().toString()));
+        holder.rateButton.setOnClickListener(view ->{
+            Toast.makeText(context, "Feedback Submitted!", Toast.LENGTH_SHORT).show();
+            holder.editComment.setVisibility(View.INVISIBLE);
+            holder.rateButton.setVisibility(View.GONE);
+            holder.ratingBar.setIsIndicator(true);
+            holder.textComment.setVisibility(View.VISIBLE);
+            clickListener.RateBtnOnClick(curWorker.userId, jobId, holder.ratingBar.getRating(),holder.editComment.getText().toString());
+        });
 //        holder.rateButton.setOnClickListener(view -> clickListener.onIt);
     }
 

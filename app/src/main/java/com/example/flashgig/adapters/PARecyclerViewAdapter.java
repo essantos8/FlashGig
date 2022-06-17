@@ -52,6 +52,7 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
         // based on position of recycler view
         Job curJob = jobArrayList.get(position);
 
+
         holder.textViewTitle.setText(curJob.getTitle());
         holder.textViewStatus.setText(curJob.getStatus().toUpperCase(Locale.ROOT));
         holder.textViewDescription.setText(curJob.getDescription());
@@ -91,9 +92,9 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
                     break;
             }
         }
-
+        String temp = String.valueOf(curJob.getWorkers().size()) + '/' + curJob.getNumWorkers();
         holder.textViewDate.setText(curJob.getDate());
-        holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()));
+        holder.textViewWorkers.setText(temp);
         holder.textViewBudget.setText(curJob.getBudget());
 
         holder.jobCard.setOnClickListener(view -> clickListener.onItemClick(curJob.jobId, curJob.getStatus()));

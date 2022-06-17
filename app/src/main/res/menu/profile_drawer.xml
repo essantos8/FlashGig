@@ -8,6 +8,9 @@
         android:icon="@drawable/options_button"/>
 
     <item
+        android:icon="@drawable/edit_button"
+        android:title="Edit Profile" />
+    <item
         android:icon="@drawable/ic_cross"
         android:title="Log Out" />
 </menu>

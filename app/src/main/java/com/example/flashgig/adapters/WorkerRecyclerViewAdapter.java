@@ -1,6 +1,7 @@
 package com.example.flashgig.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +11,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.activities.ChatActivity;
+import com.example.flashgig.fragments.DisplayWorker;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
+import com.example.flashgig.utilities.Constants;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -69,7 +77,7 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
 
         if(curWorker.ratings.keySet().contains(jobId)){
             holder.editComment.setVisibility(View.INVISIBLE);
-            holder.rateButton.setVisibility(View.INVISIBLE);
+            holder.rateButton.setVisibility(View.GONE);
             holder.textComment.setVisibility(View.VISIBLE);
             holder.ratingBar.setIsIndicator(true);
             holder.textComment.setText(curWorker.getComment(jobId).getText());
@@ -84,15 +92,32 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         holder.textViewWName.setText(curWorker.getFullName());
         holder.textViewWNumber.setText(curWorker.getPhone());
         holder.textViewWEmail.setText(curWorker.getEmail());
-//        holder.workerCard.setOnClickListener(view -> clickListener.onItemClickWorker(curWorker.userId, jobId));
-        holder.rateButton.setOnClickListener(view -> clickListener.RateBtnOnClick(curWorker.userId, jobId, holder.ratingBar.getRating(),holder.editComment.getText().toString()));
+        holder.rateButton.setOnClickListener(view ->{
+            Toast.makeText(context, "Feedback Submitted!", Toast.LENGTH_SHORT).show();
+            holder.editComment.setVisibility(View.INVISIBLE);
+            holder.rateButton.setVisibility(View.GONE);
+            holder.ratingBar.setIsIndicator(true);
+            holder.textComment.setVisibility(View.VISIBLE);
+            clickListener.RateBtnOnClick(curWorker.userId, jobId, holder.ratingBar.getRating(),holder.editComment.getText().toString());
+        });
+        holder.chatButton.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra(Constants.KEY_USER, curWorker);
+            context.startActivity(intent);
+        });
+        holder.workerCard.setOnClickListener(view -> {
+            Fragment fragment = DisplayWorker.newInstance(curWorker.getUserId(), jobId);
+            FragmentTransaction fragmentTransaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
 //        holder.rateButton.setOnClickListener(view -> clickListener.onIt);
 
         StorageReference profilePicRef = storageRef.child("media/images/profile_pictures/" + curWorker.getUserId());
         profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
             GlideApp.with(context)
                     .load(profilePicRef)
-                    .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
                     .fitCenter()
                     .into(holder.imageWorker);
         }).addOnFailureListener(e -> {
@@ -112,8 +137,8 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         EditText editComment;
         CardView workerCard;
         RatingBar ratingBar;
-        Button rateButton;
-        ImageView imageWorker;
+        Button rateButton, chatButton;
+        ImageView imageWorker, btn;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -127,6 +152,7 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
             workerCard = itemView.findViewById(R.id.workerCardPopup);
             ratingBar = itemView.findViewById(R.id.rbWorker);
             rateButton = itemView.findViewById(R.id.rateBtn);
+            chatButton = itemView.findViewById(R.id.btnChatWorkerRow);
         }
     }
 
