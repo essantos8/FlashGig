@@ -24,7 +24,19 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Your Feedback:"
+                android:textColor="@color/dark_grey"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/profilePicClientFeedback"
+                app:layout_constraintTop_toBottomOf="@+id/profilePicClientFeedback" />
 
             <TextView
                 android:id="@+id/textJobClientRating"
@@ -41,13 +53,12 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profilePicClientFeedback"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:elevation="10dp"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toTopOf="@id/barrier"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearance="@style/Circular"
@@ -57,8 +68,8 @@
             <ProgressBar
                 android:id="@+id/progressBarDetail"
                 style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:elevation="10dp"
                 android:indeterminate="true"
                 android:indeterminateTint="@color/dashboard_blue"
@@ -72,11 +83,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:fontFamily="@font/salmapromedium"
                 android:text="client name"
                 android:textColor="@color/dark_grey"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/profilePicClientFeedback"
                 app:layout_constraintStart_toEndOf="@+id/profilePicClientFeedback"
                 app:layout_constraintTop_toTopOf="@+id/profilePicClientFeedback" />
 
@@ -90,9 +101,9 @@
                 android:backgroundTint="@color/mid_grey"
                 android:padding="0dp"
                 android:paddingLeft="0dp"
-                app:layout_constraintBottom_toTopOf="@id/barrier"
+                app:layout_constraintBottom_toBottomOf="@+id/textJobClientName"
                 app:layout_constraintEnd_toStartOf="@+id/button2"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/textJobClientName" />
 
             <androidx.appcompat.widget.AppCompatButton
 
@@ -104,83 +115,38 @@
                 android:backgroundTint="@color/mid_grey"
                 android:padding="0dp"
                 android:paddingLeft="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/barrier"
+                app:layout_constraintBottom_toBottomOf="@+id/button3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/barrier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="profilePicClientFeedback, textJobClientRating"
-                tools:layout_editor_absoluteX="178dp"
-                tools:layout_editor_absoluteY="79dp" />
+                app:layout_constraintTop_toTopOf="@+id/button3" />
 
             <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
+                android:id="@+id/textClientFeedback"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:text="Their Feedback"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:elevation="5dp"
+                android:padding="5dp"
+                android:text="lorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotas"
                 android:textColor="@color/dark_grey"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/barrier" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewClientFeedback"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:cardBackgroundColor="@color/light_grey"
-                app:cardCornerRadius="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView18">
-
-                <TextView
-                    android:id="@+id/textClientFeedback"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:elevation="5dp"
-                    android:padding="5dp"
-                    android:text="lorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotaslorem ipsum dolor tenet sator opera rotas"
-                    android:textColor="@color/dark_grey" />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewWorkerFeedback"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:cardBackgroundColor="@color/light_grey"
-                app:cardCornerRadius="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/ratingBarClient" />
 
             <RatingBar
                 android:id="@+id/ratingBarClient"
                 style="@android:style/Widget.Material.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
                 android:indeterminate="false"
                 android:numStars="5"
                 android:progressTint="#DFDD00"
                 android:rating="3.5"
                 android:secondaryProgressTint="@color/yellow_flash"
-                app:layout_constraintBottom_toTopOf="@+id/cardViewClientFeedback"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/barrier" />
+                app:layout_constraintStart_toStartOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

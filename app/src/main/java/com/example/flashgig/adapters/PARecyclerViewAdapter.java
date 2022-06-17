@@ -206,7 +206,7 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
             chipVirtualAssistant = itemView.findViewById(R.id.chipVirtualAssistant);
             chipOther = itemView.findViewById(R.id.chipOther);
             jobCard = itemView.findViewById(R.id.jobCardPopup);
-            textViewStatus = itemView.findViewById(R.id.textViewStatus);
+            textViewStatus = itemView.findViewById(R.id.textViewStatus2);
             textViewDescription = itemView.findViewById(R.id.textJobDescription);
 
             /*itemView.findViewById(R.id.btnBidderAccess).setOnClickListener(new View.OnClickListener() {

@@ -215,7 +215,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
             textViewLocation = itemView.findViewById(R.id.textJobLocation);
             textViewWorkers = itemView.findViewById(R.id.textJobWorkers);
             textViewBudget = itemView.findViewById(R.id.textJobBudget);
-            textViewStatus = itemView.findViewById(R.id.textViewStatus);
+            textViewStatus = itemView.findViewById(R.id.textViewStatus2);
             chipCarpentry = itemView.findViewById(R.id.chipCarpentry);
             chipPlumbing = itemView.findViewById(R.id.chipPlumbing);
             chipElectronics = itemView.findViewById(R.id.chipElectronics);

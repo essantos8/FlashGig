@@ -15,11 +15,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:background="@color/white"
             android:onClick="goBack"
-            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/arrow_left"
+            android:tintMode="src_in"
+            app:layout_constraintBottom_toBottomOf="@+id/textView9"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/textView9"
+            app:tint="@color/dark_grey" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
@@ -722,7 +727,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/salmapromedium"
             android:text="Job Post"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_grey"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

@@ -79,8 +79,7 @@
             android:hint="Email"
             android:inputType="textWebEmailAddress"
             android:singleLine="true"
-            android:textColor="@color/black"
-            android:textColorHint="@color/mid_grey" />
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -104,8 +103,7 @@
             android:hint="Password"
             android:password="true"
             android:singleLine="true"
-            android:textColor="@color/black"
-            android:textColorHint="@color/mid_grey" />
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

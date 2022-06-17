@@ -18,7 +18,7 @@
             android:layout_height="84dp"
             android:background="#006DFE"
             android:fontFamily="@font/salmapromedium"
-            android:letterSpacing="0.08"
+            android:gravity="center"
             android:paddingStart="10dp"
             android:paddingTop="20dp"
             android:text="Create a Job Post"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="92dp"
-            android:letterSpacing="0.08"
+            android:fontFamily="@font/salmapromedium"
             android:text="Title"
             android:textColor="#444444"
             android:textSize="18dp"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:letterSpacing="0.08"
+            android:fontFamily="@font/salmapromedium"
             android:text="Description"
             android:textColor="#444444"
             android:textSize="18dp"
@@ -68,6 +68,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginEnd="32dp"
             android:hint="Enter job title"
+            android:textColorHint="@color/dark_grey"
             app:counterEnabled="true"
             app:counterMaxLength="30"
             app:helperText="Required*"
@@ -81,7 +82,9 @@
                 android:layout_height="wrap_content"
                 android:background="#E2E4E9"
                 android:capitalize="sentences"
+                android:fontFamily="@font/salmapromedium"
                 android:inputType="textShortMessage"
+                android:textColor="@color/dark_grey"
                 android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,6 +97,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginEnd="32dp"
             android:hint="Explain job details"
+            android:textColorHint="@color/dark_grey"
             app:counterEnabled="true"
             app:counterMaxLength="1000"
             app:helperText="Required*"
@@ -108,8 +112,10 @@
                 android:layout_height="wrap_content"
                 android:background="#E2E4E9"
                 android:capitalize="characters"
+                android:fontFamily="@font/salmapromedium"
                 android:inputType="textMultiLine"
                 android:singleLine="false"
+                android:textColor="@color/dark_grey"
                 android:textSize="14dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -118,12 +124,12 @@
             android:id="@+id/textView_jobCateg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:text="Job Category"
+            android:fontFamily="@font/salmapromedium"
+            android:text="Job Category (required)"
             android:textColor="#444444"
             android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.115"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/jobImage1" />
 
@@ -151,6 +157,7 @@
                 android:checked="false"
                 android:fontFamily="@font/salmapromedium"
                 android:text="Carpentry"
+                android:textColor="@color/chiptext_color"
                 android:textSize="12dp"
                 app:checkedIconEnabled="false"
                 app:chipBackgroundColor="@color/chip_color" />
@@ -164,6 +171,7 @@
                 android:checked="false"
                 android:fontFamily="@font/salmapromedium"
                 android:text="Plumbing"
+                android:textColor="@color/chiptext_color"
                 android:textSize="12dp"
                 app:checkedIconEnabled="false"
                 app:chipBackgroundColor="@color/chip_color" />
@@ -177,6 +185,7 @@
                 android:checked="false"
                 android:fontFamily="@font/salmapromedium"
                 android:text="Electrical"
+                android:textColor="@color/chiptext_color"
                 android:textSize="12dp"
                 app:checkedIconEnabled="false"
                 app:chipBackgroundColor="@color/chip_color" />
@@ -190,6 +199,7 @@
                 android:checked="false"
                 android:fontFamily="@font/salmapromedium"
                 android:text="Electronics"
+                android:textColor="@color/chiptext_color"
                 android:textSize="12dp"
                 app:checkedIconEnabled="false"
                 app:chipBackgroundColor="@color/chip_color" />
@@ -203,6 +213,7 @@
                 android:checked="false"
                 android:fontFamily="@font/salmapromedium"
                 android:text="Personal Shopping"
+                android:textColor="@color/chiptext_color"
                 android:textSize="12dp"
                 app:checkedIconEnabled="false"
                 app:chipBackgroundColor="@color/chip_color" />
@@ -216,6 +227,7 @@
                 android:checked="false"
                 android:fontFamily="@font/salmapromedium"
                 android:text="Virtual Assistant"
+                android:textColor="@color/chiptext_color"
                 android:textSize="12dp"
                 app:checkedIconEnabled="false"
                 app:chipBackgroundColor="@color/chip_color" />
@@ -229,6 +241,7 @@
                 android:checked="true"
                 android:fontFamily="@font/salmapromedium"
                 android:text="Other"
+                android:textColor="@color/chiptext_color"
                 android:textSize="12dp"
                 app:checkedIconEnabled="false"
                 app:chipBackgroundColor="@color/chip_color" />
@@ -240,12 +253,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/salmapromedium"
             android:text="Number of Workers"
             android:textColor="#444444"
             android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/chipGroup_jobCateg" />
 
@@ -254,6 +265,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:fontFamily="@font/salmapromedium"
             android:text="Location"
             android:textColor="#444444"
             android:textSize="18dp"
@@ -269,7 +281,12 @@
             android:layout_marginStart="1dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="48dp"
+            android:background="@color/light_grey"
             android:clickable="true"
+            android:foregroundTint="@color/dark_grey"
+            android:foregroundTintMode="multiply"
+            android:gravity="center"
+            android:popupBackground="@color/dark_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.37"
             app:layout_constraintStart_toEndOf="@+id/textView_numWorker"
@@ -280,7 +297,12 @@
             android:layout_width="220dp"
             android:layout_height="25dp"
             android:layout_marginTop="12dp"
+            android:background="@color/light_grey"
             android:clickable="true"
+            android:dropDownSelector="@color/dark_grey"
+            android:foregroundTint="@color/dark_grey"
+            android:gravity="center"
+            android:popupBackground="@color/dark_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.19"
             app:layout_constraintStart_toEndOf="@+id/textView_location"
@@ -292,6 +314,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/salmapromedium"
             android:text="Budget"
             android:textColor="#444444"
             android:textSize="18sp"
@@ -303,10 +326,15 @@
             android:layout_width="69dp"
             android:layout_height="40dp"
             android:layout_marginTop="16dp"
+            android:background="@color/light_grey"
             android:ems="10"
+            android:fontFamily="@font/salmapromedium"
+            android:gravity="center|center_horizontal"
             android:hint="min"
             android:inputType="number"
-            android:textColor="#444444"
+            android:textColor="@color/dark_grey"
+            android:textColorHighlight="@color/dashboard_blue"
+            android:textColorHint="@color/dark_grey"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.108"
@@ -317,29 +345,20 @@
             android:id="@+id/editText_maxAmt"
             android:layout_width="69dp"
             android:layout_height="40dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
+            android:background="@color/light_grey"
             android:ems="10"
+            android:fontFamily="@font/salmapromedium"
+            android:gravity="center"
             android:hint="max"
             android:inputType="number"
-            android:textColor="#444444"
+            android:textColor="@color/dark_grey"
+            android:textColorHighlight="@color/dashboard_blue"
+            android:textColorHint="@color/dark_grey"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toEndOf="@+id/textView_budget"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_location" />
-
-        <TextView
-            android:id="@+id/textView_to"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="-"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/editText_maxAmt"
+            app:layout_constraintBottom_toBottomOf="@+id/editText_minAmt"
             app:layout_constraintStart_toEndOf="@+id/editText_minAmt"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_location" />
+            app:layout_constraintTop_toTopOf="@+id/editText_minAmt" />
 
         <TextView
             android:id="@+id/textView_startDate"
@@ -347,6 +366,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
+            android:fontFamily="@font/salmapromedium"
             android:text="Start Date"
             android:textColor="#444444"
             android:textSize="18sp"
@@ -376,14 +396,15 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:fontFamily="@font/salmapromedium"
             android:text="Jan 01 2022"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_grey"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/button_postJob"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toEndOf="@+id/textView_startDate"
-            app:layout_constraintTop_toBottomOf="@+id/editText_maxAmt" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_minAmt" />
 
         <ImageView
             android:id="@+id/jobImage1"
@@ -437,6 +458,19 @@
             app:layout_constraintHorizontal_bias="0.093"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout_jobDesc" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/salmapromedium"
+            android:text="-"
+            android:textColor="@color/dark_grey"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/editText_minAmt"
+            app:layout_constraintEnd_toStartOf="@+id/editText_maxAmt"
+            app:layout_constraintStart_toEndOf="@+id/editText_minAmt"
+            app:layout_constraintTop_toTopOf="@+id/editText_minAmt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
