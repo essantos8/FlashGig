@@ -17,7 +17,6 @@ import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
@@ -35,6 +34,7 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
         curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         eventChangeListener();
     }
+
     private void eventChangeListener() {
         db.collection("jobs").whereEqualTo("client",curUser).orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
             if (error != null) {
@@ -42,6 +42,8 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
             }
             else {
                 for (DocumentChange dc : value.getDocumentChanges()) {
+                    Log.d("Changed", "changed: "+dc.getDocument().toObject(Job.class).getJobId());
+
                     if (dc.getType() == DocumentChange.Type.ADDED) {
                         jobList.add(dc.getDocument().toObject(Job.class));
 //                    Log.d("jobss", "eventChangeListener: added");
@@ -83,18 +85,16 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
 
     @Override
     public void onItemClick(String JID, String status) {
+        Log.d("JOBID", "onItemClick: "+JID);
         Fragment fragment = null;
         if (status.equals("pending")){
-            fragment = DetailFragment.newInstance(JID);
+            fragment = new PostedPendingFragment(JID, status);
         }
-        // disabled for now
         else if(status.equals("in progress")){
-            fragment = DetailFragment.newInstance(JID);
-//            fragment = new JobInProgressFragment(JID);
+            fragment = new PostedInProgressFragment(JID);
         }
         else if(status.equals("completed")){
-            //            fragment = new JobCompletedFragment(JID);
-            fragment = DetailFragment.newInstance(JID);
+            fragment = new PostedCompletedFragment(JID);
         }
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");

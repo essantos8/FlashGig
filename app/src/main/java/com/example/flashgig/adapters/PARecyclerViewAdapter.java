@@ -20,6 +20,7 @@ import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAdapter.MyViewHolder> implements Filterable {
     private Context ctx;
@@ -40,7 +41,7 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
     public PARecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflate layout
         LayoutInflater inflater = LayoutInflater.from(ctx);
-        View view = inflater.inflate(R.layout.pa_recycler_view_row, parent, false);
+        View view = inflater.inflate(R.layout.posted_recycler_view_row, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -51,8 +52,10 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
         // based on position of recycler view
         Job curJob = jobArrayList.get(position);
 
+
         holder.textViewTitle.setText(curJob.getTitle());
-        holder.textViewStatus.setText(curJob.getStatus());
+        holder.textViewStatus.setText(curJob.getStatus().toUpperCase(Locale.ROOT));
+        holder.textViewDescription.setText(curJob.getDescription());
 
         holder.chipCarpentry.setVisibility(View.GONE);
         holder.chipPlumbing.setVisibility(View.GONE);
@@ -89,9 +92,9 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
                     break;
             }
         }
-
+        String temp = String.valueOf(curJob.getWorkers().size()) + '/' + curJob.getNumWorkers();
         holder.textViewDate.setText(curJob.getDate());
-        holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()));
+        holder.textViewWorkers.setText(temp);
         holder.textViewBudget.setText(curJob.getBudget());
 
         holder.jobCard.setOnClickListener(view -> clickListener.onItemClick(curJob.jobId, curJob.getStatus()));
@@ -184,26 +187,38 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // grabbing the views from the row layout file
         // similar with oncreate
-        TextView textViewTitle, textViewStatus, textViewDate, textViewBudget, textViewWorkers;
+        TextView textViewTitle, textViewStatus, textViewDescription, textViewDate, textViewBudget, textViewWorkers;
         Chip chipCarpentry, chipPlumbing, chipElectronics, chipElectrical, chipPersonalShopping, chipVirtualAssistant, chipOther;
         CardView jobCard;
+        //Button btnBidderAccess;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewTitle = itemView.findViewById(R.id.textJobTitle2);
-            textViewStatus = itemView.findViewById(R.id.textJobStatus);
-            textViewDate = itemView.findViewById(R.id.textJobDate2);
-            textViewWorkers = itemView.findViewById(R.id.textJobWorkers2);
-            textViewBudget = itemView.findViewById(R.id.textJobBudget2);
-            chipCarpentry = itemView.findViewById(R.id.chipCarpentry2);
-            chipPlumbing = itemView.findViewById(R.id.chipPlumbing2);
-            chipElectronics = itemView.findViewById(R.id.chipElectronics2);
-            chipElectrical = itemView.findViewById(R.id.chipElectrical2);
-            chipPersonalShopping = itemView.findViewById(R.id.chipPersonalShopping2);
-            chipVirtualAssistant = itemView.findViewById(R.id.chipVirtualAssistant2);
-            chipOther = itemView.findViewById(R.id.chipOther2);
-            jobCard = itemView.findViewById(R.id.jobCardPopup2);
+            textViewTitle = itemView.findViewById(R.id.textJobTitle);
+            textViewDate = itemView.findViewById(R.id.textJobDate);
+            textViewWorkers = itemView.findViewById(R.id.textJobWorkers);
+            textViewBudget = itemView.findViewById(R.id.textJobBudget);
+            chipCarpentry = itemView.findViewById(R.id.chipCarpentry);
+            chipPlumbing = itemView.findViewById(R.id.chipPlumbing);
+            chipElectronics = itemView.findViewById(R.id.chipElectronics);
+            chipElectrical = itemView.findViewById(R.id.chipElectrical);
+            chipPersonalShopping = itemView.findViewById(R.id.chipPersonalShopping);
+            chipVirtualAssistant = itemView.findViewById(R.id.chipVirtualAssistant);
+            chipOther = itemView.findViewById(R.id.chipOther);
+            jobCard = itemView.findViewById(R.id.jobCardPopup);
+            textViewStatus = itemView.findViewById(R.id.textViewStatus2);
+            textViewDescription = itemView.findViewById(R.id.textJobDescription);
+
+            /*itemView.findViewById(R.id.btnBidderAccess).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayout2, fragment, "displayBidder");
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });*/
         }
     }
 

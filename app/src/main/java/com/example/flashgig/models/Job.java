@@ -2,6 +2,8 @@ package com.example.flashgig.models;
 
 import androidx.annotation.Nullable;
 
+import com.google.firebase.Timestamp;
+
 import java.sql.Array;
 import java.util.ArrayList;
 
@@ -11,15 +13,21 @@ public class Job {
 
     public Integer numWorkers;
 
+    public Timestamp timestamp;
+
     public ArrayList<String> categories;
     public ArrayList<String> workers;
+
+
     public ArrayList<String> bidders;
+    public ArrayList<String> userCompleteTracker;
     public ArrayList<String> jobImages;
 
     public Job() {
     }
     // Constructor for new jobs
-    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, String jobId, ArrayList<String> jobImages) {
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location,
+               String budget, String jobId, ArrayList<String> jobImages) {
         this.title = title;
         this.description = description;
         this.client = client;
@@ -31,11 +39,13 @@ public class Job {
         this.jobImages = jobImages;
         this.bidders = new ArrayList<>();
         this.workers = new ArrayList<>();
+        this.userCompleteTracker = new ArrayList<>();
         this.jobId = jobId;
         this.status = "pending";
     }
     //
-    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location, String budget, ArrayList<String> workers, ArrayList<String> bidders, String jobId, ArrayList<String> jobImages) {
+    public Job(String title, String description, String client, String date, ArrayList<String> categories, Integer numWorkers, String location,
+               String budget, ArrayList<String> workers, ArrayList<String> bidders, String jobId, ArrayList<String> jobImages) {
         this.title = title;
         this.description = description;
         this.client = client;
@@ -84,7 +94,24 @@ public class Job {
         }
         return description;
     }
+    public ArrayList<String> getUserCompleteTracker() {
+        if(this.userCompleteTracker == null){
+            return new ArrayList<>();
+        }
+        return userCompleteTracker;
+    }
 
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setUserCompleteTracker(ArrayList<String> userCompleteTracker) {
+        this.userCompleteTracker = userCompleteTracker;
+    }
     public String getJobId() {
         return jobId;
     }

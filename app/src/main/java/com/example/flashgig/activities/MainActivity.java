@@ -1,5 +1,6 @@
 package com.example.flashgig.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -10,6 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.flashgig.fragments.AppliedCompletedFragment;
+import com.example.flashgig.fragments.AppliedPendingFragment;
+import com.example.flashgig.fragments.DisplayBidder;
+import com.example.flashgig.fragments.DisplayWorker;
+import com.example.flashgig.fragments.ImagePopupFragment;
 import com.example.flashgig.fragments.JobAdderFragment;
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.ActivityMainBinding;
@@ -17,6 +23,9 @@ import com.example.flashgig.fragments.DetailFragment;
 import com.example.flashgig.fragments.HomeFragment;
 import com.example.flashgig.fragments.MessagesFragment;
 import com.example.flashgig.fragments.MyJobsFragment;
+import com.example.flashgig.fragments.PostedCompletedFragment;
+import com.example.flashgig.fragments.PostedInProgressFragment;
+import com.example.flashgig.fragments.PostedPendingFragment;
 import com.example.flashgig.fragments.ProfileEditFragment;
 import com.example.flashgig.fragments.ProfileFragment;
 
@@ -54,9 +63,11 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.messages:
                     if (!curFragmentTag.equals("messages")) {
                         if (!curFragmentTag.equals("home")) {
-                            replaceFragment(new MessagesFragment(), "messages", "LtoR");
+                            startActivity(new Intent(this, InboxChat.class));
+//                            replaceFragment(new MessagesFragment(), "messages", "LtoR");
                         } else {
-                            replaceFragment(new MessagesFragment(), "messages", "RtoL");
+                            startActivity(new Intent(this, InboxChat.class));
+//                            replaceFragment(new MessagesFragment(), "messages", "RtoL");
                         }
                     }
                     break;
@@ -82,13 +93,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment curFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
-        if (curFragment instanceof DetailFragment || curFragment instanceof JobAdderFragment || curFragment instanceof ProfileEditFragment || curFragment instanceof JobAdderFragment) {
+//        if (curFragment instanceof ImagePopupFragment || curFragment instanceof DetailFragment  || curFragment instanceof ProfileEditFragment ||
+//                curFragment instanceof PostedInProgressFragment|| curFragment instanceof PostedPendingFragment|| curFragment instanceof PostedCompletedFragment ||
+//                curFragment instanceof AppliedPendingFragment|| curFragment instanceof AppliedCompletedFragment ||
+//                curFragment instanceof DisplayBidder || curFragment instanceof DisplayWorker) {
+        if(!(curFragment instanceof HomeFragment)){ //|| curFragment instanceof MyJobsFragment || curFragment instanceof ProfileFragment)){
             super.onBackPressed();
             return;
         }
 
         SearchView searchBar = findViewById(R.id.searchviewHome);
-        if (searchBar != null) {
+        if(searchBar != null) {
             if (!searchBar.isIconified()) {
                 searchBar.setIconified(true);
                 searchBar.onActionViewCollapsed();

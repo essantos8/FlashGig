@@ -10,10 +10,11 @@
 
     <SearchView
         android:id="@+id/searchviewHome"
+        android:theme="@style/SearchViewStyle"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/bg_white_rounded"
         android:elevation="10dp"
@@ -46,7 +47,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:background="#FFFFFF">
+            android:background="#FFFFFF"
+            android:visibility="gone">
 
             <Spinner
                 android:id="@+id/spinnerRegion"

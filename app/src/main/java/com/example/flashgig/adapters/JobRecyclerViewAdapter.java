@@ -30,7 +30,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
 
     public JobRecyclerViewAdapter(Context ctx, ArrayList<Job> jobArrayList, ItemClickListener clickListener) {
         this.ctx = ctx;
-        this.fullJobArrayList = new ArrayList<>(jobArrayList);
+        this.fullJobArrayList = jobArrayList;
         this.jobArrayList = jobArrayList;
         this.clickListener = clickListener;
     }
@@ -41,7 +41,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     public JobRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflate layout
         LayoutInflater inflater = LayoutInflater.from(ctx);
-        View view = inflater.inflate(R.layout.recycler_view_row, parent, false);
+        View view = inflater.inflate(R.layout.job_recycler_view_row, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -62,6 +62,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         holder.chipPersonalShopping.setVisibility(View.GONE);
         holder.chipVirtualAssistant.setVisibility(View.GONE);
         holder.chipOther.setVisibility(View.GONE);
+        holder.textViewStatus.setText(curJob.getStatus().toUpperCase());
 
         for (String category : curJob.getCategories()) {
             switch (category) {
@@ -93,7 +94,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
 
         holder.textViewDate.setText(curJob.getDate());
         holder.textViewClient.setText(curJob.getClient());
-        holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()));
+        holder.textViewWorkers.setText(String.valueOf(curJob.getWorkers().size()+"/"+curJob.getNumWorkers()));
         String loc = jobArrayList.get(position).getLocation();
         holder.textViewLocation.setText(loc);
         holder.textViewBudget.setText(curJob.getBudget());
@@ -116,6 +117,8 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     private final Filter jobTextFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
+            fullJobArrayList = new ArrayList<>(fullJobArrayList);
+            Log.d("search", "fulljobarraysize: "+String.valueOf(fullJobArrayList.size()));
             ArrayList<Job> filteredJobArrayList = new ArrayList<>();
             if(charSequence == null || charSequence.length() == 0) {
 //                Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show();
@@ -137,10 +140,11 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            setCategoryFilters((ArrayList<Job>) filterResults.values);
-//            jobArrayList.clear();
-//            jobArrayList.addAll((ArrayList) filterResults.values);
-//            notifyDataSetChanged();
+//            setCategoryFilters((ArrayList<Job>) filterResults.values);
+            checkResultSize();
+            jobArrayList.clear();
+            jobArrayList.addAll((ArrayList) filterResults.values);
+            notifyDataSetChanged();
         }
     };
 
@@ -151,13 +155,13 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         else{
             categoryFilters.remove(category);
         }
-        setCategoryFilters(fullJobArrayList);
+//        setCategoryFilters(fullJobArrayList);
     }
 
     private void setCategoryFilters(@Nullable ArrayList<Job> textFilteredJobArrayList){
         // possibly redundant
         if(textFilteredJobArrayList == null){
-            textFilteredJobArrayList = fullJobArrayList;
+            textFilteredJobArrayList.addAll(fullJobArrayList);
         }
 
         ArrayList<Job> filteredJobArrayList = new ArrayList<>();
@@ -185,10 +189,18 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         notifyDataSetChanged();
     }
 
+    public void checkResultSize(){
+        Log.d("init", "check");
+
+        Log.d("init", "fulljobsize: "+String.valueOf(fullJobArrayList.size()));
+        Log.d("init", "jobsize: "+String.valueOf(jobArrayList.size()));
+
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // grabbing the views from the row layout file
         // similar with oncreate
-        TextView textViewTitle, textViewDescription, textViewDate, textViewBudget, textViewClient, textViewLocation, textViewWorkers, textViewHide;
+        TextView textViewTitle, textViewDescription, textViewDate, textViewBudget, textViewClient, textViewLocation, textViewWorkers, textViewStatus;
         Chip chipCarpentry, chipPlumbing, chipElectronics, chipElectrical, chipPersonalShopping, chipVirtualAssistant, chipOther;
         CardView jobCard;
         Button btnAccept;
@@ -203,6 +215,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
             textViewLocation = itemView.findViewById(R.id.textJobLocation);
             textViewWorkers = itemView.findViewById(R.id.textJobWorkers);
             textViewBudget = itemView.findViewById(R.id.textJobBudget);
+            textViewStatus = itemView.findViewById(R.id.textViewStatus2);
             chipCarpentry = itemView.findViewById(R.id.chipCarpentry);
             chipPlumbing = itemView.findViewById(R.id.chipPlumbing);
             chipElectronics = itemView.findViewById(R.id.chipElectronics);

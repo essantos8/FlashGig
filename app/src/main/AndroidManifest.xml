@@ -10,9 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FlashGig.Blue">
         <activity
-            android:name=".activities.MainActivity"
-            android:screenOrientation="portrait"
+            android:name=".activities.InboxChat"
             android:exported="true" />
+        <activity
+            android:name=".activities.UsersActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.ChatActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.UserVerificationActivity"
             android:exported="true" />

@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fadeScrollbars="false"
-        app:layout_constraintBottom_toTopOf="@+id/btnProfileUpdate"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bluebox"
         tools:layout_editor_absoluteX="29dp">
 
@@ -60,7 +60,7 @@
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroupCategories"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginStart="8dp"
@@ -258,77 +258,33 @@
                     app:textStartPadding="4dp" />
 
             </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/tvtitle8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/salmapromedium"
+                android:text="Feedback and Ratings"
+                android:textColor="@color/mid_grey"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chipGroupCategoriesDB" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </ScrollView>
-
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroupCategories" />
-
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/white"
-        android:fontFamily="@font/salmapromedium"
-        android:text="Log out"
-        android:textColor="@color/dashboard_blue"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnProfileUpdate"
-        app:layout_constraintTop_toTopOf="@+id/btnProfileUpdate"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/btnProfileUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/white"
-        android:fontFamily="@font/salmapromedium"
-        android:text="UPDATE"
-        android:textColor="@color/dashboard_blue"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bluebox"
-        app:layout_constraintVertical_bias="1.0"
-        app:rippleColor="@color/dashboard_blue" />
-
-    <Button
-        android:id="@+id/btnProfileAddJob"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/white"
-        android:fontFamily="@font/salmapromedium"
-        android:text="Add Job"
-        android:textColor="@color/dashboard_blue"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnProfileUpdate"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnProfileUpdate"
-        app:layout_constraintVertical_bias="0.0"
-        app:rippleColor="@color/dashboard_blue" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bluebox"
         android:layout_width="0dp"
-        android:layout_height="320dp"
+        android:layout_height="wrap_content"
         android:background="@color/dashboard_blue"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -359,7 +315,6 @@
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ProfilePic" />
 
@@ -390,21 +345,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textEmail" />
 
         <ImageButton
-            android:id="@+id/btnEditProfile"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/dashboard_blue"
-            android:contentDescription="edit"
-            android:scaleType="fitCenter"
-            android:src="@drawable/edit_button"
-            android:tintMode="src_in"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
-
-        <ImageButton
             android:id="@+id/btnOptions"
             android:layout_width="36dp"
             android:layout_height="36dp"
@@ -425,34 +365,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:secondaryProgressTint="#00000000"
+            android:stepSize="0.1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textPhone" />
-
-        <RatingBar
-            android:id="@+id/rbClient"
-            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rbWorker" />
-
-        <ImageButton
-            android:id="@+id/btnReviews"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="@color/dashboard_blue"
-            android:contentDescription="more reviews"
-            android:scaleType="center"
-            android:tintMode="src_atop"
-            app:layout_constraintBottom_toBottomOf="@+id/rbClient"
-            app:layout_constraintStart_toEndOf="@+id/rbWorker"
-            app:layout_constraintTop_toTopOf="@+id/rbWorker"
-            app:srcCompat="@drawable/searc_button"
-            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/tvratinglabel"
@@ -460,23 +381,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/salmapromedium"
-            android:text="worker:"
+            android:text="Rating: "
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/rbWorker"
             app:layout_constraintEnd_toStartOf="@+id/rbWorker"
             app:layout_constraintTop_toTopOf="@+id/rbWorker" />
-
-        <TextView
-            android:id="@+id/tvratinglabel2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/salmapromedium"
-            android:text="client:"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/rbClient"
-            app:layout_constraintEnd_toStartOf="@+id/rbWorker"
-            app:layout_constraintTop_toTopOf="@+id/rbClient" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -493,16 +402,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvdesc" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -510,8 +409,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:backgroundTint="@color/white"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/profile_drawer_header"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
         app:menu="@menu/profile_drawer"></com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

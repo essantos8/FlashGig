@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.flashgig.R;
-import com.example.flashgig.adapters.JobRecyclerViewAdapter;
 
+import com.example.flashgig.adapters.PARecyclerViewAdapter;
 import com.example.flashgig.databinding.FragmentAppliedBinding;
 import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,12 +23,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
-public class AppliedFragment extends Fragment implements JobRecyclerViewAdapter.ItemClickListener {
+public class AppliedFragment extends Fragment implements PARecyclerViewAdapter.ItemClickListener {
     private FirebaseFirestore db;
     private ArrayList<Job> jobList = new ArrayList<>();
-    private JobRecyclerViewAdapter adapter;
+    private PARecyclerViewAdapter adapter;
     String curUser;
 
     @Override
@@ -38,7 +39,6 @@ public class AppliedFragment extends Fragment implements JobRecyclerViewAdapter.
         curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         eventChangeListener();
     }
-
 
     private void eventChangeListener() {
         db.collection("jobs").whereArrayContains("bidders",curUser).orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value,error) -> {
@@ -56,8 +56,27 @@ public class AppliedFragment extends Fragment implements JobRecyclerViewAdapter.
                         jobList.add(dc.getDocument().toObject(Job.class));
                         jobList.remove(dc.getDocument().toObject(Job.class));
                     }
+                    adapter.notifyDataSetChanged();
                 }
-                adapter.notifyDataSetChanged();
+            }
+        });
+        db.collection("jobs").whereArrayContains("workers",curUser).orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value,error) -> {
+            if (error != null) {
+                Log.d("error", "Firebase error");
+            }else{
+                for (DocumentChange dc : value.getDocumentChanges()) {
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        jobList.add(dc.getDocument().toObject(Job.class));
+                    }
+                    else if(dc.getType() == DocumentChange.Type.REMOVED){
+                        jobList.remove(dc.getDocument().toObject(Job.class));
+                    }
+                    else{
+                        jobList.add(dc.getDocument().toObject(Job.class));
+                        jobList.remove(dc.getDocument().toObject(Job.class));
+                    }
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
     }
@@ -72,7 +91,7 @@ public class AppliedFragment extends Fragment implements JobRecyclerViewAdapter.
         RecyclerView recyclerView = binding.recyclerViewApplied;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
+        adapter = new PARecyclerViewAdapter(this.getContext(), jobList, this);
         recyclerView.setAdapter(adapter);
 
         // Inflate the layout for this fragment
@@ -80,11 +99,26 @@ public class AppliedFragment extends Fragment implements JobRecyclerViewAdapter.
     }
 
     @Override
-    public void onItemClick(String JID) {
-        Fragment fragment = DetailFragment.newInstance(JID);
+    public void onItemClick(String JID, String status) {
+//        Fragment fragment = DetailFragment.newInstance(JID);
+        Fragment fragment = null;
+        if (status.equals("pending")){
+            fragment = AppliedPendingFragment.newInstance(JID, status);
+            //fragment = DetailFragment.newInstance(JID);
+        }
+        // disabled for now
+        else if(status.equals("in progress")){
+            fragment = AppliedInProgressFragment.newInstance(JID, status);
+//            fragment = new JobInProgressFragment(JID);
+        }
+        else if(status.equals("completed")){
+            fragment = AppliedCompletedFragment.newInstance(JID, status);
+//            fragment = DetailFragment.newInstance(JID);
+        }
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");
         fragmentTransaction.addToBackStack(null);
+
         fragmentTransaction.commit();
     }
 }

@@ -149,8 +149,8 @@ public class JobAdderFragment extends Fragment{
         jobPicture3.setOnClickListener(view -> choosePicture3());
 
         Spinner spinner_noOfWorkers = binding.spinnerNoOfWorkers;
-        ArrayAdapter<CharSequence> adapter_noOfWorkers = ArrayAdapter.createFromResource(getActivity(), R.array.numberOfWorkers, android.R.layout.simple_spinner_item);
-        adapter_noOfWorkers.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter_noOfWorkers = ArrayAdapter.createFromResource(getActivity(), R.array.numberOfWorkers, R.layout.spinner_selecteditem);
+        adapter_noOfWorkers.setDropDownViewResource(R.layout.spinner_dropdownitem);
         spinner_noOfWorkers.setAdapter(adapter_noOfWorkers);
         spinner_noOfWorkers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -164,8 +164,8 @@ public class JobAdderFragment extends Fragment{
         });
 
         Spinner spinner_locationCity = binding.spinnerLocation;
-        ArrayAdapter<CharSequence> adapter_locationCity = ArrayAdapter.createFromResource(getActivity(), R.array.locationCity, android.R.layout.simple_spinner_item);
-        adapter_locationCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter_locationCity = ArrayAdapter.createFromResource(getActivity(), R.array.locationCity, R.layout.spinner_selecteditem);
+        adapter_locationCity.setDropDownViewResource(R.layout.spinner_dropdownitem);
         spinner_locationCity.setAdapter(adapter_locationCity);
         spinner_locationCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

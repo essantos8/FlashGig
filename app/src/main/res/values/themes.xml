@@ -32,4 +32,12 @@
         <item name="android:windowMinWidthMinor">90%</item>
     </style>
 
+    <style name="spinner_Theme">
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="spinner_Dropdown_Theme">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

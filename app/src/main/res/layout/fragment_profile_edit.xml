@@ -44,10 +44,11 @@
                 android:background="@color/light_grey"
                 android:ems="10"
                 android:fontFamily="@font/salmapromedium"
-                android:hint="Name"
+                android:hint=" Name"
                 android:inputType="textPersonName"
+                android:textColor="@color/dark_grey"
                 android:textColorHint="@color/mid_grey"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvtitle"
@@ -72,8 +73,9 @@
                 android:ems="10"
                 android:fontFamily="@font/salmapromedium"
                 android:gravity="start|top"
-                android:hint=" about me"
-                android:inputType="textMultiLine"
+                android:hint=" About me"
+                android:inputType="textMultiLine|textCapSentences"
+                android:textColor="@color/dark_grey"
                 android:textColorHint="@color/mid_grey"
                 android:textSize="16sp" />
 
@@ -92,7 +94,7 @@
                 android:id="@+id/divider4"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 android:background="?android:attr/listDivider" />
 
             <com.google.android.material.chip.ChipGroup
@@ -292,7 +294,7 @@
                 android:id="@+id/divider5"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:background="?android:attr/listDivider" />
 
             <Button
@@ -304,7 +306,8 @@
                 android:layout_marginEnd="32dp"
                 android:fontFamily="@font/salmapromedium"
                 android:text="CHANGE PASSWORD"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="invisible" />
 
         </LinearLayout>
     </ScrollView>
@@ -347,11 +350,13 @@
         android:id="@+id/btnConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="41dp"
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/salmapromedium"
         android:text="CONFIRM"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -363,6 +368,7 @@
         android:text="CANCEL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnConfirm" />
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/btnConfirm" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
