@@ -33,6 +33,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -57,6 +58,7 @@ public class DisplayWorker extends Fragment {
     private FragmentDisplayWorkerBinding binding;
     private ArrayList<Comment> comments = new ArrayList<>();
     private CommentsRecyclerViewAdapter adapter;
+    private FirebaseUser currentUser;
     DocumentSnapshot document;
     DocumentReference workerDocRef;
     DocumentReference jobDocRef;
@@ -97,6 +99,7 @@ public class DisplayWorker extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         workerDocRef = db.collection("users").document(mParam1);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 //        jobDocRef = db.collection("jobs").document(mParam2);
     }
 
@@ -120,11 +123,7 @@ public class DisplayWorker extends Fragment {
             }
         });
 
-        binding.btnChatWorkerProfile.setOnClickListener(view -> {
-            Intent intent = new Intent(getContext(), ChatActivity.class);
-            intent.putExtra(Constants.KEY_USER, workUserAcc);
-            getContext().startActivity(intent);
-        });
+
 
         //BACK BUTTON
         binding.backButtonDW.setOnClickListener(view ->{
@@ -139,17 +138,27 @@ public class DisplayWorker extends Fragment {
         textWorkerName.setText(user.getFullName());
         textWorkerNumber.setText(user.getPhone());
         textWorkerEmail.setText(user.getEmail());
+        if(!workUserAcc.getEmail().equals(currentUser.getEmail())){
+            binding.btnChatWorkerProfile.setVisibility(View.VISIBLE);
+            binding.btnChatWorkerProfile.setOnClickListener(view -> {
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                intent.putExtra(Constants.KEY_USER, workUserAcc);
+                getContext().startActivity(intent);
+            });
+        }
         binding.rbWorker.setRating(user.getAverageRating());
         getComments(user);
         setSkills();
         StorageReference userRef = FirebaseStorage.getInstance().getReference().child("media/images/profile_pictures/" + user.getUserId());
         userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
 //            Snackbar.make(binding.getRoot(), "File exists!", Snackbar.LENGTH_SHORT).show();
-            GlideApp.with(getContext())
-                    .load(userRef)
-                    .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
-                    .fitCenter()
-                    .into(binding.imageWorker);
+            if(getContext() != null) {
+                GlideApp.with(getContext())
+                        .load(userRef)
+                        .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
+                        .fitCenter()
+                        .into(binding.imageWorker);
+            }
         }).addOnFailureListener(e -> {
             Log.d("Profile", "retrieveInfo: "+e.toString());
 //            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();

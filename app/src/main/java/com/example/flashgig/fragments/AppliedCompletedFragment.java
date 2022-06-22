@@ -55,17 +55,11 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
 
     private Task<QuerySnapshot> curJob;
     private User clientUser;
-    private User bidUser;
-    private User workUser;
     private Job job;
-    private  ArrayList<String> clientListString = new ArrayList<String>();
     private ArrayList<User> clientList = new ArrayList<>();
     private ClientRecyclerViewAdapter adapter;
 
     private FragmentAppliedCompletedBinding binding;
-    private ImageView profilePicDetail;
-
-    private TextView textJobTitle, textJobDate, textJobBudget, textJobLocation, textJobClientEmail, textJobClientName, textJobDescription, textJobWorkers;
 
     private RecyclerView imageRecyclerView, feedbackRecyclerView;
 
@@ -120,12 +114,19 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
                         return;
                     }
                     clientUser = task1.getResult().getDocuments().get(0).toObject(User.class);
-                    getClientObj();
+
+                    clientList.add(clientUser);
+                    feedbackRecyclerView = binding.workerRecyclerView;
+                    feedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+                    adapter = new ClientRecyclerViewAdapter(this.getContext(), clientList, this, jobId);
+                    feedbackRecyclerView.setAdapter(adapter);
+
                     setViews();
                     loadImages();
                 });
             }
         });
+
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
         binding.backButton.setOnClickListener(view ->{
@@ -134,23 +135,6 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
 
         // Inflate the layout for this fragment
         return binding.getRoot();
-    }
-
-    private void getClientObj() {
-        db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task -> {
-            if (task.getResult().getDocuments().isEmpty()) {
-                Log.d("CompletedClientFragment", job.getClient() + ": User is NOT FOUND");
-                return;
-            }
-            clientList.add(task.getResult().getDocuments().get(0).toObject(User.class));
-            adapter.notifyDataSetChanged();
-        });
-
-        feedbackRecyclerView = binding.workerRecyclerView;
-        feedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
-        adapter = new ClientRecyclerViewAdapter(this.getContext(), clientList, this, jobId);
-        feedbackRecyclerView.setAdapter(adapter);
     }
 
 
@@ -216,21 +200,19 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
         // load client profile pic
         StorageReference userRef = storageRef.child("media/images/profile_pictures/" + clientId);
         userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
-            try {
-                GlideApp.with(this)
+            if(getContext() != null){
+                GlideApp.with(getContext())
                         .load(userRef)
                         .error(R.drawable.default_profile)
                         .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
                         .fitCenter()
-                        .into(profilePicDetail);
+                        .into(binding.profilePicDetail);
                 binding.progressBarDetail.setVisibility(View.GONE);
-            } catch (Exception e) {
-                Log.d("Pending Fragment Client", "loadImage: "+e.toString());
             }
         }).addOnFailureListener(e -> {
             binding.progressBarDetail.setVisibility(View.GONE);
-            profilePicDetail.setImageResource(R.drawable.default_profile);
-            Log.d("Pending Fragment Worker", "retrieveInfo: "+e.toString());
+            binding.profilePicDetail.setImageResource(R.drawable.default_profile);
+            Log.d("AppliedCompletedFrag", "loadImages: "+e.toString());
         });
         // load job images
         ArrayList<String> jobImageUris = new ArrayList<>(job.getJobImages());

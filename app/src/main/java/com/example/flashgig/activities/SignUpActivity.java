@@ -99,15 +99,12 @@ public class SignUpActivity extends AppCompatActivity {
         if (password.isEmpty()) {
             tilpasswordsignup.setError("Password is required!");
             reset = true;
-            tilpassword2signup.setVisibility(View.GONE);
         }
         else if(password.length() < 8){
             tilpasswordsignup.setError("Password must be at least 8 characters!");
             reset = true;
-            tilpassword2signup.setVisibility(View.GONE);
         }
         else{
-            tilpassword2signup.setVisibility(View.VISIBLE);
             tilpasswordsignup.setErrorEnabled(false);
             if(!password2.equals(password)){
                 tilpassword2signup.setError("Passwords do not match!");

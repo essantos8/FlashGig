@@ -100,8 +100,6 @@ public class AppliedInProgressFragment extends Fragment implements HorizontalIma
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         binding = FragmentAppliedInProgressBinding.inflate(inflater, container, false);
 
         textJobTitle = binding.textJobTitle;

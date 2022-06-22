@@ -134,6 +134,7 @@
                     android:backgroundTint="@color/mid_grey"
                     android:padding="0dp"
                     android:paddingLeft="0dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
