@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -16,23 +15,13 @@ import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
 import com.example.flashgig.databinding.ItemContainerUserBinding;
 import com.example.flashgig.listeners.UserListener;
-import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.tasks.Task;
-import com.google.common.net.InternetDomainName;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> implements Filterable {
+public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerViewAdapter.UserViewHolder> implements Filterable {
 
     private final ArrayList<User> users;
     private ArrayList<User> fullUserArrayList;
@@ -40,7 +29,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     private Context ctx;
     private StorageReference storageRef;
 
-    public UsersAdapter(Context ctx, ArrayList<User>users, UserListener userListener){
+    public UserRecyclerViewAdapter(Context ctx, ArrayList<User>users, UserListener userListener){
         this.ctx = ctx;
         this.users = users;
         this.fullUserArrayList = users;

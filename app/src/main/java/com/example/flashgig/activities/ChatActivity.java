@@ -1,6 +1,8 @@
 package com.example.flashgig.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.View;
 import com.example.flashgig.R;
 import com.example.flashgig.adapters.ChatAdapter;
 import com.example.flashgig.databinding.ActivityChatBinding;
+import com.example.flashgig.fragments.DisplayWorker;
 import com.example.flashgig.models.ChatMessage;
 import com.example.flashgig.models.User;
 import com.example.flashgig.utilities.Constants;
@@ -142,6 +145,14 @@ public class ChatActivity extends AppCompatActivity {
     private void setListeners() {
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
+        binding.imageInfo.setOnClickListener(v -> {
+//            Unable to show profile fragment in activity (need to convert messaging parts to fragments)
+//            Fragment fragment = DisplayWorker.newInstance(receiverUser.getUserId(), "");
+//            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+//            fragmentTransaction.addToBackStack(null);
+//            fragmentTransaction.commit();
+        });
     }
 
     private String getReadableDateTime(Date date){

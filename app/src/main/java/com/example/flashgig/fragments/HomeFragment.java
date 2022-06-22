@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -34,12 +36,14 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
 
     private FirebaseFirestore db;
     private ArrayList<Job> jobList = new ArrayList<>();
+    private ArrayList<String> categoryFilters = new ArrayList<>();
 
     FragmentHomeBinding binding;
 
-    private JobRecyclerViewAdapter adapter;
+    private JobRecyclerViewAdapter adapter, filteredAdapter;
     private SearchView searchView;
     private RecyclerView recyclerView;
+    private Boolean isSearchFiltered = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,12 +128,12 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
 
         searchView = binding.searchviewHome;
 
-        searchView.setOnSearchClickListener(view -> binding.cardView.setVisibility(View.VISIBLE));
+//        searchView.setOnSearchClickListener(view -> binding.cardViewFilters.setVisibility(View.VISIBLE));
         searchView.setOnClickListener(view -> binding.searchviewHome.setIconified(false));
-        searchView.setOnCloseListener(() -> {
-            binding.cardView.setVisibility(View.GONE);
-            return false;
-        });
+//        searchView.setOnCloseListener(() -> {
+//            binding.cardViewFilters.setVisibility(View.GONE);
+//            return false;
+//        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -139,8 +143,36 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
             @Override
             public boolean onQueryTextChange(String s) {
                 adapter.getFilter().filter(s);
+                if(filteredAdapter != null){
+                    filteredAdapter.getFilter().filter(s);
+                }
                 return false;
             }
+        });
+//        binding.chipGroupCategories.setOnClickListener(view -> {
+//            Toast.makeText(getContext(), String.valueOf(binding.chipGroupCategories.getCheckedChipIds()), Toast.LENGTH_SHORT).show();
+//
+//        });
+        binding.btnFilterJobs.setOnClickListener(view -> {
+            isSearchFiltered = !isSearchFiltered;
+            if (!isSearchFiltered) {
+                recyclerView.setAdapter(adapter);
+            }
+            switch(binding.cardViewFilters.getVisibility()){
+                case View.GONE:
+                    binding.cardViewFilters.setVisibility(View.VISIBLE);
+                    break;
+                case View.VISIBLE:
+                    binding.cardViewFilters.setVisibility(View.GONE);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        binding.btnShowResults.setOnClickListener(view -> {
+            Toast.makeText(getContext(), "Showing filtered results", Toast.LENGTH_SHORT).show();
+            setCategoryFilters();
         });
 
         setChipListeners();
@@ -159,21 +191,49 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
         return binding.getRoot();
     }
 
+    private void toggleCategoryFilter(String category, boolean unused){
+        if(categoryFilters.contains(category)){
+            categoryFilters.remove(category);
+        }
+        else{
+            categoryFilters.add(category);
+        }
+    }
+
+    private void setCategoryFilters() {
+        if(categoryFilters.isEmpty()){
+            recyclerView.setAdapter(adapter);
+            return;
+        }
+        ArrayList<Job> filteredJobList = new ArrayList<>();
+        filteredAdapter = new JobRecyclerViewAdapter(getContext(), filteredJobList, this);
+        for(Job job: jobList){
+            for(String category: categoryFilters){
+                if(job.getCategories().contains(category)){
+                    filteredJobList.add(job);
+                    break;
+                }
+            }
+        }
+        filteredAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(filteredAdapter);
+    }
+
     private void setChipListeners() {
         binding.chipCarpentry.setOnCheckedChangeListener((compoundButton, b) ->
-                adapter.toggleCategoryFilter("Carpentry", b));
+                toggleCategoryFilter("Carpentry", b));
         binding.chipPlumbing.setOnCheckedChangeListener((compoundButton, b) ->
-                adapter.toggleCategoryFilter("Plumbing", b));
+                toggleCategoryFilter("Plumbing", b));
         binding.chipElectrical.setOnCheckedChangeListener((compoundButton, b) ->
-                adapter.toggleCategoryFilter("Electrical", b));
+                toggleCategoryFilter("Electrical", b));
         binding.chipElectronics.setOnCheckedChangeListener((compoundButton, b) ->
-                adapter.toggleCategoryFilter("Electronics", b));
+                toggleCategoryFilter("Electronics", b));
         binding.chipPersonalShopping.setOnCheckedChangeListener((compoundButton, b) ->
-                adapter.toggleCategoryFilter("Shopping", b));
+                toggleCategoryFilter("Shopping", b));
         binding.chipVirtualAssistant.setOnCheckedChangeListener((compoundButton, b) ->
-                adapter.toggleCategoryFilter("Assistant", b));
+                toggleCategoryFilter("Assistant", b));
         binding.chipOther.setOnCheckedChangeListener((compoundButton, b) ->
-                adapter.toggleCategoryFilter("Other", b));
+                toggleCategoryFilter("Others", b));
     }
 
     private String getTodaysDate() {

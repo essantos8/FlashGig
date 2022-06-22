@@ -10,7 +10,6 @@
 
     <SearchView
         android:id="@+id/searchviewHome"
-        android:theme="@style/SearchViewStyle"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -18,14 +17,15 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/bg_white_rounded"
         android:elevation="10dp"
+        android:theme="@style/SearchViewStyle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnFilterJobs"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/cardViewFilters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -33,6 +33,7 @@
         android:layout_marginEnd="8dp"
         android:elevation="8dp"
         android:visibility="gone"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,8 +48,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:background="#FFFFFF"
-            android:visibility="gone">
+            android:background="@color/white">
 
             <Spinner
                 android:id="@+id/spinnerRegion"
@@ -93,14 +93,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
+                android:clickable="true"
                 android:textAlignment="center"
                 android:visibility="visible"
                 app:chipSpacingHorizontal="6dp"
                 app:chipSpacingVertical="6dp"
                 app:layout_constrainedHeight="true"
                 app:layout_constrainedWidth="true"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btnShowResults"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
@@ -338,6 +338,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -409,6 +410,7 @@
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/dashboard_blue"
                 android:entries="@array/locationCity"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -483,6 +485,7 @@
                 android:id="@+id/barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:barrierDirection="bottom"
                 app:constraint_referenced_ids="spinnerCity"
                 tools:layout_editor_absoluteY="158dp" />
@@ -498,6 +501,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -514,10 +518,20 @@
                 android:text="Jan 01 2022"
                 android:textColor="@color/mid_grey"
                 android:textSize="14sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView17"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/btnShowResults"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show Results"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -532,7 +546,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewFilters"
         app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -566,5 +580,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/recyclerViewJobs" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnFilterJobs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Button"
+        android:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_tune" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

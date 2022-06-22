@@ -65,28 +65,29 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         holder.textViewStatus.setText(curJob.getStatus().toUpperCase());
 
         for (String category : curJob.getCategories()) {
-            switch (category) {
-                case "Carpentry":
+            switch (category.toLowerCase()) {
+                case "carpentry":
                     holder.chipCarpentry.setVisibility(View.VISIBLE);
                     break;
-                case "Plumbing":
+                case "plumbing":
                     holder.chipPlumbing.setVisibility(View.VISIBLE);
                     break;
-                case "Electrical":
+                case "electrical":
                     holder.chipElectrical.setVisibility(View.VISIBLE);
                     break;
-                case "Electronics":
+                case "electronics":
                     holder.chipElectronics.setVisibility(View.VISIBLE);
                     break;
-                case "Personal Shopping":
-                case "Shopping":
+                case "personal shopping":
+                case "shopping":
                     holder.chipPersonalShopping.setVisibility(View.VISIBLE);
                     break;
-                case "Virtual Assistant":
-                case "Assistant":
+                case "virtual assistant":
+                case "assistant":
                     holder.chipVirtualAssistant.setVisibility(View.VISIBLE);
                     break;
-                case "Other":
+                case "other":
+                case "others":
                     holder.chipOther.setVisibility(View.VISIBLE);
                     break;
             }
@@ -118,7 +119,7 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             fullJobArrayList = new ArrayList<>(fullJobArrayList);
-            Log.d("search", "fulljobarraysize: "+String.valueOf(fullJobArrayList.size()));
+            Log.d("search", "fulljobarraysize: "+ fullJobArrayList.size());
             ArrayList<Job> filteredJobArrayList = new ArrayList<>();
             if(charSequence == null || charSequence.length() == 0) {
 //                Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show();
@@ -141,61 +142,70 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
 //            setCategoryFilters((ArrayList<Job>) filterResults.values);
-            checkResultSize();
+//            checkResultSize();
             jobArrayList.clear();
             jobArrayList.addAll((ArrayList) filterResults.values);
             notifyDataSetChanged();
         }
     };
-
-    public void toggleCategoryFilter(String category, boolean addCategory) {
-        if(addCategory){
-            categoryFilters.add(category);
-        }
-        else{
-            categoryFilters.remove(category);
-        }
-//        setCategoryFilters(fullJobArrayList);
-    }
-
-    private void setCategoryFilters(@Nullable ArrayList<Job> textFilteredJobArrayList){
-        // possibly redundant
-        if(textFilteredJobArrayList == null){
-            textFilteredJobArrayList.addAll(fullJobArrayList);
-        }
-
-        ArrayList<Job> filteredJobArrayList = new ArrayList<>();
-
-        if(categoryFilters.isEmpty()){
-            filteredJobArrayList.addAll(textFilteredJobArrayList);
-        }
-        else{
-            Log.d("categories", "notall");
-            for (String cat: categoryFilters){
-                Log.d("categories", "toggleCategoryFilter: "+cat);
-            }
-            for (Job job : textFilteredJobArrayList) {
-                // "and" filter
-//                if (job.getCategories().containsAll(categoryFilters))
+//
+//    public void toggleCategoryFilter(String category, boolean addCategory) {
+//        if(addCategory){
+//            categoryFilters.add(category);
+//        }
+//        else{
+//            categoryFilters.remove(category);
+//        }
+//        if (categoryFilters.isEmpty()){
+//            clearCategoryFilters();
+////            return;
+//        }
+//
+//        setCategoryFilters(jobArrayList);
+//    }
+//
+//    private void clearCategoryFilters(){
+//    }
+//
+//    private void setCategoryFilters(@Nullable ArrayList<Job> textFilteredJobArrayList){
+//        // possibly redundant
+//        if(textFilteredJobArrayList == null){
+//            textFilteredJobArrayList.addAll(fullJobArrayList);
+//        }
+//
+//        ArrayList<Job> filteredJobArrayList = new ArrayList<>();
+//
+//        if(categoryFilters.isEmpty()){
+//            Log.d("categories", "empty filter: ");
+//            filteredJobArrayList.addAll(textFilteredJobArrayList);
+//        }
+//        else{
+//            Log.d("categories", "notall");
+//            for (String cat: categoryFilters){
+//                Log.d("categories", "toggleCategoryFilter: "+cat);
+//            }
+//            for (Job job : textFilteredJobArrayList) {
+//                // "and" filter
+////                if (job.getCategories().containsAll(categoryFilters))
+////                    filteredJobArrayList.add(job);
+//
+//                // "or" filter
+//                if(!Collections.disjoint(job.getCategories(), categoryFilters))
 //                    filteredJobArrayList.add(job);
-
-                // "or" filter
-                if(!Collections.disjoint(job.getCategories(), categoryFilters))
-                    filteredJobArrayList.add(job);
-            }
-        }
-        jobArrayList.clear();
-        jobArrayList.addAll(filteredJobArrayList);
-        notifyDataSetChanged();
-    }
-
-    public void checkResultSize(){
-        Log.d("init", "check");
-
-        Log.d("init", "fulljobsize: "+String.valueOf(fullJobArrayList.size()));
-        Log.d("init", "jobsize: "+String.valueOf(jobArrayList.size()));
-
-    }
+//            }
+//        }
+//        jobArrayList.clear();
+//        jobArrayList.addAll(filteredJobArrayList);
+//        notifyDataSetChanged();
+//    }
+//
+//    public void checkResultSize(){
+//        Log.d("init", "check");
+//
+//        Log.d("init", "fulljobsize: "+String.valueOf(fullJobArrayList.size()));
+//        Log.d("init", "jobsize: "+String.valueOf(jobArrayList.size()));
+//
+//    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // grabbing the views from the row layout file
