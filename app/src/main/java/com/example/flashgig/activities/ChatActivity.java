@@ -65,9 +65,13 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();
+        String inputMessage = binding.inputMessage.getText().toString().trim();
+        if(inputMessage.isEmpty()){
+            return;
+        }
         message.put(Constants.KEY_SENDER_ID, curUser.getUid());
         message.put(Constants.KEY_RECEIVER_ID, receiverUser.userId);
-        message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+        message.put(Constants.KEY_MESSAGE, inputMessage);
         message.put(Constants.KEY_TIMESTAMP, new Date());
         database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
         if (conversationId != null) {

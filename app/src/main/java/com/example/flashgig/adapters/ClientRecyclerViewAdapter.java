@@ -1,24 +1,35 @@
 package com.example.flashgig.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flashgig.GlideApp;
 import com.example.flashgig.R;
+import com.example.flashgig.activities.ChatActivity;
+import com.example.flashgig.fragments.DisplayWorker;
 import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
+import com.example.flashgig.utilities.Constants;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -31,6 +42,8 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
     private String jobId;
     private Button rateButton;
     public User curWorker;
+    private StorageReference storageRef;
+
     public ClientRecyclerViewAdapter(Context context, ArrayList<User> workerList, ItemClickListener clickListener, String jobId) {
         this.context = context;
         this.workerList = workerList;
@@ -55,6 +68,7 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
     @Override
     public void onBindViewHolder(@NonNull ClientRecyclerViewAdapter.MyViewHolder holder, int position) {
         User curWorker = workerList.get(position);
+        storageRef = FirebaseStorage.getInstance().getReference();
         //holder.imageWorker.setImageResource(curWorker.get);
         Log.d("Rating", "list of rated jobs: "+curWorker.ratings.keySet());
         Log.d("Rating", "job ID"+jobId);
@@ -84,6 +98,28 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
             holder.textComment.setVisibility(View.VISIBLE);
             clickListener.RateBtnOnClick(curWorker.userId, jobId, holder.ratingBar.getRating(),holder.editComment.getText().toString());
         });
+        holder.chatButton.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra(Constants.KEY_USER, curWorker);
+            context.startActivity(intent);
+        });
+        holder.workerCard.setOnClickListener(view -> {
+            Fragment fragment = DisplayWorker.newInstance(curWorker.getUserId(), jobId);
+            FragmentTransaction fragmentTransaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayout, fragment, "displayWorker");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+        StorageReference profilePicRef = storageRef.child("media/images/profile_pictures/" + curWorker.getUserId());
+        profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
+            GlideApp.with(context)
+                    .load(profilePicRef)
+                    .fitCenter()
+                    .into(holder.imageClient);
+        }).addOnFailureListener(e -> {
+            Log.d("Profile", "retrieveInfo: "+e.toString());
+//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
+        });
 //        holder.rateButton.setOnClickListener(view -> clickListener.onIt);
     }
 
@@ -98,7 +134,8 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
         EditText editComment;
         CardView workerCard;
         RatingBar ratingBar;
-        Button rateButton;
+        Button rateButton, chatButton;
+        ImageView imageClient;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -111,6 +148,8 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
             workerCard = itemView.findViewById(R.id.workerCardPopup);
             ratingBar = itemView.findViewById(R.id.rbWorker);
             rateButton = itemView.findViewById(R.id.rateBtn);
+            chatButton = itemView.findViewById(R.id.btnChatWorkerRow);
+            imageClient = itemView.findViewById(R.id.imageWorker);
         }
     }
 

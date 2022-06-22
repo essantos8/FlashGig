@@ -100,14 +100,14 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
-        curUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        curUser = currentUser.getEmail();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             jobId = mParam1;
         }
         curJob = db.collection("jobs").whereEqualTo("jobId",mParam1).get();
         storageRef = FirebaseStorage.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
     }
 
@@ -254,11 +254,15 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
         });
-        binding.btnChat.setOnClickListener(view -> {
+        if(!clientUser.getEmail().equals(curUser)){
+            binding.btnChat.setVisibility(View.VISIBLE);
+            binding.btnChat.setOnClickListener(view -> {
                 Intent intent = new Intent(getContext(), ChatActivity.class);
                 intent.putExtra(Constants.KEY_USER, clientUser);
                 startActivity(intent);
-        });
+            });
+        }
+
 
         for (String category : job.getCategories()){
             switch (category) {
