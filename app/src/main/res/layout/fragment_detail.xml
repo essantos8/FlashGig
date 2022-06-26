@@ -227,12 +227,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="num workers here"
                     android:textColor="@color/mid_grey"
                     app:layout_constraintStart_toEndOf="@+id/textView7"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                    app:layout_constraintTop_toTopOf="@+id/textView7" />
 
                 <TextView
                     android:id="@+id/textJobDate"
@@ -251,13 +250,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
                     android:fontFamily="@font/salmapromedium"
                     android:text="description here"
                     android:textColor="@color/mid_grey"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toEndOf="@+id/textView8"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toTopOf="@+id/textView8" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -270,7 +268,7 @@
                     android:textColor="#000000"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                    app:layout_constraintTop_toBottomOf="@+id/textJobDescription" />
 
                 <TextView
                     android:id="@+id/textView5"
@@ -537,7 +535,7 @@
                     android:textColor="#000000"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toBottomOf="@+id/textJobBudget" />
 
                 <HorizontalScrollView
                     android:id="@+id/horizontalScrollView"
