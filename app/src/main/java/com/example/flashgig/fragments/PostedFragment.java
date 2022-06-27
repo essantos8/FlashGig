@@ -78,8 +78,6 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
 
         adapter = new PARecyclerViewAdapter(this.getContext(), jobList, this);
         recyclerView.setAdapter(adapter);
-
-        // Inflate the layout for this fragment
         return binding.getRoot();
     }
 

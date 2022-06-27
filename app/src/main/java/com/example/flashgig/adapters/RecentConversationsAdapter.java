@@ -79,11 +79,9 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
                 conversationListener.onConversationClicked(user);
             });
             String otherUserId = chatMessage.getSenderId();
-//            Log.d("HANAP", "M:"+FirebaseAuth.getInstance().getCurrentUser().getUid()+" R:"+chatMessage.getReceiverId()+" S:"+chatMessage.getSenderId());
             if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(otherUserId)){
                 otherUserId = chatMessage.getReceiverId();
             }
-//            Toast.makeText(binding.getRoot().getContext(), otherUserId, Toast.LENGTH_SHORT).show();
             StorageReference profilePicRef = storageRef.child("media/images/profile_pictures/" + otherUserId);
             profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
                 GlideApp.with(ctx.getApplicationContext())

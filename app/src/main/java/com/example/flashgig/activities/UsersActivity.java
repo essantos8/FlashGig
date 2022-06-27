@@ -143,10 +143,6 @@ public class UsersActivity extends AppCompatActivity implements UserListener{
                                 continue;
                             }
                             User user = queryDocumentSnapshot.toObject(User.class);
-//                            User user = new User();
-//                            user.fullName = queryDocumentSnapshot.getString(Constants.KEY_NAME);
-//                            user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
-//                            user.userId = queryDocumentSnapshot.getId();
                             users.add(user);
                         }
                         if(users.size() > 0) {

@@ -94,7 +94,6 @@ public class ProfileFragment extends Fragment{
             binding.drawerLayout.open();
         });
         binding.profileDrawer.setNavigationItemSelectedListener(item -> {
-//            Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
             switch(item.getTitle().toString()){
                 case "Log Out":
                     logOut();
@@ -105,7 +104,6 @@ public class ProfileFragment extends Fragment{
             }
             return false;
         });
-        // Inflate the layout for this fragment
         return binding.getRoot();
     }
 
@@ -151,7 +149,6 @@ public class ProfileFragment extends Fragment{
     private void retrieveInfo() {
         StorageReference userRef = storageRef.child("media/images/profile_pictures/" + currentUser.getUid());
         userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
-//            Snackbar.make(binding.getRoot(), "File exists!", Snackbar.LENGTH_SHORT).show();
             GlideApp.with(this)
                     .load(userRef)
                     .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
@@ -160,7 +157,6 @@ public class ProfileFragment extends Fragment{
             progressBar.setVisibility(View.GONE);
         }).addOnFailureListener(e -> {
             Log.d("Profile", "retrieveInfo: "+e.toString());
-//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
         });
         db.collection("users").document(currentUser.getUid()).get().addOnCompleteListener(task -> {
             user = task.getResult().toObject(User.class);
@@ -169,7 +165,6 @@ public class ProfileFragment extends Fragment{
                 textName.setText(user.getFullName());
                 textEmail.setText(user.getEmail());
                 textPhone.setText(user.getPhone());
-//                Log.d("PROF", "retrieveInfo: " + user.getAverageRating());
                 binding.rbWorker.setRating(user.getAverageRating());
                 binding.tvdesc.setText(user.getAbout());
                 if (user.getSkills().size() > 0) {
@@ -208,7 +203,6 @@ public class ProfileFragment extends Fragment{
 
 
                 Log.d("Profile", "user not in database");
-//                Toast.makeText(getContext(), "User not found in database!", Toast.LENGTH_SHORT).show();
             }
         });
     }

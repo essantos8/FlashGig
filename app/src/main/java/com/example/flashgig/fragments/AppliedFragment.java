@@ -93,27 +93,20 @@ public class AppliedFragment extends Fragment implements PARecyclerViewAdapter.I
 
         adapter = new PARecyclerViewAdapter(this.getContext(), jobList, this);
         recyclerView.setAdapter(adapter);
-
-        // Inflate the layout for this fragment
         return binding.getRoot();
     }
 
     @Override
     public void onItemClick(String JID, String status) {
-//        Fragment fragment = DetailFragment.newInstance(JID);
         Fragment fragment = null;
         if (status.equals("pending")){
             fragment = AppliedPendingFragment.newInstance(JID, status);
-            //fragment = DetailFragment.newInstance(JID);
         }
-        // disabled for now
         else if(status.equals("in progress")){
             fragment = AppliedInProgressFragment.newInstance(JID, status);
-//            fragment = new JobInProgressFragment(JID);
         }
         else if(status.equals("completed")){
             fragment = AppliedCompletedFragment.newInstance(JID, status);
-//            fragment = DetailFragment.newInstance(JID);
         }
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");

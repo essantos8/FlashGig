@@ -23,8 +23,6 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-
-    //private EditText editTextFullName, editTextEmail, editTextPassword, editTextPhone;
     private TextInputLayout tilnamesignup, tilemailsignup, tilpasswordsignup, tilnumbersignup, tilpassword2signup;
     private TextInputEditText tietnamesignup, tietemailsignup, tietpasswordsignup, tietnumbersignup, tietpassword2signup;
 
@@ -34,13 +32,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         ActivitySignupBinding binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        // Configure Google Sign In
-//        GoogleSignInOptions gso = new GoogleSignInOptions
-//                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(clientId)
-//                .requestEmail()
-//                .build();
 
         // Initialize Firebase Auth and database
         mAuth = FirebaseAuth.getInstance();
@@ -141,7 +132,6 @@ public class SignUpActivity extends AppCompatActivity {
                         .setDisplayName(fullName)
                         .build();
                 user.updateProfile(profileUpdates);
-//                FirebaseAuth.getInstance().signOut();
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
             } else {

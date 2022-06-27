@@ -117,7 +117,6 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
         protected FilterResults performFiltering(CharSequence charSequence) {
             ArrayList<Job> filteredJobArrayList = new ArrayList<>();
             if(charSequence == null || charSequence.length() == 0) {
-//                Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show();
                 filteredJobArrayList.addAll(fullJobArrayList);
             }
             else{
@@ -137,9 +136,6 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             setCategoryFilters((ArrayList<Job>) filterResults.values);
-//            jobArrayList.clear();
-//            jobArrayList.addAll((ArrayList) filterResults.values);
-//            notifyDataSetChanged();
         }
     };
 
@@ -154,7 +150,6 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
     }
 
     private void setCategoryFilters(@Nullable ArrayList<Job> textFilteredJobArrayList){
-        // possibly redundant
         if(textFilteredJobArrayList == null){
             textFilteredJobArrayList = fullJobArrayList;
         }
@@ -170,11 +165,6 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
                 Log.d("categories", "toggleCategoryFilter: "+cat);
             }
             for (Job job : textFilteredJobArrayList) {
-                // "and" filter
-//                if (job.getCategories().containsAll(categoryFilters))
-//                    filteredJobArrayList.add(job);
-
-                // "or" filter
                 if(!Collections.disjoint(job.getCategories(), categoryFilters))
                     filteredJobArrayList.add(job);
             }
@@ -186,15 +176,12 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // grabbing the views from the row layout file
-        // similar with oncreate
         TextView textViewTitle, textViewStatus, textViewDescription, textViewDate, textViewBudget, textViewWorkers;
         Chip chipCarpentry, chipPlumbing, chipElectronics, chipElectrical, chipPersonalShopping, chipVirtualAssistant, chipOther;
         CardView jobCard;
-        //Button btnBidderAccess;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             textViewTitle = itemView.findViewById(R.id.textJobTitle);
             textViewDate = itemView.findViewById(R.id.textJobDate);
             textViewWorkers = itemView.findViewById(R.id.textJobWorkers);
@@ -209,16 +196,6 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
             jobCard = itemView.findViewById(R.id.jobCardPopup);
             textViewStatus = itemView.findViewById(R.id.textViewStatus2);
             textViewDescription = itemView.findViewById(R.id.textJobDescription);
-
-            /*itemView.findViewById(R.id.btnBidderAccess).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.frameLayout2, fragment, "displayBidder");
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                }
-            });*/
         }
     }
 

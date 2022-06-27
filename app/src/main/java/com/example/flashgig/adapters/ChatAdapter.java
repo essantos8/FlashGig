@@ -122,7 +122,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         void setData(ChatMessage chatMessage){
             binding.textMessage.setText(chatMessage.message);
             binding.textDateTime.setText(chatMessage.dateTime);
-            //binding.imageProfile.setImageBitmap(receiverProfileImage);
             String otherUserId = chatMessage.getSenderId();
             if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(otherUserId)){
                 otherUserId = chatMessage.getReceiverId();
@@ -141,12 +140,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
                 GlideApp.with(binding.getRoot().getContext())
                         .load(profilePicRef)
-//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .fitCenter()
                         .into(binding.imageProfile);
             }).addOnFailureListener(e -> {
                 Log.d("CommentsRecyclerView", "onBindViewHolder: "+e.toString());
-//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
             });
         }
     }

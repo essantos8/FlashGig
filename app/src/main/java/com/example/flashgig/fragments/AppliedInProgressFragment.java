@@ -68,7 +68,6 @@ public class AppliedInProgressFragment extends Fragment implements HorizontalIma
     private RecyclerView imageRecyclerView;
 
     public AppliedInProgressFragment() {
-        // Required empty public constructor
     }
 
     public static AppliedInProgressFragment newInstance(String param1, String param2) {
@@ -99,9 +98,7 @@ public class AppliedInProgressFragment extends Fragment implements HorizontalIma
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentAppliedInProgressBinding.inflate(inflater, container, false);
-
         textJobTitle = binding.textJobTitle;
         textJobLocation = binding.textJobLocation;
         textJobDate = binding.textJobDate;
@@ -117,7 +114,6 @@ public class AppliedInProgressFragment extends Fragment implements HorizontalIma
             if(task.isSuccessful()){
                 document = task.getResult().getDocuments().get(0);
                 job = document.toObject(Job.class);
-                // get client user id
                 db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
                     if(task1.getResult().getDocuments().isEmpty()){
                         Log.d("Pending Fragment Worker", "onComplete: User not found");
@@ -241,7 +237,6 @@ public class AppliedInProgressFragment extends Fragment implements HorizontalIma
             profilePicDetail.setImageResource(R.drawable.default_profile);
             Log.d("Pending Fragment Worker", "retrieveInfo: "+e.toString());
         });
-        // load job images
         ArrayList<String> jobImageUris = new ArrayList<>(job.getJobImages());
         ArrayList<Uri> jobImageArrayList = new ArrayList<>();
         StorageReference jobImagesRef = storageRef.child("/media/images/addjob_pictures/");
@@ -254,7 +249,6 @@ public class AppliedInProgressFragment extends Fragment implements HorizontalIma
                 jobImageArrayList.add(uri);
                 // if last image uri is fetched, set adapter
                 if(imageCounter[0] == jobImageUris.size()){
-//                    Toast.makeText(getContext(), "last image is"+String.valueOf(imageCounter[0]), Toast.LENGTH_SHORT).show();
                     HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList, this);
                     LinearLayoutManager layoutManager
                             = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -274,13 +268,4 @@ public class AppliedInProgressFragment extends Fragment implements HorizontalIma
         fragmentTransaction.add(R.id.frameLayout, imagePopupFragment,"imagePopup").addToBackStack(null).commit();
         return;
     }
-    /*
-    @Override
-    public void onItemClick(String userId, String jobId) {
-        Fragment fragment = DisplayBidder.newInstance(userId, jobId);    //CHANGE TO DISPLAYCLIENT!!!
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment, "displayBidder");
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }*/
 }

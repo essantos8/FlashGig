@@ -69,7 +69,6 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
     public void onBindViewHolder(@NonNull ClientRecyclerViewAdapter.MyViewHolder holder, int position) {
         User curWorker = workerList.get(position);
         storageRef = FirebaseStorage.getInstance().getReference();
-        //holder.imageWorker.setImageResource(curWorker.get);
         Log.d("Rating", "list of rated jobs: "+curWorker.ratings.keySet());
         Log.d("Rating", "job ID"+jobId);
 
@@ -80,7 +79,6 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
             holder.ratingBar.setIsIndicator(true);
             holder.textComment.setText(curWorker.getComment(jobId).getText());
             float rating = curWorker.getComment(jobId).getRating();
-//            Log.d("Rating", "Existing Rating!: "+rating);
             holder.ratingBar.setRating(rating);
         }
         else{
@@ -118,9 +116,7 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
                     .into(holder.imageClient);
         }).addOnFailureListener(e -> {
             Log.d("Profile", "retrieveInfo: "+e.toString());
-//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
         });
-//        holder.rateButton.setOnClickListener(view -> clickListener.onIt);
     }
 
     @Override
@@ -129,7 +125,6 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        //ImageView imageWorker;
         TextView textViewWName, textViewWNumber, textViewWEmail, textComment;
         EditText editComment;
         CardView workerCard;
@@ -138,8 +133,6 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
         ImageView imageClient;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            //imageWorker = itemView.findViewById(R.id.imageWorker);
             textViewWName = itemView.findViewById(R.id.textWorkerName);
             textViewWNumber = itemView.findViewById(R.id.textWorkerNumber);
             textViewWEmail = itemView.findViewById(R.id.textWorkerEmail);

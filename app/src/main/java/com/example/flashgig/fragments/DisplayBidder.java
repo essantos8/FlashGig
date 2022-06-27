@@ -63,27 +63,16 @@ public class DisplayBidder extends Fragment {
     private CommentsRecyclerViewAdapter adapter;
 
     DocumentSnapshot document;
-    //Task<QuerySnapshot> bidUser1;
     DocumentReference bidderDocRef;
     DocumentReference jobDocRef;
     FragmentManager fm;
 
-    Job job;    //container of the job (to check if bidder is already worker)
-    User bidUserAcc;    //container of bidder/worker
-
+    Job job;
+    User bidUserAcc;
     private TextView textBidderName, textBidderNumber, textBidderEmail;
-
     public DisplayBidder() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment DisplayBidder.
-     */
-    // TODO: Rename and change types and number of parameters
     public static DisplayBidder newInstance(String mParam1, String mParam2) {
         DisplayBidder fragment = new DisplayBidder();
         Bundle args = new Bundle();
@@ -140,9 +129,7 @@ public class DisplayBidder extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentDisplayBidderBinding.inflate(inflater, container, false);
-
         textBidderName = binding.textBidderName;
         textBidderNumber = binding.textBidderNumber;
         textBidderEmail = binding.textBidderEmail;
@@ -152,7 +139,6 @@ public class DisplayBidder extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 bidUserAcc = documentSnapshot.toObject(User.class);
-                //Log.d("BiddersFragment", "onComplete: User's name is: " + bidUserAcc.getFullName());
                 retrieveInfo(bidUserAcc);
             }
         });
@@ -182,10 +168,8 @@ public class DisplayBidder extends Fragment {
                 binding.btnAcceptBidder.setBackgroundColor(808080);    //set the button color to grey
                 Toast.makeText(getActivity(), "Bidder already accepted as worker!", Toast.LENGTH_SHORT).show();    //show that the bidder is already a worker
             } else {
-                bidderListTemp = job.getBidders();    //get the bidder list
-                workerListTemp = job.getWorkers();    //get the worker list
-//                jobRating.put(job.jobId,0); //put an initial rating of 0 for a particular job
-//                bidUserAcc.ratings.put(job.jobId, 0); // inputs a temporary rating of 0;
+                bidderListTemp = job.getBidders();
+                workerListTemp = job.getWorkers();
                 bidderListTemp.remove(bidUserAcc.getEmail());    //remove the bidder from the tempbidder list
                 workerListTemp.add(bidUserAcc.getEmail());    //add the bidder to the tempworker list
                 //UPDATING BIDDERS AND WORKERS
@@ -202,8 +186,6 @@ public class DisplayBidder extends Fragment {
                                 Log.d("DisplayBidderAccept", "Error updating document. (bidders)", e);
                             }
                         });
-//                bidderDocRef.update("ratings",jobRating);
-
             }
             statusCheck(jobDocRef);
             Fragment fragment = new PostedFragment();
@@ -256,7 +238,6 @@ public class DisplayBidder extends Fragment {
         setSkills();
         StorageReference userRef = FirebaseStorage.getInstance().getReference().child("media/images/profile_pictures/" + user.getUserId());
         userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
-//            Snackbar.make(binding.getRoot(), "File exists!", Snackbar.LENGTH_SHORT).show();
             GlideApp.with(this)
                     .load(userRef)
                     .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
@@ -264,7 +245,6 @@ public class DisplayBidder extends Fragment {
                     .into(binding.imageBidder);
         }).addOnFailureListener(e -> {
             Log.d("Profile", "retrieveInfo: "+e.toString());
-//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
         });
     }
     private void getComments(User user) {

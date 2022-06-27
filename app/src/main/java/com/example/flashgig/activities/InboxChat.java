@@ -140,7 +140,6 @@ public class InboxChat extends AppCompatActivity implements ConversationListener
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
- //       super.onBackPressed();
     }
 
     public void onConversationClicked(User user){

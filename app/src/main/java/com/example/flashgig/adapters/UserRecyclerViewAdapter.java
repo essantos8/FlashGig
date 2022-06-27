@@ -66,7 +66,6 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             fullUserArrayList = new ArrayList<>(fullUserArrayList);
             ArrayList<User> filteredUserArrayList = new ArrayList<>();
             if(charSequence == null || charSequence.length() == 0) {
-//                Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show();
                 filteredUserArrayList.addAll(fullUserArrayList);
             }
             else{
