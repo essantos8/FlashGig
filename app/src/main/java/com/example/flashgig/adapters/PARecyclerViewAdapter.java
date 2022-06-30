@@ -19,6 +19,7 @@ import com.example.flashgig.models.Job;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 
@@ -88,6 +89,7 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
                     holder.chipVirtualAssistant.setVisibility(View.VISIBLE);
                     break;
                 case "Other":
+                case "Others":
                     holder.chipOther.setVisibility(View.VISIBLE);
                     break;
             }
@@ -135,44 +137,11 @@ public class PARecyclerViewAdapter extends RecyclerView.Adapter<PARecyclerViewAd
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            setCategoryFilters((ArrayList<Job>) filterResults.values);
+            jobArrayList.clear();
+            jobArrayList.addAll((ArrayList<Job>) filterResults.values);
+            notifyDataSetChanged();
         }
     };
-
-    public void toggleCategoryFilter(String category, boolean addCategory) {
-        if(addCategory){
-            categoryFilters.add(category);
-        }
-        else{
-            categoryFilters.remove(category);
-        }
-        setCategoryFilters(fullJobArrayList);
-    }
-
-    private void setCategoryFilters(@Nullable ArrayList<Job> textFilteredJobArrayList){
-        if(textFilteredJobArrayList == null){
-            textFilteredJobArrayList = fullJobArrayList;
-        }
-
-        ArrayList<Job> filteredJobArrayList = new ArrayList<>();
-
-        if(categoryFilters.isEmpty()){
-            filteredJobArrayList.addAll(textFilteredJobArrayList);
-        }
-        else{
-            Log.d("categories", "notall");
-            for (String cat: categoryFilters){
-                Log.d("categories", "toggleCategoryFilter: "+cat);
-            }
-            for (Job job : textFilteredJobArrayList) {
-                if(!Collections.disjoint(job.getCategories(), categoryFilters))
-                    filteredJobArrayList.add(job);
-            }
-        }
-        jobArrayList.clear();
-        jobArrayList.addAll(filteredJobArrayList);
-        notifyDataSetChanged();
-    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // grabbing the views from the row layout file

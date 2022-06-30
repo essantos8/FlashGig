@@ -26,7 +26,6 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     private Context ctx;
     private ArrayList<Job> fullJobArrayList, jobArrayList;
     private ItemClickListener clickListener;
-    private ArrayList<String> categoryFilters = new ArrayList<>();
 
     public JobRecyclerViewAdapter(Context ctx, ArrayList<Job> jobArrayList, ItemClickListener clickListener) {
         this.ctx = ctx;
@@ -122,7 +121,6 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
             Log.d("search", "fulljobarraysize: "+ fullJobArrayList.size());
             ArrayList<Job> filteredJobArrayList = new ArrayList<>();
             if(charSequence == null || charSequence.length() == 0) {
-//                Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show();
                 filteredJobArrayList.addAll(fullJobArrayList);
             }
             else{
@@ -141,8 +139,6 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-//            setCategoryFilters((ArrayList<Job>) filterResults.values);
-//            checkResultSize();
             jobArrayList.clear();
             jobArrayList.addAll((ArrayList) filterResults.values);
             notifyDataSetChanged();

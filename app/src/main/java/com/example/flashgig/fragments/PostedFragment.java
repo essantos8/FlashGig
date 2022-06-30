@@ -38,29 +38,22 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
     private void eventChangeListener() {
         db.collection("jobs").whereEqualTo("client",curUser).orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
             if (error != null) {
-                Log.d("error", error.toString());
+                Log.d("PostedFragment", error.toString());
             }
             else {
                 for (DocumentChange dc : value.getDocumentChanges()) {
-                    Log.d("Changed", "changed: "+dc.getDocument().toObject(Job.class).getJobId());
-
+                    Job job = dc.getDocument().toObject(Job.class);
                     if (dc.getType() == DocumentChange.Type.ADDED) {
-                        jobList.add(dc.getDocument().toObject(Job.class));
-//                    Log.d("jobss", "eventChangeListener: added");
+                        jobList.add(job);
                     } else if (dc.getType() == DocumentChange.Type.REMOVED) {
-                        jobList.remove(dc.getDocument().toObject(Job.class));
-//                    Log.d("jobss", "eventChangeListener: removed");
+                        jobList.remove(job);
                     } else {
-                        Integer index = -1;
-                        index = jobList.indexOf(dc.getDocument().toObject(Job.class));
-                        assert !index.equals(-1);
-                        Log.d("INDEX", "eventChangeListener: " + String.valueOf(index));
-                        jobList.remove(dc.getDocument().toObject(Job.class));
-                        jobList.add(index, dc.getDocument().toObject(Job.class));
-//                    Log.d("jobss", "eventChangeListener: modified");
+                        jobList.remove(job);
+                        jobList.add(job);
                     }
                     adapter.notifyDataSetChanged();
                 }
+                AppliedFragment.sortJobsByTimestamp(jobList);
             }
         });
     }
@@ -68,10 +61,10 @@ public class PostedFragment extends Fragment implements PARecyclerViewAdapter.It
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         FragmentPostedBinding binding = FragmentPostedBinding.inflate(inflater, container, false);
 
         RecyclerView recyclerView = binding.recyclerViewPosted;
+        recyclerView.setItemViewCacheSize(50);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));

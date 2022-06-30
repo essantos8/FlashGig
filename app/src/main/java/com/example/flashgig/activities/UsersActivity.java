@@ -1,8 +1,5 @@
 package com.example.flashgig.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,18 +7,18 @@ import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashgig.adapters.UserRecyclerViewAdapter;
 import com.example.flashgig.databinding.ActivityUsersListBinding;
 import com.example.flashgig.listeners.UserListener;
-import com.example.flashgig.models.Job;
 import com.example.flashgig.models.User;
 import com.example.flashgig.utilities.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 
 import java.util.ArrayList;
 
@@ -41,6 +38,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener{
         setContentView(binding.getRoot());
 
         recyclerView = binding.usersRecyclerView;
+        recyclerView.setItemViewCacheSize(50);
         curUser = FirebaseAuth.getInstance().getCurrentUser();
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         getUsers();

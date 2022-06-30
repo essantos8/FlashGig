@@ -1,16 +1,12 @@
 package com.example.flashgig.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.flashgig.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.flashgig.adapters.ChatAdapter;
 import com.example.flashgig.databinding.ActivityChatBinding;
-import com.example.flashgig.fragments.DisplayWorker;
 import com.example.flashgig.models.ChatMessage;
 import com.example.flashgig.models.User;
 import com.example.flashgig.utilities.Constants;
@@ -23,10 +19,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,6 +37,7 @@ public class ChatActivity extends AppCompatActivity {
     private List<ChatMessage> chatMessages;
     private ChatAdapter chatAdapter;
     private FirebaseFirestore database;
+    private StorageReference storageRef;
     private FirebaseUser curUser;
     private String conversationId = null;
 
@@ -56,13 +54,24 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void init() {
+        storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference profilePicRef = storageRef.child("media/images/profile_pictures/" + receiverUser.getUserId());
         chatMessages = new ArrayList<>();
         chatAdapter = new ChatAdapter(
                 this,
                 chatMessages,
-                curUser.getUid()
-        );
-        binding.chatRecyclerView.setAdapter(chatAdapter);
+                curUser.getUid());
+        profilePicRef.getMetadata().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                chatAdapter.setReceiverPicRef(profilePicRef);
+            }
+            else {
+                chatAdapter.setReceiverPicRef(null);
+            }
+            binding.chatRecyclerView.setAdapter(chatAdapter);
+        });
+
+        binding.chatRecyclerView.setItemViewCacheSize(100);
         database = FirebaseFirestore.getInstance();
     }
 
@@ -145,6 +154,8 @@ public class ChatActivity extends AppCompatActivity {
     private void setListeners() {
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
+        binding.imageInfo.setVisibility(View.INVISIBLE);
+        binding.imageInfo.setOnClickListener(view -> {});
     }
 
     private String getReadableDateTime(Date date){

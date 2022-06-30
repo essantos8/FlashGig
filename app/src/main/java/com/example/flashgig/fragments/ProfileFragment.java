@@ -117,6 +117,7 @@ public class ProfileFragment extends Fragment{
             adapter.notifyDataSetChanged();
         });
         commentRecyclerView = binding.comRecycler;
+        commentRecyclerView.setItemViewCacheSize(20);
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         adapter = new CommentsRecyclerViewAdapter(this.getContext(), comments);
         commentRecyclerView.setAdapter(adapter);

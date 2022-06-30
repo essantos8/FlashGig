@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
+import com.example.flashgig.R;
 import com.example.flashgig.databinding.ItemContainerRecentConversationBinding;
 import com.example.flashgig.listeners.ConversationListener;
 import com.example.flashgig.models.ChatMessage;
@@ -70,6 +71,7 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
         }
 
         void setData(ChatMessage chatMessage){
+            binding.imageProfile.setImageResource(R.drawable.ic_baseline_account_circle_24);
             binding.textName.setText(chatMessage.conversationName);
             binding.textRecentMessage.setText(chatMessage.message);
             binding.getRoot().setOnClickListener(v -> {
@@ -90,6 +92,7 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
                         .fitCenter()
                         .into(binding.imageProfile);
             }).addOnFailureListener(e -> {
+                binding.imageProfile.setImageResource(R.drawable.ic_baseline_account_circle_24);
                 Log.d("RecentConversationsAd", "setData: "+e.toString());
             });
         }

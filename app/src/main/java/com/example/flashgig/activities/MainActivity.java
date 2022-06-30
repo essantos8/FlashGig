@@ -2,7 +2,6 @@ package com.example.flashgig.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 
@@ -11,22 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.flashgig.fragments.AppliedCompletedFragment;
-import com.example.flashgig.fragments.AppliedPendingFragment;
-import com.example.flashgig.fragments.DisplayBidder;
-import com.example.flashgig.fragments.DisplayWorker;
-import com.example.flashgig.fragments.ImagePopupFragment;
-import com.example.flashgig.fragments.JobAdderFragment;
 import com.example.flashgig.R;
 import com.example.flashgig.databinding.ActivityMainBinding;
-import com.example.flashgig.fragments.DetailFragment;
 import com.example.flashgig.fragments.HomeFragment;
-import com.example.flashgig.fragments.MessagesFragment;
 import com.example.flashgig.fragments.MyJobsFragment;
-import com.example.flashgig.fragments.PostedCompletedFragment;
-import com.example.flashgig.fragments.PostedInProgressFragment;
-import com.example.flashgig.fragments.PostedPendingFragment;
-import com.example.flashgig.fragments.ProfileEditFragment;
 import com.example.flashgig.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {

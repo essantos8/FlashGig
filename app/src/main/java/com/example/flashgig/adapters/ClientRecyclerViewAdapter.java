@@ -34,14 +34,10 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecyclerViewAdapter.MyViewHolder> {
-    private FirebaseFirestore db;
     private Context context;
     private ArrayList<User> workerList;
     private ItemClickListener clickListener;
-    private Job job;
     private String jobId;
-    private Button rateButton;
-    public User curWorker;
     private StorageReference storageRef;
 
     public ClientRecyclerViewAdapter(Context context, ArrayList<User> workerList, ItemClickListener clickListener, String jobId) {
@@ -51,16 +47,12 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
         this.jobId = jobId;
     }
 
-
-
     @NonNull
     @Override
     public ClientRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflate layout
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.worker_recycler_view_row, parent, false);
-
-
 
         return new ClientRecyclerViewAdapter.MyViewHolder(view);
     }
