@@ -2,7 +2,6 @@ package com.example.flashgig.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,15 +15,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mifmif.common.regex.Main;
 
 
 public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-
-    //private EditText editTextFullName, editTextEmail, editTextPassword, editTextPhone;
     private TextInputLayout tilnamesignup, tilemailsignup, tilpasswordsignup, tilnumbersignup, tilpassword2signup;
     private TextInputEditText tietnamesignup, tietemailsignup, tietpasswordsignup, tietnumbersignup, tietpassword2signup;
 
@@ -34,13 +30,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         ActivitySignupBinding binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        // Configure Google Sign In
-//        GoogleSignInOptions gso = new GoogleSignInOptions
-//                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(clientId)
-//                .requestEmail()
-//                .build();
 
         // Initialize Firebase Auth and database
         mAuth = FirebaseAuth.getInstance();
@@ -141,7 +130,6 @@ public class SignUpActivity extends AppCompatActivity {
                         .setDisplayName(fullName)
                         .build();
                 user.updateProfile(profileUpdates);
-//                FirebaseAuth.getInstance().signOut();
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
             } else {

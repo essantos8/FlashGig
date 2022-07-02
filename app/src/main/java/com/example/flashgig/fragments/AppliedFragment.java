@@ -1,5 +1,6 @@
 package com.example.flashgig.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,10 +21,12 @@ import com.example.flashgig.models.Job;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.MetadataChanges;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 
 public class AppliedFragment extends Fragment implements PARecyclerViewAdapter.ItemClickListener {
@@ -41,23 +44,25 @@ public class AppliedFragment extends Fragment implements PARecyclerViewAdapter.I
     }
 
     private void eventChangeListener() {
-        db.collection("jobs").whereArrayContains("bidders",curUser).orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value,error) -> {
+        db.collection("jobs").whereArrayContains("bidders",curUser).orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(MetadataChanges.INCLUDE, (value,error) -> {
             if (error != null) {
-                Log.d("error", "Firebase error");
+                Log.d("AppliedFragment", error.toString());
             }else{
                 for (DocumentChange dc : value.getDocumentChanges()) {
+                    Job job = dc.getDocument().toObject(Job.class);
                     if(dc.getType() == DocumentChange.Type.ADDED){
-                        jobList.add(dc.getDocument().toObject(Job.class));
+                        jobList.add(job);
                     }
                     else if(dc.getType() == DocumentChange.Type.REMOVED){
-                        jobList.remove(dc.getDocument().toObject(Job.class));
+                        jobList.remove(job);
                     }
                     else{
-                        jobList.add(dc.getDocument().toObject(Job.class));
-                        jobList.remove(dc.getDocument().toObject(Job.class));
+                        jobList.remove(job);
+                        jobList.add(job);
                     }
                     adapter.notifyDataSetChanged();
                 }
+                sortJobsByTimestamp(jobList);
             }
         });
         db.collection("jobs").whereArrayContains("workers",curUser).orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value,error) -> {
@@ -65,20 +70,30 @@ public class AppliedFragment extends Fragment implements PARecyclerViewAdapter.I
                 Log.d("error", "Firebase error");
             }else{
                 for (DocumentChange dc : value.getDocumentChanges()) {
+                    Job job = dc.getDocument().toObject(Job.class);
                     if(dc.getType() == DocumentChange.Type.ADDED){
-                        jobList.add(dc.getDocument().toObject(Job.class));
+                        jobList.add(job);
                     }
                     else if(dc.getType() == DocumentChange.Type.REMOVED){
-                        jobList.remove(dc.getDocument().toObject(Job.class));
+                        jobList.remove(job);
                     }
                     else{
-                        jobList.add(dc.getDocument().toObject(Job.class));
-                        jobList.remove(dc.getDocument().toObject(Job.class));
+                        jobList.remove(job);
+                        jobList.add(job);
                     }
                     adapter.notifyDataSetChanged();
                 }
+                sortJobsByTimestamp(jobList);
             }
         });
+    }
+
+    public static ArrayList<Job> sortJobsByTimestamp(ArrayList<Job> oldArrayList){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Log.d("AppliedFragment", "sortJobsByTimestamp");
+            oldArrayList.sort(Comparator.comparing(Job::getTimestamp).reversed());
+        }
+        return null;
     }
 
 
@@ -89,31 +104,25 @@ public class AppliedFragment extends Fragment implements PARecyclerViewAdapter.I
         FragmentAppliedBinding binding = FragmentAppliedBinding.inflate(inflater, container, false);
 
         RecyclerView recyclerView = binding.recyclerViewApplied;
+        recyclerView.setItemViewCacheSize(50);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         adapter = new PARecyclerViewAdapter(this.getContext(), jobList, this);
         recyclerView.setAdapter(adapter);
-
-        // Inflate the layout for this fragment
         return binding.getRoot();
     }
 
     @Override
     public void onItemClick(String JID, String status) {
-//        Fragment fragment = DetailFragment.newInstance(JID);
         Fragment fragment = null;
         if (status.equals("pending")){
             fragment = AppliedPendingFragment.newInstance(JID, status);
-            //fragment = DetailFragment.newInstance(JID);
         }
-        // disabled for now
         else if(status.equals("in progress")){
             fragment = AppliedInProgressFragment.newInstance(JID, status);
-//            fragment = new JobInProgressFragment(JID);
         }
         else if(status.equals("completed")){
             fragment = AppliedCompletedFragment.newInstance(JID, status);
-//            fragment = DetailFragment.newInstance(JID);
         }
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment, "jobDetail");

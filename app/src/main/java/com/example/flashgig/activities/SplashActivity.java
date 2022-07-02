@@ -27,7 +27,6 @@ public class SplashActivity extends AppCompatActivity {
 
         // Grabbing objects/views from layout
         setContentView(R.layout.splash_intro);
-//        setContentView(binding.getRoot());
         new Handler().postDelayed(() -> setContentView(binding.getRoot()), 1000);
         mAuth = FirebaseAuth.getInstance();
 

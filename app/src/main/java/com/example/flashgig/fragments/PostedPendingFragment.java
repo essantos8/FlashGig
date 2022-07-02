@@ -146,11 +146,9 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         bidderList.clear();
         workerList.clear();
         binding = FragmentPostedPendingBinding.inflate(inflater, container, false);
-
         textJobTitle = binding.textJobTitle;
         textJobLocation = binding.textJobLocation;
         textJobDate = binding.textJobDate;
@@ -170,12 +168,7 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
                     job = document.toObject(Job.class);
                     bidderListString = job.getBidders();    //get the list of bidders' emails and put them here
                     workerListString = job.getWorkers();    //get the list of workers' emails and put them here
-                    /*if(!curUser.equals(job.getClient())){
-                        binding.btnApplyForJob.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        binding.btnDeleteJob.setVisibility(View.VISIBLE);
-                    }*/
+
                     // get client user id
                     db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
                         if (task1.getResult().getDocuments().isEmpty()) {
@@ -211,23 +204,6 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
             jobDeletionDialog.getButton(DialogInterface.BUTTON_POSITIVE).setBackgroundColor(getResources().getColor(R.color.light_red));
             jobDeletionDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.white));
         });
-
-        /*
-        binding.btnApplyForJob.setOnClickListener(view ->{
-            if(job.getBidders().contains(curUser)){
-                binding.btnApplyForJob.setBackgroundColor(65536);
-                Toast.makeText(getActivity(),"Applied for job already!",Toast.LENGTH_SHORT).show();
-            }
-            else {
-                final Map<String, Object> addUsertoArrayMap = new HashMap<>();
-                addUsertoArrayMap.put("bidders", FieldValue.arrayUnion(curUser));
-                // something wrong here
-                db.collection("jobs").document(document.getId()).update(addUsertoArrayMap);
-                Toast.makeText(getActivity(),"Applied for job!",Toast.LENGTH_SHORT).show();
-                binding.btnApplyForJob.setBackgroundColor(808080);
-                fm.popBackStackImmediate();
-            }
-        });*/
 
         return binding.getRoot();
     }
@@ -324,10 +300,8 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
                     binding.chipOther.setVisibility(View.VISIBLE);
                     break;
             }
-        }/*
-        if(job.getBidders().contains(curUser)){
-            binding.btnApplyForJob.setBackgroundColor(808080);
-        }*/
+        }
+
 
     }
     private void loadImages() {
@@ -364,7 +338,6 @@ public class PostedPendingFragment extends Fragment implements HorizontalImageRe
                 jobImageArrayList.add(uri);
                 // if last image uri is fetched, set adapter
                 if(imageCounter[0] == jobImageUris.size()){
-//                    Toast.makeText(getContext(), "last image is"+String.valueOf(imageCounter[0]), Toast.LENGTH_SHORT).show();
                     HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList, this);
                     LinearLayoutManager layoutManager
                             = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);

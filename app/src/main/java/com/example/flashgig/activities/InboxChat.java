@@ -1,26 +1,18 @@
 package com.example.flashgig.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
-import com.example.flashgig.R;
 import com.example.flashgig.adapters.RecentConversationsAdapter;
 import com.example.flashgig.databinding.ActivityInboxChatBinding;
-import com.example.flashgig.databinding.ActivityMainBinding;
 import com.example.flashgig.listeners.ConversationListener;
 import com.example.flashgig.models.ChatMessage;
 import com.example.flashgig.models.User;
 import com.example.flashgig.utilities.Constants;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
@@ -140,7 +132,6 @@ public class InboxChat extends AppCompatActivity implements ConversationListener
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
- //       super.onBackPressed();
     }
 
     public void onConversationClicked(User user){

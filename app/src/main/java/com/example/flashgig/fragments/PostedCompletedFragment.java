@@ -94,8 +94,6 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
         binding.backButton.setOnClickListener(view ->{
             fm.popBackStackImmediate();
         });
-
-        // Inflate the layout for this fragment
         return binding.getRoot();
     }
 
@@ -210,7 +208,6 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
                 jobImageArrayList.add(uri);
                 // if last image uri is fetched, set adapter
                 if(imageCounter[0] == jobImageUris.size()){
-//                    Toast.makeText(getContext(), "last image is"+String.valueOf(imageCounter[0]), Toast.LENGTH_SHORT).show();
                     HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList, this);
                     LinearLayoutManager layoutManager
                             = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -230,10 +227,6 @@ public class PostedCompletedFragment extends Fragment implements HorizontalImage
         fragmentTransaction.add(R.id.frameLayout, imagePopupFragment,"imagePopup").addToBackStack(null).commit();
         return;
     }
-
-//    @Override
-//    public void onItemClickWorker(String userId1, String jobId1) {
-//    }
 
     public void RateBtnOnClick(String userId, String jobId, float rating, String comment){
         Comment comme = new Comment(job.getClient(),rating,comment,clientUser.getUserId());

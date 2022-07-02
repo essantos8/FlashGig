@@ -35,6 +35,7 @@
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/Cartshier/app/src/main/res/layout/recycler_view_row.xml" value="0.4" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/bg_lgrey_rounded.xml" value="0.1645" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/bg_white_rounded.xml" value="0.1645" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/blue_white_gradient.xml" value="0.1055" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/drawable_bg_white_rounded.xml" value="0.1645" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/gradient.xml" value="0.1" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/drawable/ic_add.xml" value="0.1105" />
@@ -55,21 +56,21 @@
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_main.xml" value="0.15833333333333333" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_profile_edit.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_signup.xml" value="0.176" />
-        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_splash.xml" value="0.15833333333333333" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_splash.xml" value="0.264" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_user.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/activity_users_list.xml" value="0.264" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/bidder_recycler_view_row.xml" value="0.4" />
-        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/client_feedback_recycler_view_row.xml" value="0.264" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/client_feedback_recycler_view_row.xml" value="0.5448460508701473" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_applied.xml" value="0.16927083333333334" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_applied_completed.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_applied_in_progress.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_applied_pending.xml" value="0.23854166666666668" />
-        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_detail.xml" value="0.264" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_detail.xml" value="0.4" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_display_bidder.xml" value="0.4" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_display_worker.xml" value="0.264" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_image_popup.xml" value="0.25025641025641027" />
-        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_job_adder.xml" value="0.1765625" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_job_adder.xml" value="0.2" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_job_in_progress.xml" value="0.2" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_messages.xml" value="0.15833333333333333" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_my_jobs.xml" value="0.2" />
@@ -81,10 +82,10 @@
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/fragment_profile_edit.xml" value="0.264" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/image_popup.xml" value="0.22291666666666668" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/item_container_recent_conversation.xml" value="0.15572916666666667" />
-        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/item_container_sent_message.xml" value="0.72" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/item_container_sent_message.xml" value="0.4" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/item_container_user.xml" value="0.264" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/item_containter_received_message.xml" value="0.536" />
-        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/job_recycler_view_row.xml" value="0.264" />
+        <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/job_recycler_view_row.xml" value="0.536" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/pa_recycler_view_row.xml" value="0.264" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/profile_drawer_header.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kenneth/AndroidStudioProjects/FIREBASE_TEST_JAVA/app/src/main/res/layout/recycler_view_horizontal_image.xml" value="0.21354166666666666" />

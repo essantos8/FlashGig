@@ -11,8 +11,10 @@ import android.widget.Filterable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.flashgig.GlideApp;
+import com.example.flashgig.R;
 import com.example.flashgig.databinding.ItemContainerUserBinding;
 import com.example.flashgig.listeners.UserListener;
 import com.example.flashgig.models.User;
@@ -66,7 +68,6 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             fullUserArrayList = new ArrayList<>(fullUserArrayList);
             ArrayList<User> filteredUserArrayList = new ArrayList<>();
             if(charSequence == null || charSequence.length() == 0) {
-//                Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show();
                 filteredUserArrayList.addAll(fullUserArrayList);
             }
             else{
@@ -113,10 +114,11 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
                     GlideApp.with(ctx)
                             .load(userRef)
-                            .signature(new ObjectKey(String.valueOf(storageMetadata.getCreationTimeMillis())))
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .fitCenter()
                             .into(binding.imageProfile);
             }).addOnFailureListener(e -> {
+                binding.imageProfile.setImageResource(R.drawable.ic_baseline_account_circle_24);
                 Log.d("Profile", "retrieveInfo: "+e.toString());
             });
         }

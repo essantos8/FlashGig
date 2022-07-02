@@ -59,8 +59,6 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
     public void onBindViewHolder(@NonNull BidderRecyclerViewAdapter.MyViewHolder holder, int position) {
         User curBidder = bidderList.get(position);
         storageRef = FirebaseStorage.getInstance().getReference();
-
-        //holder.imageBidder.setImageResource(curBidder.get);
         holder.textViewBName.setText(curBidder.getFullName());
         holder.textViewBNumber.setText(curBidder.getPhone());
         holder.textViewBEmail.setText(curBidder.getEmail());
@@ -84,14 +82,12 @@ public class BidderRecyclerViewAdapter extends RecyclerView.Adapter<BidderRecycl
         }
         StorageReference profilePicRef = storageRef.child("media/images/profile_pictures/" + curBidder.getUserId());
         profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
-//            Snackbar.make(binding.getRoot(), "File exists!", Snackbar.LENGTH_SHORT).show();
                 GlideApp.with(context)
                         .load(profilePicRef)
                         .fitCenter()
                         .into(holder.imageBidder);
         }).addOnFailureListener(e -> {
             Log.d("Profile", "retrieveInfo: "+e.toString());
-//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
         });
     }
 

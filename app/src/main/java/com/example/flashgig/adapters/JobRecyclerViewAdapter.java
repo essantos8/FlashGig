@@ -26,7 +26,6 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
     private Context ctx;
     private ArrayList<Job> fullJobArrayList, jobArrayList;
     private ItemClickListener clickListener;
-    private ArrayList<String> categoryFilters = new ArrayList<>();
 
     public JobRecyclerViewAdapter(Context ctx, ArrayList<Job> jobArrayList, ItemClickListener clickListener) {
         this.ctx = ctx;
@@ -122,7 +121,6 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
             Log.d("search", "fulljobarraysize: "+ fullJobArrayList.size());
             ArrayList<Job> filteredJobArrayList = new ArrayList<>();
             if(charSequence == null || charSequence.length() == 0) {
-//                Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show();
                 filteredJobArrayList.addAll(fullJobArrayList);
             }
             else{
@@ -141,71 +139,11 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-//            setCategoryFilters((ArrayList<Job>) filterResults.values);
-//            checkResultSize();
             jobArrayList.clear();
             jobArrayList.addAll((ArrayList) filterResults.values);
             notifyDataSetChanged();
         }
     };
-//
-//    public void toggleCategoryFilter(String category, boolean addCategory) {
-//        if(addCategory){
-//            categoryFilters.add(category);
-//        }
-//        else{
-//            categoryFilters.remove(category);
-//        }
-//        if (categoryFilters.isEmpty()){
-//            clearCategoryFilters();
-////            return;
-//        }
-//
-//        setCategoryFilters(jobArrayList);
-//    }
-//
-//    private void clearCategoryFilters(){
-//    }
-//
-//    private void setCategoryFilters(@Nullable ArrayList<Job> textFilteredJobArrayList){
-//        // possibly redundant
-//        if(textFilteredJobArrayList == null){
-//            textFilteredJobArrayList.addAll(fullJobArrayList);
-//        }
-//
-//        ArrayList<Job> filteredJobArrayList = new ArrayList<>();
-//
-//        if(categoryFilters.isEmpty()){
-//            Log.d("categories", "empty filter: ");
-//            filteredJobArrayList.addAll(textFilteredJobArrayList);
-//        }
-//        else{
-//            Log.d("categories", "notall");
-//            for (String cat: categoryFilters){
-//                Log.d("categories", "toggleCategoryFilter: "+cat);
-//            }
-//            for (Job job : textFilteredJobArrayList) {
-//                // "and" filter
-////                if (job.getCategories().containsAll(categoryFilters))
-////                    filteredJobArrayList.add(job);
-//
-//                // "or" filter
-//                if(!Collections.disjoint(job.getCategories(), categoryFilters))
-//                    filteredJobArrayList.add(job);
-//            }
-//        }
-//        jobArrayList.clear();
-//        jobArrayList.addAll(filteredJobArrayList);
-//        notifyDataSetChanged();
-//    }
-//
-//    public void checkResultSize(){
-//        Log.d("init", "check");
-//
-//        Log.d("init", "fulljobsize: "+String.valueOf(fullJobArrayList.size()));
-//        Log.d("init", "jobsize: "+String.valueOf(jobArrayList.size()));
-//
-//    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // grabbing the views from the row layout file
@@ -213,7 +151,6 @@ public class JobRecyclerViewAdapter extends RecyclerView.Adapter<JobRecyclerView
         TextView textViewTitle, textViewDescription, textViewDate, textViewBudget, textViewClient, textViewLocation, textViewWorkers, textViewStatus;
         Chip chipCarpentry, chipPlumbing, chipElectronics, chipElectrical, chipPersonalShopping, chipVirtualAssistant, chipOther;
         CardView jobCard;
-        Button btnAccept;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -41,8 +41,6 @@ public class UserVerificationActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-//        OnVerificationStateChangedCallbacks mCallbacks = setCallbacks();
-
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber("+639288974143")       // Phone number to verify
@@ -68,13 +66,6 @@ public class UserVerificationActivity extends AppCompatActivity {
         return new OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-                // This callback will be invoked in two situations:
-                // 1 - Instant verification. In some cases the phone number can be instantly
-                //     verified without needing to send or enter a verification code.
-                // 2 - Auto-retrieval. On some devices Google Play services can automatically
-                //     detect the incoming verification SMS and perform verification without
-                //     user action.
-//                Log.d(TAG, "onVerificationCompleted:" + credential);
 
                 signInWithPhoneAuthCredential(credential);
             }
@@ -83,7 +74,6 @@ public class UserVerificationActivity extends AppCompatActivity {
             public void onVerificationFailed(FirebaseException e) {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
-//                Log.w(TAG, "onVerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
@@ -100,7 +90,7 @@ public class UserVerificationActivity extends AppCompatActivity {
                 // The SMS verification code has been sent to the provided phone number, we
                 // now need to ask the user to enter the code and then construct a credential
                 // by combining the code with a verification ID.
-//                Log.d(TAG, "onCodeSent:" + verificationId);
+
                 Toast.makeText(UserVerificationActivity.this, "Code sent!", Toast.LENGTH_SHORT).show();
                 // Save verification ID and resending token so we can use them later
                 verificationId = verificationId1;
@@ -116,17 +106,15 @@ public class UserVerificationActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "signInWithCredential:success");
+
                             Toast.makeText(UserVerificationActivity.this, "User verification success!", Toast.LENGTH_SHORT).show();
-//                            FirebaseUser user = task.getResult().getUser();
+
                             // Update UI
                         } else {
                             // Sign in failed, display a message and update the UI
                             Toast.makeText(UserVerificationActivity.this, "The verification code entered was invalid", Toast.LENGTH_SHORT).show();
-//                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-//                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-//                                // The verification code entered was invalid
-//                            }
+                           // The verification code entered was invalid
+
                         }
                     }
                 });

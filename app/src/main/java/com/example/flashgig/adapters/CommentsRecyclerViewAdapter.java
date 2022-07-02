@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,7 +66,6 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRe
         holder.userCardView.setOnClickListener(view -> {
             getUserProfile(curComment.ratorId);
         });
-        // get rator id
         StorageReference profilePicRef = storageRef.child("media/images/profile_pictures/" + curComment.getRatorId());
         profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
             GlideApp.with(ctx)
@@ -74,8 +74,9 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRe
                     .into(holder.profilePic);
             holder.progressBar.setVisibility(View.GONE);
         }).addOnFailureListener(e -> {
-            Log.d("CommentsRecyclerView", "onBindViewHolder: "+e.toString());
-//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
+            holder.progressBar.setVisibility(View.GONE);
+            holder.profilePic.setImageResource(R.drawable.ic_baseline_account_circle_24);
+            Log.d("CommentsRecyclerView", "onBindViewHolder: "+ e);
         });
 
     }
