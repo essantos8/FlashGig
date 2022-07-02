@@ -26,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.MetadataChanges;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
@@ -50,7 +51,6 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
         eventChangeListener();
-
     }
 
     @Override
@@ -62,9 +62,9 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
     }
 
     private void eventChangeListener() {
-        ListenerRegistration eventListener = db.collection("jobs").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
+        db.collection("jobs").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
             if (error != null) {
-                Log.d("error", error.toString());
+                Log.d("HomeFragment", error.toString());
             }
             else {
                 for (DocumentChange dc : value.getDocumentChanges()) {
@@ -74,21 +74,15 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
                     }
                     if (dc.getType() == DocumentChange.Type.ADDED) {
                         jobList.add(job);
-                        //                    Log.d("jobss", "eventChangeListener: added");
                     } else if (dc.getType() == DocumentChange.Type.REMOVED) {
                         jobList.remove(job);
-                        //                    Log.d("jobss", "eventChangeListener: removed");
                     } else {
-                        Integer index = -1;
-                        index = jobList.indexOf(job);
-                        assert !index.equals(-1);
-                        Log.d("INDEX", "eventChangeListener: " + String.valueOf(index));
+                        jobList.add(job);
                         jobList.remove(job);
-                        jobList.add(index, job);
-                        //                    Log.d("jobss", "eventChangeListener: modified");
                     }
                     adapter.notifyDataSetChanged();
                 }
+                AppliedFragment.sortJobsByTimestamp(jobList);
                 if (binding.progressBarHome.getVisibility() == View.VISIBLE) {
                     binding.progressBarHome.setVisibility(View.GONE);
                 }
@@ -103,6 +97,7 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         FloatingActionButton fltBtnAddJob = binding.floatingBtnAddJob;
+        adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
 
         fltBtnAddJob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,22 +113,14 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
                         .commit();
             }
         });
-
-
         recyclerView = binding.recyclerViewJobs;
+        recyclerView.setItemViewCacheSize(100);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setHasFixedSize(false);
-        adapter = new JobRecyclerViewAdapter(this.getContext(), jobList, this);
         recyclerView.setAdapter(adapter);
 
         searchView = binding.searchviewHome;
-
-//        searchView.setOnSearchClickListener(view -> binding.cardViewFilters.setVisibility(View.VISIBLE));
         searchView.setOnClickListener(view -> binding.searchviewHome.setIconified(false));
-//        searchView.setOnCloseListener(() -> {
-//            binding.cardViewFilters.setVisibility(View.GONE);
-//            return false;
-//        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -149,10 +136,6 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
                 return false;
             }
         });
-//        binding.chipGroupCategories.setOnClickListener(view -> {
-//            Toast.makeText(getContext(), String.valueOf(binding.chipGroupCategories.getCheckedChipIds()), Toast.LENGTH_SHORT).show();
-//
-//        });
         binding.btnFilterJobs.setOnClickListener(view -> {
             isSearchFiltered = !isSearchFiltered;
             if (!isSearchFiltered) {
@@ -180,14 +163,10 @@ public class HomeFragment extends Fragment implements JobRecyclerViewAdapter.Ite
         ArrayAdapter<CharSequence> adapterLocationCity = ArrayAdapter.createFromResource(getContext(), R.array.locationCity, android.R.layout.simple_spinner_item);
         adapterLocationCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerCity.setAdapter(adapterLocationCity);
-//        initLocations(binding);
         DatePickerDialog datePickerDialog = getDatePickerDialog(binding.btnDatePicker);
-
         binding.btnDatePicker.setOnClickListener(view -> {
             datePickerDialog.show();
         });
-
-        // Inflate the layout for this fragment
         return binding.getRoot();
     }
 

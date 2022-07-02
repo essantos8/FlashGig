@@ -121,14 +121,12 @@ public class LoginActivity extends AppCompatActivity {
 
         if (email.isEmpty()) {
             tilemail.setError("Email is required!");
-            //editTextEmail.requestFocus();
             return;
         } else {
             tilemail.setError(null);
         }
         if (password.isEmpty()) {
             tilpassword.setError("Password is required!");
-            //editTextPassword.requestFocus();
             return;
         } else {
             tilemail.setError(null);

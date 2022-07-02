@@ -59,27 +59,16 @@ public class DisplayWorker extends Fragment {
     private ArrayList<Comment> comments = new ArrayList<>();
     private CommentsRecyclerViewAdapter adapter;
     private FirebaseUser currentUser;
-    DocumentSnapshot document;
     DocumentReference workerDocRef;
-    DocumentReference jobDocRef;
     FragmentManager fm;
 
-    Job job;    //container of the job (to check if bidder is already worker)
-    User workUserAcc;    //container of bidder/worker
+    User workUserAcc;
 
     private TextView textWorkerName, textWorkerNumber, textWorkerEmail;
 
     public DisplayWorker() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment DisplayWorker.
-     */
-    // TODO: Rename and change types and number of parameters
     public static DisplayWorker newInstance(String mParam1, String mParam2) {
         DisplayWorker fragment = new DisplayWorker();
         Bundle args = new Bundle();
@@ -100,15 +89,12 @@ public class DisplayWorker extends Fragment {
         }
         workerDocRef = db.collection("users").document(mParam1);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//        jobDocRef = db.collection("jobs").document(mParam2);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentDisplayWorkerBinding.inflate(inflater, container, false);
-
         textWorkerName = binding.textWorkerName;
         textWorkerNumber = binding.textWorkerNumber;
         textWorkerEmail = binding.textWorkerEmail;
@@ -118,12 +104,9 @@ public class DisplayWorker extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 workUserAcc = documentSnapshot.toObject(User.class);
-                //Log.d("DisplayWorker", "onComplete: User's name is: " + workUserAcc.getFullName());
                 retrieveInfo(workUserAcc);
             }
         });
-
-
 
         //BACK BUTTON
         binding.backButtonDW.setOnClickListener(view ->{
@@ -151,7 +134,6 @@ public class DisplayWorker extends Fragment {
         setSkills();
         StorageReference userRef = FirebaseStorage.getInstance().getReference().child("media/images/profile_pictures/" + user.getUserId());
         userRef.getMetadata().addOnSuccessListener(storageMetadata -> {
-//            Snackbar.make(binding.getRoot(), "File exists!", Snackbar.LENGTH_SHORT).show();
             if(getContext() != null) {
                 GlideApp.with(getContext())
                         .load(userRef)
@@ -161,7 +143,6 @@ public class DisplayWorker extends Fragment {
             }
         }).addOnFailureListener(e -> {
             Log.d("Profile", "retrieveInfo: "+e.toString());
-//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
         });
     }
 

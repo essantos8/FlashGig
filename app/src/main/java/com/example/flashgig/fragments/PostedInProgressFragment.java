@@ -65,8 +65,6 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
-//        curUser = FirebaseAuth.getInstance().getCurrentUser();
-
     }
 
     @Override
@@ -78,9 +76,6 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
             if(task.isSuccessful()){
                 DocumentSnapshot document = task.getResult().getDocuments().get(0);
                 job = document.toObject(Job.class);
-//                if(!curUser.equals(job.getClient())){
-//                    binding.btnApplyForJob.setVisibility(View.VISIBLE);
-//                }
                 // get client user id
                 db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
                     if(task1.getResult().getDocuments().isEmpty()){
@@ -100,8 +95,6 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
         binding.backButton.setOnClickListener(view ->{
             fm.popBackStackImmediate();
         });
-
-        // Inflate the layout for this fragment
         return binding.getRoot();
     }
 
@@ -195,18 +188,6 @@ public class PostedInProgressFragment extends Fragment implements HorizontalImag
                 checkCompleteStatus();
             }
         });
-
-
-//            if(tracker.isEmpty()) {
-//                db.collection("jobs").document(jobId).update("userCompleteTracker", tracker);
-//            }
-//            else{
-//                tracker.add(currentUser.getEmail());
-//                db.collection("jobs").document(jobId).update("userCompleteTracker", tracker);
-//            }
-
-
-
     }
 
     private void checkCompleteStatus(){

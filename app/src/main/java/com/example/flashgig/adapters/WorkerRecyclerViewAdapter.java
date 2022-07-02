@@ -60,9 +60,6 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
         // inflate layout
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.worker_recycler_view_row, parent, false);
-
-
-
         return new WorkerRecyclerViewAdapter.MyViewHolder(view);
     }
 
@@ -70,8 +67,6 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
     public void onBindViewHolder(@NonNull WorkerRecyclerViewAdapter.MyViewHolder holder, int position) {
         User curWorker = workerList.get(position);
         storageRef = FirebaseStorage.getInstance().getReference();
-
-        //holder.imageWorker.setImageResource(curWorker.get);
         Log.d("Rating", "list of rated jobs: "+curWorker.ratings.keySet());
         Log.d("Rating", "job ID"+jobId);
 
@@ -82,7 +77,6 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
             holder.ratingBar.setIsIndicator(true);
             holder.textComment.setText(curWorker.getComment(jobId).getText());
             float rating = curWorker.getComment(jobId).getRating();
-//            Log.d("Rating", "Existing Rating!: "+rating);
             holder.ratingBar.setRating(rating);
         }
         else{
@@ -112,7 +106,6 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
-//        holder.rateButton.setOnClickListener(view -> clickListener.onIt);
 
         StorageReference profilePicRef = storageRef.child("media/images/profile_pictures/" + curWorker.getUserId());
         profilePicRef.getMetadata().addOnSuccessListener(storageMetadata -> {
@@ -122,7 +115,6 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
                     .into(holder.imageWorker);
         }).addOnFailureListener(e -> {
             Log.d("Profile", "retrieveInfo: "+e.toString());
-//            Snackbar.make(binding.getRoot(), "File does not exist!", Snackbar.LENGTH_SHORT).show();
         });
     }
 
@@ -132,13 +124,12 @@ public class WorkerRecyclerViewAdapter extends RecyclerView.Adapter<WorkerRecycl
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        //ImageView imageWorker;
         TextView textViewWName, textViewWNumber, textViewWEmail, textComment;
         EditText editComment;
         CardView workerCard;
         RatingBar ratingBar;
         Button rateButton, chatButton;
-        ImageView imageWorker, btn;
+        ImageView imageWorker;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

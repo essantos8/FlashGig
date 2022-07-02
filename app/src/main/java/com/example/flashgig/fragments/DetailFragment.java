@@ -77,17 +77,7 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
     private RecyclerView imageRecyclerView;
 
     public DetailFragment() {
-        // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment DetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static DetailFragment newInstance(String param1) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
@@ -116,10 +106,7 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         binding = FragmentDetailBinding.inflate(inflater, container, false);
-
         textJobTitle = binding.textJobTitle;
         textJobLocation = binding.textJobLocation;
         textJobDate = binding.textJobDate;
@@ -144,7 +131,6 @@ public class DetailFragment extends Fragment implements HorizontalImageRecyclerV
                     else if (curUser.equals(job.getClient())){
                         binding.btnDeleteJob.setVisibility(View.VISIBLE);
                     }
-                    // get client user id
                     db.collection("users").whereEqualTo("email", job.getClient()).get().addOnCompleteListener(task1 -> {
                         if(task1.getResult().getDocuments().isEmpty()){
                             Log.d("Detail Fragment", "onComplete: User not found");

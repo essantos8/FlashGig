@@ -64,17 +64,7 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
     private RecyclerView imageRecyclerView, feedbackRecyclerView;
 
     public AppliedCompletedFragment() {
-        // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment PendingFragmentWorker.
-     */
-    // TODO: Rename and change types and number of parameters
     public static AppliedCompletedFragment newInstance(String param1, String param2) {
         AppliedCompletedFragment fragment = new AppliedCompletedFragment();
         Bundle args = new Bundle();
@@ -132,8 +122,6 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
         binding.backButton.setOnClickListener(view ->{
             fm.popBackStackImmediate();
         });
-
-        // Inflate the layout for this fragment
         return binding.getRoot();
     }
 
@@ -190,10 +178,6 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
                     break;
             }
         }
-
-        // Client Card
-
-
     }
     private void loadImages() {
         String clientId = clientUser.getUserId();
@@ -227,11 +211,9 @@ public class AppliedCompletedFragment extends Fragment implements HorizontalImag
                 jobImageArrayList.add(uri);
                 // if last image uri is fetched, set adapter
                 if(imageCounter[0] == jobImageUris.size()){
-//                    Toast.makeText(getContext(), "last image is"+String.valueOf(imageCounter[0]), Toast.LENGTH_SHORT).show();
                     HorizontalImageRecyclerViewAdapter adapter = new HorizontalImageRecyclerViewAdapter(getContext(), jobImageArrayList, this);
                     LinearLayoutManager layoutManager
                             = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-
                     imageRecyclerView.setLayoutManager(layoutManager);
                     imageRecyclerView.setAdapter(adapter);
                 }

@@ -112,23 +112,14 @@ public class JobAdderFragment extends Fragment{
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==getPicRC1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imageUri1 = data.getData();
-//            GlideApp.with(this)
-//                    .load(imageUri1)
-//                    .into(binding.jobImage1);
             binding.jobImage1.setImageURI(imageUri1);
         }
         if(requestCode==getPicRC2 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imageUri2 = data.getData();
-//            GlideApp.with(this)
-//                    .load(imageUri1)
-//                    .into(binding.jobImage2);
             binding.jobImage2.setImageURI(imageUri2);
         }
         if(requestCode==getPicRC3 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imageUri3 = data.getData();
-//            GlideApp.with(this)
-//                    .load(imageUri1)
-//                    .into(binding.jobImage3);
             binding.jobImage3.setImageURI(imageUri3);
         }
     }
@@ -138,13 +129,10 @@ public class JobAdderFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         binding = FragmentJobAdderBinding.inflate(inflater, container, false);
-
         jobPicture1 = binding.jobImage1;
         jobPicture1.setOnClickListener(view -> choosePicture1());
-
         jobPicture2 = binding.jobImage2;
         jobPicture2.setOnClickListener(view -> choosePicture2());
-
         jobPicture3 = binding.jobImage3;
         jobPicture3.setOnClickListener(view -> choosePicture3());
 
@@ -306,9 +294,7 @@ public class JobAdderFragment extends Fragment{
         HashMap<String, Object> timestamp = new HashMap<String, Object>();
         timestamp.put("timestamp", FieldValue.serverTimestamp());
         doc.update(timestamp);
-//        Toast.makeText(getContext(), "Job Added to Database", Toast.LENGTH_SHORT).show();
         Snackbar.make(getActivity().findViewById(R.id.frameLayout), "Job Added!", Snackbar.LENGTH_SHORT).show();
-
         FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
         fragment.replace(R.id.frameLayout, new HomeFragment(), "home");
         fragment.commit();
